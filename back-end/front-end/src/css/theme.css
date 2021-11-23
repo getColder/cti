@@ -67,10 +67,10 @@ ul,li{
 
 
 .nav ul{
-    margin: 0;
+    position: relative;
+    bottom: 0%;
     padding: 0;
     list-style-type: none;
-    position: relative;
     float:left;
 }
 
@@ -146,7 +146,7 @@ margin-top: -70px;
 
 
 #timelineBox{
-    margin-top: 130px;
+    margin-top: 30px;
     font-size: 2;
     list-style: none;
     padding-right: 40px;
