@@ -38,9 +38,9 @@ ul,li{
 .nav img{
     z-index: -1020;
     position: relative;
-    height: 170px;
-    width:  320px;
-    margin-left: -324px;
+    height: 169px;
+    width:  370px;
+    margin-left: -300px;
     margin-top: 60px;
     border-bottom-left-radius: 30px;
     align-content: center;
@@ -80,7 +80,7 @@ ul,li{
   float: left;
   font-size: 30px;
   margin: 0;
-  padding-bottom: 9px;
+  padding-top: 16px;
   box-shadow: 2px 0px 3px black inset;
 }
 .nav a{
@@ -202,10 +202,10 @@ margin-top: -70px;
 
 
 .cycleInfoForms {
-    border: 3px solid #999999;
+    border: 1px solid black;
   padding: 3px;
   position: relative;
-  margin-left: 27%;
+  margin-left: 290px;
   margin-right: 26%;
   background-color: #cccc99;
   margin-bottom: -250px;
