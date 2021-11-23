@@ -102,7 +102,7 @@ var timelineBox = new Vue({
     el: '#timelineBox',
     data: {
             timenodes : [],
-            currentTime = currentTimenode
+            currentTime : currentTimenode
     },
     methods: {
         getData: function(time){
