@@ -15,7 +15,6 @@ function getCookie(cookieWanted){
 }
 
 var currentDevId = getCookie('cDev');
-var currentTimenode = '';
 
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
 document.write('<script src="js/component/devBordHandle.js"></script>') //devbordHandle组件
@@ -90,6 +89,7 @@ var dataDisplay = new Vue({
         this.$children[0].devID = currentDevId;
         vEvent.$on('updateTimeline', value => {
             this.$children[0].timenode = value;
+            timelineBox.currentTime = value;
         })
         vEvent.$on('updateDev', value => {
             this.$children[0].devID = value;
@@ -102,7 +102,7 @@ var timelineBox = new Vue({
     el: '#timelineBox',
     data: {
             timenodes : [],
-            currentTime : currentTimenode
+            currentTime : ''
     },
     methods: {
         getData: function(time){
