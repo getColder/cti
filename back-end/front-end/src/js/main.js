@@ -15,6 +15,7 @@ function getCookie(cookieWanted){
 }
 
 var currentDevId = getCookie('cDev');
+var currentTimenode = '';
 
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
 document.write('<script src="js/component/devBordHandle.js"></script>') //devbordHandle组件
