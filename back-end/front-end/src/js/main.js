@@ -126,8 +126,10 @@ var timelineBox = new Vue({
                     axios.get('/currentstate/timeline?devid=' + currentDevId)
                     .then(function(response){
                         timelineBox.timenodes = response.data;
-                        if(timelineBox.timenodes)
+                        if(timelineBox.timenodes){
                             timelineBox.timenodes.reverse();
+                            timelineBox.currentTime = timelineBox.timenode[0];
+                        }
                         else
                             timelineBox.timenodes = [];
                     })
