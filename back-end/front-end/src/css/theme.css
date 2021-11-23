@@ -8,14 +8,6 @@ ul,li{
   margin: 0;
 }
 
-.head {
-  color :  rgb(255,245,247);
-  font-family:serif;
-  background-color: #336666;
-  margin: 0;
-  font-size: 12px;
-  padding-left: 30px;
-}
 .nav {
   color : rgb(255,245,247);
   margin: 0;
@@ -28,7 +20,7 @@ ul,li{
     z-index: -1203;
     position: absolute;
     float: auto;
-    background-color: #999999;
+    background-color: #9ad9f9ee;
     width: 100%;
     height: 253px;
     top: 0px;
@@ -227,7 +219,7 @@ margin-top: -70px;
 
 
 .cycleInfoForms {
-    border: 4px solid black;
+    border: 3px solid #999999;
   margin-top: 40px;
   padding: 3px;
   position: relative;
