@@ -164,12 +164,12 @@ var timelineBox = new Vue({
     data() {
       return {
         devid : currentDevId,
-        linkTo: "currentstate/download/csvinfo?devid=" + currentDevId
+        linkTo: "download/csvinfo?devid=" + currentDevId
       }
     },
     mounted(){
         vEvent.$on('updateDev',value=>{
-            this.linkTo = "currentstate/download/csvinfo?devid=" + value;
+            this.linkTo = "download/csvinfo?devid=" + value;
         })
     }
   })
