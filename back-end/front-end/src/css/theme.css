@@ -144,7 +144,7 @@ margin-top: -70px;
 
 
 #timelineBox{
-    margin-top: -5%;
+    margin-top: -50px;
     font-size: 2;
     list-style: none;
     padding-right: 40px;
@@ -258,7 +258,6 @@ margin-top: -70px;
 .devCard{
     cursor: pointer;
     border-left: 10px solid gainsboro;
-    background-color: #33666634;
     color: whitesmoke;
     font-size: 150%;
     text-align: center;
