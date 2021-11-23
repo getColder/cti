@@ -80,8 +80,8 @@ ul,li{
   float: left;
   font-size: 30px;
   margin: 0;
-  padding: 4px;
-  box-shadow: 2px 2px 9px black;
+  padding: 8px;
+  box-shadow: 2px 0px 3px black inset;
 }
 .nav a{
   text-decoration: none;
