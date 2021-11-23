@@ -134,6 +134,7 @@ var timelineBox = new Vue({
             style="position:relative;top:4px;left: -6px;"><slot></slot></button>',
             methods: {
                 getTimeline : function(){
+                    alert('get')
                     axios.get('/currentstate/timeline?devid=' + currentDevId)
                     .then(function(response){
                         timelineBox.timenodes = response.data;
