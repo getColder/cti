@@ -50,7 +50,7 @@ const tableInfoCom = {
     data() {
         return {
             time: '未知',
-            devID: -1,
+            devID: '未知',
             infos: [],
             timenode: [],
             state: 0
