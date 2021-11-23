@@ -13,10 +13,10 @@ const devBordHandleCOM = {
         <option v-for="dev in devIDs" :value="dev" :key="dev">设备{{dev}}</option>\
     </select>\
     <button @click="setDev(temp_devID)" class="btn_switchDev"">切换设备</button>\
-    <div style="position:relative;top: 0px;float:left;width:45%;\
+    <div style="position:relative;top: 0px;float:left;width:75%;\
     font-size: 44%;padding:5%;background-color:#22739572;border-radius:3px;padding-bottom:5px;padding-top:15px">地点：贵阳市花溪区</div>\
     <div class="btn_devoption"  style="position:relative;top: 0px;float:left;width:75%;border: 1px solid white;\
-    font-size: 0%;padding:0;background-color:#a2333528">\
+    font-size: 0%;padding:0;background-color:#a23335">\
     <button type="defalut" style="position:relative;width:33%;height:74px;background-color:#22739522;color:white;border-width:2px;border-right: 1px solid white">设备数据库</button>\
     <button type="defalut" style="position:relative;width:33%;height:74px;background-color:#22739522;color:white;border-width:2px;border-right: 1px solid white">设备曲线图</button>\
     <button type="defalut" style="position:relative;width:34%;height:74px;background-color:#22739522;color:white;border-width:2px;border-right: 1px solid white">修改设备信息</button>\

@@ -134,7 +134,7 @@ margin-top: -70px;
 
 .btn_switchDev{
     height: 20%;
-    width: 20%;
+    width: 30%;
     float: left;
     color: whitesmoke;
     border: 1px solid white;
@@ -144,6 +144,7 @@ margin-top: -70px;
 
 
 #timelineBox{
+    margin-top: 5%;
     font-size: 2;
     list-style: none;
     padding-right: 40px;
