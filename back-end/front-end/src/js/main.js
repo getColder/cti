@@ -128,7 +128,7 @@ var timelineBox = new Vue({
                         timelineBox.timenodes = response.data;
                         if(timelineBox.timenodes){
                             timelineBox.timenodes.reverse();
-                            timelineBox.currentTime = timelineBox.timenode[0];
+                            timelineBox.currentTime = timelineBox.timenodes[0];
                         }
                         else
                             timelineBox.timenodes = [];
