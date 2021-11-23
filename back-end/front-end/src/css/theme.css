@@ -40,10 +40,10 @@ ul,li{
     float: auto;
     background-color: rgb(220, 223, 214);
     width: 750px;
-    height: 300px;
+    height: 330px;
     right: 0px;
     top: 100px;
-    border-radius: 10%;
+    border-top-left-radius: 10%;
 }
 
 .nav img{
@@ -51,7 +51,7 @@ ul,li{
     height: 230px;
     width:  600px;
    border: 2px solid white;
-   box-shadow: 5px 5px 15px black;
+   box-shadow: 5px 5px 2px 15px black;
     margin: 0;
     align-content: center;
     -webkit-filter:blur(10px);
@@ -229,7 +229,7 @@ margin-top: -70px;
 .cycleInfoForms {
   padding: 0;
   position: relative;
-  margin-left: 30%;
+  margin-left: 28%;
   margin-right: 26%;
   background-color: #cccc99;
   box-shadow: 5px 5px 15px black;
