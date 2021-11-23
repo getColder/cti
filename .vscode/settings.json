@@ -1,0 +1,10 @@
+{
+    "mongoRunner": {
+        "connections": [
+            {
+                "name": "CTI",
+                "url": "mongodb://localhost:27017/concrete_temper_info"
+            }
+        ]
+    }
+}
