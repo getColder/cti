@@ -1,27 +1,8 @@
 const host = window.location.host;  //网址
 const devInfoURL = 'data'
 
-function getCookie(cookieWanted){
-    //背景
-    new Vue({
-        el: '#bg_grey1',
-        data:{
-        }
-    })
 
-    var cookieAry = document.cookie.split("; ");
-    if(cookieAry == 0)
-        return null;
-    for(var i = 0; i < cookieAry.length; i++){
-        var aCookie = cookieAry[i].split("=");
-        if(cookieWanted== (aCookie[0]) && aCookie.length > 1){
-            return aCookie[1];
-        }
-    }
-    return null;
-}
-
-var currentDevId = getCookie('cDev');
+var currentDevId = localStorage.getItem("devid");
 
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
 document.write('<script src="js/component/devBordHandle.js"></script>') //devbordHandle组件
@@ -174,7 +155,9 @@ var timelineBox = new Vue({
         })
     }
   })
-
+  window.onbeforeunload = function(){
+      localStorage.setItem("devid", currentDevId)
+  }
 }
 
 
