@@ -39,9 +39,9 @@ ul,li{
     position: absolute;
     float: auto;
     background-color: rgb(220, 223, 214);
-    width: 550px;
+    width: 750px;
     height: 300px;
-    right: 30px;
+    right: 0px;
     top: 180px;
     border-radius: 10%;
 }
