@@ -100,6 +100,7 @@ var dataDisplay = new Vue({
         })
         vEvent.$on('updateDev', value => {
             this.$children[0].devID = value;
+            currentDevId = value;
         })
     }
   });
