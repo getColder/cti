@@ -51,7 +51,7 @@ ul,li{
     height: 230px;
     width:  600px;
    border: 2px solid white;
-   box-shadow: 5px 5px 30px 2px black;
+   box-shadow: 5px 5px 10px 2px black;
     margin: 0;
     align-content: center;
     -webkit-filter:blur(10px);
@@ -169,7 +169,7 @@ margin-top: -70px;
 
 #timelineBox{
     float: left;
-    margin: 0;
+    margin: -10px;
     font-size: 2;
     list-style: none;
     padding-right: 40px;
@@ -227,7 +227,7 @@ margin-top: -70px;
 
 
 .cycleInfoForms {
-  padding: 20px;
+  margin: 20px;
   position: relative;
   margin-left: 28%;
   margin-right: 26%;
