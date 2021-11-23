@@ -42,7 +42,7 @@
     <div id="timelineScroll">
     <ul v-for="timenode in timenodes" :key='timenodes.length'>
         <li @click="getData(timenode)">{{ timenode[0]+'年'+timenode[1]+'月'+timenode[2]+'日'+timenode[3]+'时'+timenode[4]+'分' }}
-            <img v-if="alert(dataDisplay.thehost)" src="img/this.png" width="15px" height="15px" alt="">
+            <img v-if="alert(currentTimenode)" src="img/this.png" width="15px" height="15px" alt="">
         </li>
     </ul>
     </div>

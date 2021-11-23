@@ -52,7 +52,7 @@ const tableInfoCom = {
             time: '未知',
             devID: -1,
             infos: [],
-            timenode: '',
+            timenode: [],
             state: 0
         }
     },
@@ -89,6 +89,7 @@ const tableInfoCom = {
         timenode: function(){
             let timestr = '' + this.timenode[0] + this.timenode[1] + this.timenode[2] + this.timenode[3] + this.timenode[4];
             this.updateData('/currentstate/data?devid='+ this.devID +'&' + "timenode=" + timestr);
+            currentTimenode = timestr;
         },
         devID: function(){
             this.updateData('/currentstate/data?devid='+ this.devID);
