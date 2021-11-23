@@ -2,6 +2,13 @@ const host = window.location.host;  //网址
 const devInfoURL = 'data'
 
 function getCookie(cookieWanted){
+    //背景
+    new Vue({
+        el: '#bg_grey1',
+        data:{
+        }
+    })
+
     var cookieAry = document.cookie.split("; ");
     if(cookieAry == 0)
         return null;
