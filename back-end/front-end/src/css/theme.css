@@ -30,7 +30,7 @@ ul,li{
     float: auto;
     background-color: #999999;
     width: 100%;
-    height: 250px;
+    height: 253px;
     top: 0px;
     border-radius: 30px;
 }
@@ -168,8 +168,6 @@ margin-top: -70px;
 
 
 #timelineBox{
-    position: absolute;
-    top: 360px;
     float: left;
     margin: 0;
     font-size: 2;
