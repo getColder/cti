@@ -19,18 +19,18 @@
         </div>
     </div>
     <div class='nav'>
+        <img src="img/pic1.jpg" alt="图片失效" />
+        <img src="img/pic2.jpg" style="left: 300px" alt="图片失效" />
         <ul id="nav_default">
             <li><a href="">首页</a></li>
             <li>历史查询</li>
             <li><a id="csvinfo" :href="linkTo">电子表格</a></li>
         </ul>
-        <img src="img/pic1.jpg" alt="图片失效" />
-        <img src="img/pic2.jpg" style="left: 300px" alt="图片失效" />
     </div>
 
     <div class="options">
         <button id="button_update" v-on:click="ajaxInfo()">{{ text }}</button>
-        <button id="test">图表</button>
+        <button id="test">曲线图</button>
     </div>
 
     <div style="height: 50px;"></div>
