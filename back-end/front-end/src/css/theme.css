@@ -233,14 +233,13 @@ margin-top: -70px;
   margin-left: 28%;
   margin-right: 26%;
   background-color: #cccc99;
-  box-shadow: 5px 5px 15px black;
+  box-shadow: 5px 5px 30px 4px black;
   margin-bottom: -250px;
 }
 
 
 .cycleInfoForms table{
-  border-style: solid;
-  border-top-width: 0;
+  border-width: 0;
   color: brown;
 }
 
