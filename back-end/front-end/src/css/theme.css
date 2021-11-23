@@ -100,12 +100,10 @@ ul,li{
     margin: 0;
     padding: 0;
     list-style-type: none;
-    float: right;
-    font-size: 15px;
-    width: 150px;
 }
 
 .nav li{
+    float:left;
   background-color: rgb(220, 223, 214);
   color: black;
   font-size: larger;
@@ -240,6 +238,7 @@ ul,li{
 .cycleInfoForms {
   padding: 0;
   position: relative;
+  right: 30%;
   margin-left: 20%;
   margin-right: 26%;
   background-color: #cccc99;
