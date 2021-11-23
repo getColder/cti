@@ -100,10 +100,7 @@ var dataDisplay = new Vue({
         })
         vEvent.$on('updateDev', value => {
             this.$children[0].devID = value;
-            alert(value)
-            alert(currentDevId)
             currentDevId = value;
-            alert(currentDevId)
         })
     }
   });
@@ -136,7 +133,6 @@ var timelineBox = new Vue({
                 getTimeline : function(){
                     axios.get('/currentstate/timeline?devid=' + currentDevId)
                     .then(function(response){
-                        alert(currentDevId)
                         timelineBox.timenodes = response.data;
                         if(timelineBox.timenodes){
                             timelineBox.timenodes.reverse();
