@@ -105,7 +105,6 @@ ul,li{
 }
 
 .nav li{
-    float:left;
   background-color: rgb(220, 223, 214);
   color: black;
   font-size: larger;
@@ -240,8 +239,7 @@ ul,li{
 .cycleInfoForms {
   padding: 0;
   position: relative;
-  right: 0;
-  margin-left: 20%;
+  margin-left: 35%;
   margin-right: 26%;
   background-color: #cccc99;
   box-shadow: 5px 5px 15px black;
