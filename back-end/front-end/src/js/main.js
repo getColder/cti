@@ -74,6 +74,28 @@ var device = new Vue({
     }
   })
 
+//表格组件
+var dataDisplay = new Vue({
+    el: '#dataDisplay',
+    data(){
+        return {
+            thehost : host
+        }
+    },
+    components: {
+        'table-info': tableInfoCom
+    },
+    mounted(){
+        this.$children[0].devID = currentDevId;
+        vEvent.$on('updateTimeline', value => {
+            this.$children[0].timenode = value;
+        })
+        vEvent.$on('updateDev', value => {
+            this.$children[0].devID = value;
+        })
+    }
+  });
+
 //时间轴框
 var timelineBox = new Vue({
     el: '#timelineBox',
@@ -141,27 +163,6 @@ var timelineBox = new Vue({
     }
   })
 
-//表格组件 vue示例1: 
-  var dataDisplay = new Vue({
-    el: '#dataDisplay',
-    data(){
-        return {
-            thehost : host
-        }
-    },
-    components: {
-        'table-info': tableInfoCom
-    },
-    mounted(){
-        this.$children[0].devID = currentDevId;
-        vEvent.$on('updateTimeline', value => {
-            this.$children[0].timenode = value;
-        })
-        vEvent.$on('updateDev', value => {
-            this.$children[0].devID = value;
-        })
-    }
-  });
 }
 
 
