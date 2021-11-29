@@ -5,9 +5,9 @@ const tableInfoCom = {
             <tr> \
                 <td colspan="7" class="timeRow">时间戳:&nbsp;&nbsp;&nbsp;&nbsp; \
                     <span id="timeStap">{{ time }}</span> \
-                </td><td></td><td></td> \
-                <td colspan="4" class="timeRow">设备号:&nbsp;&nbsp;&nbsp;&nbsp; \
-                <span id="timeStap">{{ devID }}</span> \
+                </td>\
+                <td colspan="7" class="timeRow">设备地址:&nbsp;&nbsp;&nbsp;&nbsp; \
+                <span id="timeStap">贵州省花溪区(设备ID:{{ devID }})</span> \
             </td> \
             </tr> \
             <tr id="tableHead"> \

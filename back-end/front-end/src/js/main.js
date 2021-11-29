@@ -6,6 +6,10 @@ var currentDevId = localStorage.getItem("devid");
 
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
 document.write('<script src="js/component/devBordHandle.js"></script>') //devbordHandle组件
+document.write('<script src="js/component/indictor.js"></script>') //indictor组件
+document.write('<script src="js/component/lock.js"></script>') //lock组件
+
+
 
 //中央vue事件中转
 var vEvent = new Vue();
@@ -14,7 +18,7 @@ this.onload = function () {
     var btn_update = new Vue({
         el: '#button_update',
         data: {
-          text: '测试当前数据',
+          text: '测试',
         },
         methods: {
           ajaxInfo: ()=>{
@@ -30,7 +34,10 @@ this.onload = function () {
         }
       })  //测试按钮
 
-  //设备板
+//选项卡
+
+
+//设备板
 var device = new Vue({
     el: '#device',
     data() {
@@ -71,7 +78,8 @@ var dataDisplay = new Vue({
         }
     },
     components: {
-        'table-info': tableInfoCom
+        'table-info': tableInfoCom,
+        'indictor': indictor
     },
     mounted(){
         this.$children[0].devID = currentDevId;
@@ -91,52 +99,59 @@ var timelineBox = new Vue({
     el: '#timelineBox',
     data: {
             timenodes : [],
-            currentTime : ''
+            currentTime : '',
+            lockInterval : null
     },
     methods: {
         getData: function(time){
           if(time)
             vEvent.$emit('updateTimeline', time)          
+        },
+        getTimeline : function(){
+            var thisTimeline = this;
+            axios.get('/currentstate/timeline?devid=' + currentDevId)
+            .then(function(response){
+                thisTimeline.timenodes = response.data;
+                if(thisTimeline.timenodes){
+                    thisTimeline.timenodes.reverse();
+                    thisTimeline.currentTime = thisTimeline.timenodes[0];
+                }
+                else
+                    thisTimeline.timenodes = [];
+            })
+            .catch(function(error){
+                alert('请求失败:' + error)
+            })
+        },
+        lockAutoUpdate : function(doLock){
+            if(doLock){
+                clearInterval(this.lockInterval);
+            }
+            else{
+                this.lockInterval = setInterval(() => {
+                    this.getTimeline();
+                    dataDisplay.$children[0].updateData('/currentstate/data?devid='+ currentDevId);
+                }, 60000 * 1);
+            }
         }
     },
     props:['timenodes','getData'],
     mounted(){
         vEvent.$on('updateDev',value=>{
-            this.$children[0].getTimeline();
+            this.getTimeline();
         })
+        setTimeout(()=> {
+            this.getTimeline();
+        }, 1000)
+        this.lockAutoUpdate(false);
     },
     components:{
         'btn-timeline': {
-            template: '<button id="fastSearch" @click="getTimeline"> \
+            template: '<button id="fastSearch" @click.native="getTimeline"> \
             <img src="img/timelist_rise.png" alt="" width=" 20px" height="20px" \
             style="position:relative;top:4px;left: -6px;"><slot></slot></button>',
-            methods: {
-                getTimeline : function(){
-                    axios.get('/currentstate/timeline?devid=' + currentDevId)
-                    .then(function(response){
-                        timelineBox.timenodes = response.data;
-                        if(timelineBox.timenodes){
-                            timelineBox.timenodes.reverse();
-                            timelineBox.currentTime = timelineBox.timenodes[0];
-                        }
-                        else
-                            timelineBox.timenodes = [];
-                    })
-                    .catch(function(error){
-                        alert('请求失败:' + error)
-                    })
-                }
-            },
-            mounted(){
-		var thisbtn = this;
-		setTimeout(()=> {
-			thisbtn.getTimeline();
-		}, 1000)
-                setInterval(() => {
-                    thisbtn.getTimeline();
-                }, 60000 * 1);
-            }
-        }
+        },
+        'lock-auto-up': lockAutoUp
     }
 })
 
