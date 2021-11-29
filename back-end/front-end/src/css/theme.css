@@ -222,7 +222,6 @@ margin-top: -70px;
 }
 
 #indic{
-    color: white;
     position: relative;
     background-color: #669999;
     border:3px solid white;
@@ -230,6 +229,7 @@ margin-top: -70px;
 }
 
 #indic td{
+    color: white;
     text-align: center;
     width: 75px;
 }
