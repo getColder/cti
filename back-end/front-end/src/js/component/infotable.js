@@ -6,7 +6,7 @@ const tableInfoCom = {
                 <td colspan="7" class="timeRow">时间戳:&nbsp;&nbsp;&nbsp;&nbsp; \
                     <span id="timeStap">{{ time }}</span> \
                 </td>\
-                <td colspan="7" class="timeRow">设备地址:&nbsp;&nbsp;&nbsp;&nbsp; \
+                <td colspan="7" class="timeRow">当前设备:&nbsp;&nbsp;&nbsp;&nbsp; \
                 <span id="timeStap">贵州省花溪区(设备ID:{{ devID }})</span> \
             </td> \
             </tr> \
