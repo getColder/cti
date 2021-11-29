@@ -234,6 +234,10 @@ margin-top: -70px;
     width: 75px;
 }
 
+#indic th{
+    text-align: center;
+}
+
 .cycleInfoForms {
     border: 1px solid black;
     padding: 3px;
