@@ -19,7 +19,7 @@ var data = {
     "SpareData":0
 }
 
-const client = net.createConnection(port, ali_address, ()=>{
+const client = net.createConnection(port, address, ()=>{
     setInterval(() => {
         var date = new Date()
         data.Time = [date.getUTCFullYear() - 2000, date.getMonth() + 1
