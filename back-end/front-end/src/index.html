@@ -26,7 +26,13 @@
         <ul id="nav_default">
             <li><a href="">首页</a></li>
             <li>历史查询</li>
-            <li><a id="csvinfo" :href="linkTo">电子表格</a></li>
+            <li id="nav-excel">
+                <a id="csvinfo" :href="linkTo">电子表格</a>
+                <ul>
+                    <li>下载最近200条</li>
+                    <li>从数据库下载</li>
+                </ul>
+            </li>
         </ul>
     </div>
 
@@ -42,7 +48,7 @@
             <btn-timeline>近期数据</btn-timeline>
             <lock-auto-up @lockupdate="lockAutoUpdate"></lock-auto-up>
             <div id="timelineScroll">
-            <ul v-for="timenode in timenodes" :key='timenodes.length'>
+            <ul v-for="timenode in timenodes" :key='timenodes.length' v-if="timenode">
                 <li @click="getData(timenode)">{{ timenode[0]+'年'+timenode[1]+'月'+timenode[2]+'日'+timenode[3]+'时'+timenode[4]+'分' }}
                     <img v-if="currentTime === timenode" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
