@@ -388,6 +388,7 @@ ul,li{
     margin-bottom: 0px;
     background-color: #cccc99;
     box-shadow: 2px 2px 20px #33334a;
+    padding-bottom: 40px;
 }
 
 #devTable ul{
@@ -410,7 +411,7 @@ ul,li{
     padding: 14px;
     box-shadow: 2px 7px 7px #33334a inset;
     width: 33%;
-    height: 70%;
+    height: 75%;
     position: absolute;
     float: right;
     top: 0;
