@@ -407,7 +407,7 @@ ul,li{
     resize:none;
     margin-bottom: -10px;
     background-color: #ffffff77;
-    box-shadow: 2px 5px 1px #33334a inset;
+    box-shadow: 2px 5px 50px #33334a inset;
     width: 55%;
     height: 99%;
     position: absolute;
