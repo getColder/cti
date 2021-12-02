@@ -137,16 +137,17 @@ ul,li{
 
 #options {
     z-index: 1000;
-margin-top: -70px;
-  border-bottom-style: solid;
-  border-bottom-width: 4px;
-  border-radius: 30px;
-  text-align: right;
-  padding-right: 40px;
-  font-size: 0;
+    margin-top: -70px;
+    border-bottom-style: solid;
+    border-bottom-width: 4px;
+    border-radius: 30px;
+    text-align: right;
+    padding-right: 40px;
+    font-size: 0;
 }
 
-#options button{
+.btnOpt_inactive{
+    cursor: pointer;
   margin: 0;
   margin-top: 10px;
   padding: 0;
@@ -162,24 +163,24 @@ margin-top: -70px;
 
 }
 
-#options button:hover{
-  background-color: #669999;
-  border-top-color: rgb(220, 223, 214);
-  color: rgb(220, 223, 214);
-  width: 180px;
-  transition-property: background-color;
-  transition-duration: 0.25s;
-  box-shadow: 6px 2px 10px #558888 inset;
+.btnOpt_active{
+    margin: 0;
+    margin-top: 10px;
+    padding: 0;
+    background-color: #669999;
+    color: rgb(220, 223, 214);
+    border-width: 1px;
+    border-top-width: 3px;
+    border-color: rgb(220, 223, 214);
+    font-size: 15px;
+    width: 180px;
+    height: 65px;
+    box-shadow: 12px 8px 20px #336677 inset;
+    transition-property: background-color box-shadow;
+    transition-duration: 0.25s;
 }
 
-.btnOptionSlec{
-    background-color: #669999;
-    border-top-color: rgb(220, 223, 214);
-    color: rgb(220, 223, 214);
-    width: 180px;
-    transition-property: background-color;
-    transition-duration: 0.25s;
-  }
+
 
 .slct_switchDev{
     height: 20%;
@@ -259,20 +260,90 @@ margin-top: -70px;
   color: brown;
 }
 
-#indic{
+#infoOpt{
     position: relative;
     background-color: #669999;
     border:3px solid white;
-    border-radius: 12%;
+    border-radius: 22%;
+    padding: 8px;
+    float: left;
+    text-align: center;
+    color: #7f2323;
+    height: 110px;
+    width: 200px;
+    background-color: #88aaaa;
+    font-weight: bold;
+    font-size: 18px;
 }
 
+#infoOpt span{
+    background-color: transparent;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    border-radius: 22%;
+}
+
+#infoOpt span:hover{
+    width: 1;
+    height: 1;
+    cursor: pointer;
+    box-shadow: 10px 10px 55px 15px #33334a;
+}
+
+#infoOptPic{
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    top: 33%;
+    left: 35%;
+}
+
+#infoOptlist li{
+    padding-left: 25px;
+    padding-right: 25px;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    float: left;
+}
+
+#devopt {
+    position: fixed;
+    left: 0;
+    margin-left: -50px;
+    
+}
+
+#devopt ul{
+    list-style: none;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+#devopt li{
+    text-align: center;
+    width: 75px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #a76974;
+    color: whitesmoke;
+}
+
+
 #indic td{
+    font-weight: normal;
+    font-size: 14px;
     color: white;
     text-align: center;
     width: 75px;
 }
 
 #indic th{
+    font-size: 14px;
+    color: black;
     text-align: center;
 }
 
@@ -280,8 +351,8 @@ margin-top: -70px;
     border: 1px solid black;
     padding: 3px;
     position: relative;
-    margin-left: 290px;
-    margin-right: 20%;
+    margin-left: 320px;
+    margin-right: 17%;
     background-color: #cccc99;
     margin-bottom: 0px;
 }
@@ -303,7 +374,52 @@ margin-top: -70px;
   text-align: center;
 }
 
+#tabletitle{
+    color: rgb(41, 38, 38);
+    font-size: larger;
+}
 
+#devTable{
+    border: 2px solid white;
+    border-top-left-radius: 5%;
+    position: relative;
+    margin-left: 390px;
+    margin-right: 20%;
+    margin-bottom: 0px;
+    background-color: #cccc99;
+    box-shadow: 2px 2px 20px #33334a;
+}
+
+#devTable ul{
+    width: 300px;
+    margin-left: 30px;
+
+}
+
+
+#devTable li{
+    width: 270px;
+    margin-top: 15px;
+    border-bottom: 1px inset #33334a72;
+}
+
+#devTable textarea{
+    resize:none;
+    margin-bottom: -10px;
+    background-color: #ffffff77;
+    box-shadow: 2px 5px 1px #33334a inset;
+    width: 55%;
+    height: 99%;
+    position: absolute;
+    float: right;
+    top: -3px;
+    right: 0;
+}
+
+
+#devTable li span{
+    
+}
 
 .devBord-online:hover{
     background-color: #204540ff;
@@ -359,10 +475,9 @@ margin-top: -70px;
 }
 
 
+.led{
 
-
-
-#timeStap{
-  color: rgb(41, 38, 38);
-  font-size: larger;
+    box-shadow: 0px -15px 80px 25px #ff0000ac;
 }
+
+

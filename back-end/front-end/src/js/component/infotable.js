@@ -4,14 +4,14 @@ const tableInfoCom = {
         <thead> \
             <tr> \
                 <td colspan="7" class="timeRow">时间戳:&nbsp;&nbsp;&nbsp;&nbsp; \
-                    <span id="timeStap">{{ time }}</span> \
+                    <span id="tabletitle">{{ time }}</span> \
                 </td>\
                 <td colspan="7" class="timeRow">当前设备:&nbsp;&nbsp;&nbsp;&nbsp; \
-                <span id="timeStap">贵州省花溪区(设备ID:{{ devID }})</span> \
+                <span id="tabletitle">贵州省花溪区(设备ID:{{ devID }})</span> \
             </td> \
             </tr> \
             <tr id="tableHead"> \
-                <th id="buttonHead_floor">楼层</th> \
+                <th id="buttonHead_floor">层</th> \
                 <th id="buttonHead_entry">入口温度</th> \
                 <th id="buttonHead_out">出口温度</th> \
                 <th id="buttonHead_vavleState">水泵状态</th> \
@@ -47,6 +47,7 @@ const tableInfoCom = {
         </tbody> \
     </table> \
 </div>',
+    props:['showit'],
     data() {
         return {
             time: '未知',
@@ -96,6 +97,7 @@ const tableInfoCom = {
         }
     },
     mounted(){
+        devID = currentDevId;
         this.updateData('/currentstate/data?devid='+ this.devID)
     }
 }

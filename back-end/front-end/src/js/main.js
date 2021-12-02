@@ -1,80 +1,39 @@
 const host = window.location.host;  //网址
 const devInfoURL = 'data'
 
-
 var currentDevId = localStorage.getItem("devid");
 
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
 document.write('<script src="js/component/devBordHandle.js"></script>') //devbordHandle组件
 document.write('<script src="js/component/indictor.js"></script>') //indictor组件
-document.write('<script src="js/component/lock.js"></script>') //lock组件
+document.write('<script src="js/component/lock.js"></script>') ///lock组件
+document.write('<script src="js/component/btnOptions.js"></script>') //btn-options组件
+var showInfo = true;
 
 
-
-//中央vue事件中转
-var vEvent = new Vue();
 //文档加载完毕--> 开始渲染组件
 this.onload = function () {
-    var btn_update = new Vue({
-        el: '#button_update',
-        data: {
-          text: '测试',
-        },
-        methods: {
-          ajaxInfo: ()=>{
-            axios
-            .get('http://' + host + '/currentstate/data?devid='+currentDevId)
-            .then((response) => {
-              alert(JSON.stringify(response.data));
-            })
-            .catch(function(error){
-              alert('数据异常' + error);
-            })
-          }
-        }
-      })  //测试按钮
 
-//选项卡
-
+//中央vue事件中转
+var vEvent = new Vue()
 
 //设备板
-var device = new Vue({
-    el: '#device',
-    data() {
-      return {
-        runningColor: '#ff3322'
-      }
-    },
-    methods:{
-        switchDev: function(value){
-            document.cookie = encodeURI("cDev="+ value + ";SameSite=Strict");
-            vEvent.$emit('updateDev', value);
+var devTable = new Vue({
+    el : '#devTable',
+    data(){
+        return{
+            showit : false
         }
-    },
-    components: {
-      'devbord-handle': devBordHandleCOM
-    },
-    computed: {
-      run: {
-        set: function(value){
-          if(value === true)
-            this.runningColor = '#aafdcc';
-          else
-            this.runningColor = '#ff3322';
-        }
-      }
-    },
-    mounted(){
-        this.$children[0].devID = currentDevId;
     }
-  })
+})
 
 //表格组件
 var dataDisplay = new Vue({
     el: '#dataDisplay',
     data(){
         return {
-            thehost : host
+            thehost : host,
+            showit : true
         }
     },
     components: {
@@ -82,7 +41,6 @@ var dataDisplay = new Vue({
         'indictor': indictor
     },
     mounted(){
-        this.$children[0].devID = currentDevId;
         vEvent.$on('updateTimeline', value => {
             this.$children[0].timenode = value;
             timelineBox.currentTime = value;
@@ -100,7 +58,8 @@ var timelineBox = new Vue({
     data: {
             timenodes : [],
             currentTime : '',
-            lockInterval : null
+            lockInterval : null,
+            showit : true
     },
     methods: {
         getData: function(time){
@@ -135,7 +94,6 @@ var timelineBox = new Vue({
             }
         }
     },
-    props:['timenodes','getData'],
     mounted(){
         vEvent.$on('updateDev',value=>{
             this.getTimeline();
@@ -143,7 +101,7 @@ var timelineBox = new Vue({
         setTimeout(()=> {
             this.getTimeline();
         }, 1000)
-        this.lockAutoUpdate(false);
+        this.lockAutoUpdate(false); //初始不锁定自动更新
     },
     components:{
         'btn-timeline': {
@@ -155,8 +113,56 @@ var timelineBox = new Vue({
     }
 })
 
+//选卡
+    var options = new Vue({
+        el: '#options',
+        data(){
+            return{
+                index : -1
+            }
+        },
+        components:{
+            'btn-options': btnOptions
+        },
+        mounted(){
+            this.$on('changeOpt', function (value){
+                var opts = this.$children;
+                for (const key in opts) {
+                    if (Object.hasOwnProperty.call(opts, key)) {
+                        const element = opts[key];
+                        if (element._uid != value) {
+                            element.isActive = false;
+                        }
+                        else {
+                            element.isActive = true;
+                            vEvent.$emit('changeopt',key)
+                        }
+                    }       //激活标签选项卡
+                }
+            })
+            this.$children[0].isActive = true;
+            vEvent.$on('changeopt',function(index){
+                dataDisplay.showit = false;
+                timelineBox.showit = false; 
+                devTable.showit = false; 
+                switch (Number(index)) {
+                    case 0:
+                        dataDisplay.showit = true;
+                        timelineBox.showit = true;        
+                        break;
+                    case 1:
+                        devTable.showit = true;   
+                        break;
+                
+                    default:
+                        break;
+                }    
+            })
+        },
+    })
+
 //下载csv
-  var csvinfo = new Vue({
+    var csvinfo = new Vue({
     el: '#csvinfo',
     data() {
       return {

@@ -8,7 +8,6 @@
     <meta http-equiv="refresh" content="900" charset="utf-8">
     <title>桥梁混凝土在线工作台</title>
     <link rel="icon" type="images/x-icon" href="http://47.108.232.221:9527/img/logo.ico">
-
 </head>
 
 
@@ -35,16 +34,15 @@
             </li>
         </ul>
     </div>
-
+    
     <div id="options">
-        <button>数据图表</button>
-        <button>设备</button>
-        <button id="button_update" v-on:click="ajaxInfo()">{{ text }}</button>
+        <btn-options>数据浏览</btn-options>
+        <btn-options>设备</btn-options>
+        <btn-options>测试</btn-options>
     </div>
 
     <div style="height: 50px;"></div>
-    <div id="current">
-        <div id="timelineBox">
+    <div id="timelineBox" v-show="showit">
             <btn-timeline>近期数据</btn-timeline>
             <lock-auto-up @lockupdate="lockAutoUpdate"></lock-auto-up>
             <div id="timelineScroll">
@@ -54,29 +52,50 @@
                 </li>
             </ul>
             </div>
-        </div>
-    <div id="dataDisplay" >
-        <table-info></table-info>
-        <ul style="float:left; margin:30px;list-style-type: none;">
-            <li style="padding-right: 25px;border-right: 2px solid black;float: left;">
-                <indictor></indictor>
-            </li>
-            <li style="padding-right: 25px;padding-left: 25px;border-right: 2px solid black;float: left;">
-                <div style="width: 200px; height: 100px; background-color: #88aaaa;" >切换曲线图</div>
-            </li>
-            <li style="padding-right: 25px;padding-left: 25px;float: left;">
-                <div style="width: 200px; height: 100px; background-color: #ccaaaa;" >数据库查询</div>
-            </li>
-        </ul>
+    </div>
+    <div id="dataDisplay" v-show="showit">
+            <table-info></table-info>
+            <ul id="infoOptlist" style="float:left; margin:30px;list-style-type: none;">
+                <li>
+                        <div id="infoOpt">
+                             水位指示器
+                            <indictor></indictor>
+                        </div>
+                        
+                </li>
+                <li>
+                    <div id='infoOpt'>
+                        切换曲线图
+                        <img id="infoOptPic" src="img/chart.png" alt="">
+                        <span></span>
+                    </div>
+                </li>
+                <li>
+                    <div id='infoOpt'>   
+                        数据库查询
+                        <img id="infoOptPic" src="img/db.png" alt="">
+                        <span></span>
+                    </div>
+                </li>
+            </ul>
     </div>
 
-
-
-
-
-<div id="device" >
-    <devbord-handle ref="handle" v-bind:style="{'border-left' : '3px solid ' + runningColor}">设备</devbord-handle>
-</div>
+    <div id="devTable" v-show="showit" style="font-size: large;">
+        <div id="devopt">
+            <ul>
+                <li>设备管理</li>
+                <li>切换设备</li>
+            </ul>
+        </div>
+        <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
+        <ul style="list-style: none;">
+            <li>设备ID: <span>5</span></li>
+            <li>设备地址: <span>贵阳花溪区</span></li>
+            <li>隶属单位:YYYYY</li>
+            <li>负责人:XXX</li>
+            <textarea name="" id="" cols="30" rows="10">描述: </textarea>
+        </ul>
+    </div>
 
 <script src="./js/main.js"></script>
 </body>
