@@ -407,16 +407,16 @@ ul,li{
     resize:none;
     margin-bottom: -10px;
     background-color: #ffffff77;
-    padding-left: 3px;
-    padding-right: 3px;
-    padding-top: 3px;
-    box-shadow: 2px 5px 15px #33334a inset;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    box-shadow: 2px 5px 7px #33334a inset;
     width: 55%;
     height: 99%;
     position: absolute;
     float: right;
     top: -3px;
-    right: 0;
+    right: -2px;
 }
 
 
