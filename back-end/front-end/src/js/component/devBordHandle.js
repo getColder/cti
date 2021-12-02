@@ -53,6 +53,7 @@ const devBordHandleCOM = {
         }
     },
     mounted(){
+        devID = currentDevId;
         this.show = true;
         this.getDevs();
     }
