@@ -404,14 +404,12 @@ ul,li{
 }
 
 #devTable textarea{
+    font-size: 14px;
     resize:none;
-    margin-bottom: -10px;
     background-color: #ffffff77;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
-    box-shadow: 2px 5px 7px #33334a inset;
-    width: 55%;
+    padding: 14px;
+    box-shadow: 2px 7px 7px #33334a inset;
+    width: 33%;
     height: 70%;
     position: absolute;
     float: right;
