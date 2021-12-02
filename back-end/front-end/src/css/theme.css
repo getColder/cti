@@ -415,6 +415,7 @@ ul,li{
     height: 100%;
     position: absolute;
     float: right;
+    top: 0;
     right: -2px;
 }
 
