@@ -22,9 +22,24 @@ var devTable = new Vue({
     el : '#devTable',
     data(){
         return{
-            showit : false
+            showit : false,
+            devices : []
         }
-    }
+    },
+    methods: {
+        getDevices : function(){
+            var devbord = this;
+            axios.get('/currentstate/devs')
+            .then(function(response){
+                if(response.data){
+                    devbord.devices = response.data;
+                }
+                else
+                    devbord.devices = [];
+            })
+            alert(this.devices)
+        }
+    },
 })
 
 //表格组件

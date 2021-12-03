@@ -313,7 +313,7 @@ ul,li{
 #devopt {
     position: fixed;
     left: 0;
-    margin-left: -50px;
+    margin: 50px;
     
 }
 
@@ -325,9 +325,14 @@ ul,li{
 
 #devopt li{
     text-align: center;
-    width: 75px;
-    height: 40px;
+    border-width: 0;
+    margin-bottom: 40px;
+
+}
+#devopt li button{
     line-height: 40px;
+    width: 175px;
+    height: 40px;
     background-color: #a76974;
     color: whitesmoke;
 }
@@ -391,20 +396,20 @@ ul,li{
     padding-bottom: 40px;
 }
 
-#devTable ul{
+#devitems{
     width: 300px;
     margin-left: 30px;
 
 }
 
 
-#devTable li{
+#devitems li {
     width: 270px;
     margin-top: 15px;
     border-bottom: 1px inset #33334a72;
 }
 
-#devTable textarea{
+#devitems textarea{
     font-size: 14px;
     resize:none;
     background-color: #ffffff77;
@@ -419,9 +424,6 @@ ul,li{
 }
 
 
-#devTable li span{
-    
-}
 
 .devBord-online:hover{
     background-color: #204540ff;

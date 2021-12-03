@@ -83,12 +83,12 @@
     <div id="devTable" v-show="showit" style="font-size: large;">
         <div id="devopt">
             <ul>
-                <li>设备管理</li>
-                <li>切换设备</li>
+                <li><button>设备管理</button></li>
+                <li><button @click="getDevices">切换设备</button></li>
             </ul>
         </div>
         <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
-        <ul style="list-style: none;">
+        <ul id="devitems" style="list-style: none;">
             <li>设备ID: <span>5</span></li>
             <li>设备地址: <span>贵阳花溪区</span></li>
             <li>隶属单位:YYYYY</li>
