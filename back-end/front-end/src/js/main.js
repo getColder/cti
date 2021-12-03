@@ -2,13 +2,13 @@ const host = window.location.host;  //网址
 const devInfoURL = 'data'
 
 var currentDevId = localStorage.getItem("devid");
+alert(currentDevId)
 
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
 document.write('<script src="js/component/devBordHandle.js"></script>') //devbordHandle组件
 document.write('<script src="js/component/indictor.js"></script>') //indictor组件
 document.write('<script src="js/component/lock.js"></script>') ///lock组件
 document.write('<script src="js/component/btnOptions.js"></script>') //btn-options组件
-var showInfo = true;
 
 
 //文档加载完毕--> 开始渲染组件

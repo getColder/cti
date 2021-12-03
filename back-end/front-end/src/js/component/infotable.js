@@ -97,7 +97,7 @@ const tableInfoCom = {
         }
     },
     mounted(){
-        devID = currentDevId;
+        this.devID = currentDevId;
         this.updateData('/currentstate/data?devid='+ this.devID)
     }
 }
