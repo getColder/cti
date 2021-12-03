@@ -2,6 +2,7 @@
 
 <head>
     <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/anim.css">
     <script src="vue/vue.min.js"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"> </script>
@@ -46,16 +47,16 @@
             <btn-timeline>近期数据</btn-timeline>
             <lock-auto-up @lockupdate="lockAutoUpdate"></lock-auto-up>
             <div id="timelineScroll">
-            <ul v-for="timenode in timenodes" :key='timenodes.length' v-if="timenode">
+            <ul v-for="timenode in timenodes" :key='timenodes.length' v-show="timenode">
                 <li @click="getData(timenode)">{{ timenode[0]+'年'+timenode[1]+'月'+timenode[2]+'日'+timenode[3]+'时'+timenode[4]+'分' }}
-                    <img v-if="currentTime === timenode" src="img/this.png" width="15px" height="15px" alt="">
+                    <img v-show="currentTime === timenode" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
             </ul>
             </div>
     </div>
-    <div id="dataDisplay" v-show="showit">
+    <div id="dataDisplay" v-show="showit" style="text-align:center;">
             <table-info></table-info>
-            <ul id="infoOptlist" style="float:left; margin:30px;list-style-type: none;">
+            <ul id="infoOptlist" style="margin:30px;list-style-type: none">
                 <li>
                         <div id="infoOpt">
                              水位指示器
@@ -84,16 +85,22 @@
         <div id="devopt">
             <ul>
                 <li><button>设备管理</button></li>
-                <li><button @click="getDevices">切换设备</button></li>
+                <li><button @click="toggleModal">切换设备</button></li>
+                <modal-t v-show="showModal" v-on:closemodal="closeM" v-on:confirmmodal="confirmM">设备列表：
+                    <select name="" id="devlist" v-model="devID">
+                        <option value="-1"></option>
+                        <option :value="dev" v-for="dev in devices">设备{{dev}}:贵州大学博学楼</option>
+                    </select>
+                </modal>
             </ul>
         </div>
         <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
         <ul id="devitems" style="list-style: none;">
-            <li>设备ID: <span>5</span></li>
+            <li>设备ID: <span>{{devinfo.id}}</span></li>
             <li>设备地址: <span>贵阳花溪区</span></li>
             <li>隶属单位:YYYYY</li>
             <li>负责人:XXX</li>
-            <textarea name="" id="" cols="30" rows="10">描述: </textarea>
+            <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal">描述: </textarea>
         </ul>
     </div>
 

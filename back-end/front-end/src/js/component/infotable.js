@@ -47,14 +47,13 @@ const tableInfoCom = {
         </tbody> \
     </table> \
 </div>',
-    props:['showit'],
     data() {
         return {
             time: '未知',
             devID: '未知',
             infos: [],
             timenode: [],
-            state: 0
+            state: 0,
         }
     },
     methods:{
