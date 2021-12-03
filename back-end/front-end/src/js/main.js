@@ -2,70 +2,92 @@ const host = window.location.host;  //网址
 const devInfoURL = 'data'
 
 var currentDevId = localStorage.getItem("devid");
-alert(currentDevId)
 
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
 document.write('<script src="js/component/devBordHandle.js"></script>') //devbordHandle组件
 document.write('<script src="js/component/indictor.js"></script>') //indictor组件
 document.write('<script src="js/component/lock.js"></script>') ///lock组件
 document.write('<script src="js/component/btnOptions.js"></script>') //btn-options组件
+document.write('<script src="js/component/modal.js"></script>') //modal组件
 
 
 //文档加载完毕--> 开始渲染组件
 this.onload = function () {
 
-//中央vue事件中转
-var vEvent = new Vue()
+    //中央vue事件中转
+    var vEvent = new Vue()
 
-//设备板
-var devTable = new Vue({
-    el : '#devTable',
-    data(){
-        return{
-            showit : false,
-            devices : []
-        }
-    },
-    methods: {
-        getDevices : function(){
-            var devbord = this;
-            axios.get('/currentstate/devs')
-            .then(function(response){
-                if(response.data){
-                    devbord.devices = response.data;
+    //设备板
+    var devTable = new Vue({
+        el : '#devTable',
+        data(){
+            return{
+                showit : false,
+                devices : [],
+                showModal : false,
+                devID : currentDevId,
+                devinfo : {
+                    id : currentDevId
                 }
-                else
-                    devbord.devices = [];
-            })
-            alert(this.devices)
-        }
-    },
-})
+            }
+        },
+        methods: {
+            toggleModal : function(){
+                this.showModal = !this.showModal;
+                var devbord = this;
+                axios.get('/currentstate/devs')
+                .then(function(response){
+                    if(response.data){
+                        devbord.devices = response.data;
+                    }
+                    else
+                        devbord.devices = [];
+                })
+            },
+            closeM : function(){
+                this.showModal = !this.showModal;
+            },
+            confirmM : function(){
+                currentDevId = this.devID
+                this.devinfo.id = currentDevId;
+                vEvent.$emit('updateDev',currentDevId)
+                this.showModal = !this.showModal;
+            }
+        },
+        mounted() {
 
-//表格组件
-var dataDisplay = new Vue({
-    el: '#dataDisplay',
-    data(){
-        return {
-            thehost : host,
-            showit : true
+        },
+        components:{
+            'modal-t' : modalT
         }
-    },
-    components: {
-        'table-info': tableInfoCom,
-        'indictor': indictor
-    },
-    mounted(){
-        vEvent.$on('updateTimeline', value => {
-            this.$children[0].timenode = value;
-            timelineBox.currentTime = value;
-        })
-        vEvent.$on('updateDev', value => {
-            this.$children[0].devID = value;
-            currentDevId = value;
-        })
-    }
-  });
+    })
+
+    //表格组件
+    var dataDisplay = new Vue({
+        el: '#dataDisplay',
+        data(){
+            return {
+                thehost : host,
+                showit : true,
+                devID : -1,
+            }
+        },
+        components: {
+            'table-info': tableInfoCom,
+            'indictor': indictor
+        },
+        mounted(){
+            var display = this;
+            vEvent.$on('updateTimeline', value => {
+                display.$children[0].timenode = value;
+                timelineBox.currentTime = value;
+            })
+            vEvent.$on('updateDev', function(value){
+                display.devID = value;
+                display.$children[0].devID = value;
+            })
+        }
+    });
 
 //时间轴框
 var timelineBox = new Vue({
