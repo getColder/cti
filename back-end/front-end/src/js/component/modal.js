@@ -1,9 +1,10 @@
 var modalT = {
+    props:['title'],
     template: '\
     <div class="modal-backdrop">\
             <div class="modal">\
             <div class="modal-header">\
-                <h3>请选择要切换的设备</h3>\
+                <h3>{{title}}</h3>\
             </div>\
             <div class="modal-body">\
                 <slot><slot>\
@@ -21,5 +22,5 @@ var modalT = {
         confirmit : function(){
             this.$emit('confirmmodal')
         }
-    },
+    }
 }

@@ -14,10 +14,10 @@ document.write('<script src="js/component/modal.js"></script>') //modal组件
 //文档加载完毕--> 开始渲染组件
 this.onload = function () {
 
-    //中央vue事件中转
+//中央vue事件中转
     var vEvent = new Vue()
 
-    //设备板
+//设备板
     var devTable = new Vue({
         el : '#devTable',
         data(){
@@ -28,7 +28,7 @@ this.onload = function () {
                 devID : currentDevId,
                 devinfo : {
                     id : currentDevId
-                }
+                },
             }
         },
         methods: {
@@ -62,19 +62,56 @@ this.onload = function () {
         }
     })
 
-    //表格组件
+//表格组件
     var dataDisplay = new Vue({
         el: '#dataDisplay',
         data(){
             return {
-                thehost : host,
+                devID : currentDevId,
                 showit : true,
-                devID : -1,
+                showdbInput : false,
+            }
+        },
+        methods:{
+            optCurve: function(){
+                alert('待完善')
+            },
+            optDb: function(){
+                this.showdbInput = true;
+     
+            },            
+            closeM : function(){
+                setTimeout(() => {
+                    this.showdbInput = false;
+                }, 50);
+            },
+            confirmM : function(){
+                const date = this.$refs.inputDbTime.value;
+                const time = this.$refs.inputDbTime.value;
+                const dev = this.$refs.inputDbDev.value;
+                var datestr="";
+                var timestr=""
+                var dateAry = date.split('-')
+                dateAry.forEach(element => {
+                    datestr += element.substr(-2, 2);
+                });
+                var timeAry = time.split(':')
+                timeAry.forEach(element => {
+                    timestr += element.substr(-2, 2);
+                });
+                var str = datestr + timestr;
+                str = str.substr(0, str.length -2);
+                alert((Number(dev)?Number(dev):dev) + 1 )
+                this.$children[0].updateData('/currentstate/data?devid='+ this.devID +'&' + "timenode=" + str);
+                setTimeout(() => {
+                    this.showdbInput = false;
+                }, 50);
             }
         },
         components: {
             'table-info': tableInfoCom,
-            'indictor': indictor
+            'indictor': indictor,
+            'modal-t' : modalT
         },
         mounted(){
             var display = this;

@@ -1,5 +1,6 @@
 .modal-backdrop {
-    z-index: 1000;
+    cursor: default;
+    z-index: 2000;
     position: fixed; 
     top: 0; 
     right: 0; 
@@ -11,7 +12,7 @@
     align-items: center; 
 }
 .modal { 
-    z-index: 1001;
+    z-index: 2001;
     background-color: #fff; 
     box-shadow: 2px 2px 20px 1px; 
     overflow-x:auto; 
@@ -21,7 +22,7 @@
     width: 700px;
 } 
 .modal-header { 
-    z-index: 1001;
+    z-index: 2001;
     border-bottom: 1px solid #eee; 
     color: #313131; 
     justify-content: space-between;
@@ -29,20 +30,20 @@
     display: flex; 
 } 
 .modal-footer { 
-    z-index: 1001;
+    z-index: 2001;
     border-top: 1px solid #eee; 
     justify-content: flex-end;
     padding: 15px; 
     display: flex; 
 } 
 .modal-body { 
-    z-index: 1001;
+    z-index: 2001;
     position: relative; 
     padding: 20px 10px; 
     text-align: center;
 }
 .btn-close, .btn-confirm {    
-    z-index: 1001;
+    z-index: 2001;
     border-radius: 8px;
     margin-left:16px;
     width:56px;
@@ -51,12 +52,12 @@
     cursor: pointer;
 }
 .btn-close {
-    z-index: 1001;
+    z-index: 2001;
     color: #313131;
     background-color:transparent;
 }
 .btn-confirm {
-    z-index: 1001;
+    z-index: 2001;
     color: #fff; 
     background-color: #2d8cf0;
 }

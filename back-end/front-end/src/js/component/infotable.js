@@ -68,7 +68,7 @@ const tableInfoCom = {
                     return;
                 }
                 if(response.data != ''){
-                    var time = '20';
+                    var time = '';
                     time += response.data.Time[0] + '年';
                     time += response.data.Time[1] + '月';
                     time += response.data.Time[2] + '日';
@@ -88,6 +88,7 @@ const tableInfoCom = {
     watch:{
         timenode: function(){
             let timestr = '' + this.timenode[0] + this.timenode[1] + this.timenode[2] + this.timenode[3] + this.timenode[4];
+            alert(timestr)
             this.updateData('/currentstate/data?devid='+ this.devID +'&' + "timenode=" + timestr);
             currentTimenode = timestr;
         },
