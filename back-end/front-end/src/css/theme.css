@@ -39,13 +39,15 @@ ul,li{
 }
 
 #bg_img2 {
+    margin: 0;
+    padding: 0;
+    width: 50%;
     position: static;
     float: left;
     bottom: 0;
     z-index: -3000;
-    opacity: 0.7;
-    filter: grayscale(100%) blur(5px);
-    -webkit-filter: grayscale(25%) blur(5px);
+    filter: grayscale(20%);
+    -webkit-filter: grayscale(25%);
 }
 
 .nav img{
@@ -238,17 +240,17 @@ ul,li{
 
 #indic {
     color: brown;
-    position: relative;
+    position: absolute;
     border: 1px solid black;
     border-bottom-width: 0;
     border-radius: 10%;
     padding: 20px;
     height: 225px;
-    top: -265px;
+    top: 278px;
+    right: 0;
     margin-right: 10px;
     align-items: center;
     width: 12%;
-    float: right;
     background-color: whitesmoke;
 }
 
@@ -273,6 +275,7 @@ ul,li{
 
 .infoOpt{
     padding-bottom: 10px;
+    padding-top: 10px;
     position: relative;
     height: 110px;
     width: 200px;
@@ -282,7 +285,9 @@ ul,li{
     color: #7f2323;
     border:3px solid white;
     border-radius: 22%;
-    background-color: #adaaaa;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    background-color: #adcaca;
 }
 
 .infoOpt span{
