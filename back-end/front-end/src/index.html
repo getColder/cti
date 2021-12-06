@@ -14,15 +14,13 @@
 
 
 <body>
-    <div id="bg_grey2">    
+    <div id="bghead">    
         <div style="padding: 10px;text-align: right; font-size: 30px;color: rgb(220, 223, 214)">
         <span style="border-left: 1px solid white; padding-left: 40px;"> 桥梁混凝土在线工作台</span> 
         </div>
     </div>
-
     <div class='nav'>
         <img src="img/pic1.jpg" alt="图片失效" />
-        <img src="img/pic2.jpg" style="left: 410px;border-radius: 0px" alt="图片失效" />
         <ul id="nav_default">
             <li><a href="">首页</a></li>
             <li>历史查询</li>
@@ -56,42 +54,74 @@
     </div>
     <div id="dataDisplay" v-show="showit" style="text-align:center;">
             <table-info></table-info>
-            <ul id="infoOptlist" style="margin:30px;list-style-type: none">
+            <div id="indic" v-show="true">
+                水位指示器<br><br>
+                <indictor></indictor>
+            </div>
+            <ul id="infoOptlist" style="margin:30px;margin-left:30%;margin-top:20px;list-style-type: none">
                 <li>
-                        <div id="infoOpt">
-                             水位指示器
-                            <indictor></indictor>
-                        </div>
-                        
-                </li>
-                <li>
-                    <div id='infoOpt'>
+                    <div class='infoOpt' @click="optCurve" >
                         切换曲线图
-                        <img id="infoOptPic" src="img/chart.png" alt="">
                         <span></span>
+                        <img class="infoOptPic" src="img/chart.png" alt="">
                     </div>
                 </li>
                 <li>
-                    <div id='infoOpt'>   
+                    <div class='infoOpt' v-on:click="optDb">   
                         数据库查询
-                        <img id="infoOptPic" src="img/db.png" alt="">
                         <span></span>
+                        <img class="infoOptPic" src="img/db.png" alt="">
+                        <modal-t  v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询">
+                            <ul>
+                                <li>查询日期：
+                                    <input type="date"  value="2020-01-01" required min="2020-01-01" max="2099-12-31">
+                                    至 &nbsp;<input type="date" ref="inputDbTime" value="2020-01-01" required min="2020-01-01" max="2099-12-31">
+                                </li>
+                                <li>查询设备ID或地址：
+                                    <input type="input" ref="inputDbDev"  :value="devID">
+                                </li>
+                            </ul>
+                            
+                            <button style="position: absolute;top:100%;left:10px;margin-top: 20px;width: 90px;height: 40px;
+                            background-color: #2d8cf0;color: white;border-width: 0;
+                            padding: 5px;font-size: medium; border-radius: 15%;">
+                                其他</button>
+                            <br>
+                        </modal>
                     </div>
                 </li>
             </ul>
+            <img id="bg_img2" src="img/pic2.jpg" alt="" width="50%" height="400px">
+            <img id="bg_img2" src="img/pic3.jpg" alt="" width="50%" height="400px">
     </div>
 
     <div id="devTable" v-show="showit" style="font-size: large;">
         <div id="devopt">
             <ul>
-                <li><button>设备管理</button></li>
-                <li><button @click="toggleModal">切换设备</button></li>
-                <modal-t v-show="showModal" v-on:closemodal="closeM" v-on:confirmmodal="confirmM">设备列表：
+                <li>
+                    <div class='infoOpt' @click="alert('后台页面开发中..')">
+                        设备管理
+                        <span></span>
+                        <img class="infoOptPic" src="img/config.png" alt="">
+                    </div>
+                </li>
+                <li>
+                    <div class='infoOpt' @click="toggleModal">
+                        切换设备
+                        <span></span>
+                        <img class="infoOptPic" src="img/switch.png" alt="">
+                    </div>
+                </li>
+                <modal-t v-show="showModal" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="请选择需要切换的设备">设备列表:
                     <select name="" id="devlist" v-model="devID">
                         <option value="-1"></option>
                         <option :value="dev" v-for="dev in devices">设备{{dev}}:贵州大学博学楼</option>
                     </select>
                 </modal>
+            </ul>
+            <ul style="margin:30px;margin-left:30%;margin-top:20px;list-style-type: none">
+                <li>
+                </li>
             </ul>
         </div>
         <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
@@ -102,8 +132,8 @@
             <li>负责人:XXX</li>
             <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal">描述: </textarea>
         </ul>
+        <img id="bg_img" src="img/pic4.jpg" alt="" width="700px" height="700px">
     </div>
-
 <script src="./js/main.js"></script>
 </body>
 

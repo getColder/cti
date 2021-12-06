@@ -1,6 +1,6 @@
 const indictor = {
     template: 
-    '<table id="indic">\
+    '<table>\
         <tbody>\
             <tr>\
                 <th></td>\
