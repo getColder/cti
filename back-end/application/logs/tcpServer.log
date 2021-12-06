@@ -6055,3 +6055,58 @@ tcpserver	 devID：1	 write:730	 下午11:11:22
 exit	 ::ffff:127.0.0.1	 duration:1hs48mins40secs
 [err:-11]tcpserver	 心跳检测：连接无响应,断开连接
 [err:-2]tcpserver	 feedback 	 成功断开连接
+new	 ::ffff:127.0.0.1	 start:下午11:15:10
+tcpserver	 devID：-99	 write:732	 下午11:15:38 
+tcpserver	 devID：-99	 write:732	 下午11:15:58 
+tcpserver	 devID：-99	 write:732	 下午11:16:18 
+tcpserver	 devID：-99	 write:732	 下午11:16:38 
+tcpserver	 devID：-99	 write:732	 下午11:16:58 
+tcpserver	 devID：-99	 write:732	 下午11:17:18 
+tcpserver	 devID：-99	 write:732	 下午11:17:38 
+tcpserver	 devID：-99	 write:732	 下午11:17:58 
+tcpserver	 devID：-99	 write:732	 下午11:18:18 
+tcpserver	 devID：-99	 write:732	 下午11:18:38 
+tcpserver	 devID：-99	 write:732	 下午11:18:58 
+tcpserver	 devID：-99	 write:732	 下午11:19:18 
+tcpserver	 devID：-99	 write:732	 下午11:19:38 
+tcpserver	 devID：-99	 write:732	 下午11:20:00 
+tcpserver	 devID：-99	 write:732	 下午11:20:18 
+tcpserver	 devID：-99	 write:732	 下午11:20:40 
+tcpserver	 devID：-99	 write:732	 下午11:20:58 
+tcpserver	 devID：-99	 write:732	 下午11:21:18 
+tcpserver	 devID：-99	 write:732	 下午11:21:38 
+tcpserver	 devID：-99	 write:732	 下午11:21:59 
+tcpserver	 devID：-99	 write:732	 下午11:22:21 
+tcpserver	 devID：-99	 write:732	 下午11:22:39 
+tcpserver	 devID：-99	 write:732	 下午11:23:01 
+tcpserver	 devID：-99	 write:732	 下午11:23:21 
+tcpserver	 devID：-99	 write:732	 下午11:23:39 
+tcpserver	 devID：-99	 write:732	 下午11:23:59 
+tcpserver	 devID：-99	 write:732	 下午11:24:21 
+tcpserver	 devID：-99	 write:732	 下午11:24:41 
+tcpserver	 devID：-99	 write:732	 下午11:24:59 
+tcpserver	 devID：-99	 write:732	 下午11:25:19 
+tcpserver	 devID：-99	 write:732	 下午11:25:39 
+tcpserver	 devID：-99	 write:732	 下午11:25:59 
+tcpserver	 devID：-99	 write:732	 下午11:26:19 
+tcpserver	 devID：-99	 write:732	 下午11:26:39 
+tcpserver	 devID：-99	 write:732	 下午11:26:59 
+tcpserver	 devID：-99	 write:732	 下午11:27:19 
+tcpserver	 devID：-99	 write:732	 下午11:27:39 
+tcpserver	 devID：-99	 write:732	 下午11:27:59 
+tcpserver	 devID：-99	 write:732	 下午11:28:19 
+tcpserver	 devID：-99	 write:732	 下午11:28:39 
+tcpserver	 devID：-99	 write:732	 下午11:28:59 
+tcpserver	 devID：-99	 write:732	 下午11:29:19 
+tcpserver	 devID：-99	 write:732	 下午11:29:39 
+tcpserver	 devID：-99	 write:732	 下午11:29:59 
+tcpserver	 devID：-99	 write:732	 下午11:30:19 
+tcpserver	 devID：-99	 write:732	 下午11:30:39 
+tcpserver	 devID：-99	 write:732	 下午11:30:59 
+tcpserver	 devID：-99	 write:732	 下午11:31:19 
+tcpserver	 devID：-99	 write:732	 下午11:31:39 
+tcpserver	 devID：-99	 write:732	 下午11:31:59 
+tcpserver	 devID：-99	 write:732	 下午11:32:19 
+tcpserver	 devID：-99	 write:732	 下午11:32:39 
+ ::ffff:127.0.0.1
+exit	 ::ffff:127.0.0.1	 duration:0hs17mins41secs
