@@ -2,35 +2,51 @@ const mongo = require('../node_modules/mongodb').MongoClient //database
 const emitter = require('./event').emitter
 var url_mongo = "mongodb://localhost:27017/concrete_temper_info";
 
+var arrayToSync = {};
+var dbconnection;
 var db;
+var syncTimer;
 var isConnected = false;
+
+
+
 async function startDB(){
     mongo.connect(url_mongo, (err, mongodb)=>{
         if(err) {
             console.log('ERR[-2]DataBase\t 数据库连接失败! \t %s',new Date().toLocaleTimeString());
             emitter.emit('dropConnection');
         }
+        mongodb.on('serverClosed',()=>{
+            console.log('数据库已关闭')
+            clearInterval(syncTimer)
+        })
          console.log('DataBase\t 数据库连接成功! \t %s',new Date().toLocaleTimeString());
          db = mongodb.db("concrete_temper_info"); //
          isConnected = true;
+         syncTimer = setInterval(() => {
+             syncData();
+         }, 1000 * 60);
     });
 }
 
 
 
-async function insert(devID,ary){
+async function insert(dealData){
+    var devID = dealData['Id']
     if(!isConnected){
         return;
     }
-    var targetCollection = 'dev_' + devID;
-    await (targetCollection);
-    db.collection(targetCollection).insertMany(ary, (err, res)=>{
-        if(err) {
-            console.log('ERR[-20]DataBase\t 数据插入失败！! \t %s',new Date().toLocaleTimeString());
-            emitter.emit('dropConnection');
-            throw err;
-        }
-    })
+    var theLocation = '';
+    const theTime = new Date(dealData.Time[0],Number(dealData.Time[1]) - 1,dealData.Time[2],Number(dealData.Time[3]) + 8,dealData.Time[4])
+    var document = {
+        time : theTime,
+        location : theLocation,
+        data : dealData
+    }
+    var targetCollection  = 'dev_' + devID;
+    if(!arrayToSync[targetCollection])
+        arrayToSync[targetCollection] = []
+    arrayToSync[targetCollection].push(document);
 }
 
 function checkDev(targetCollection){
@@ -47,6 +63,26 @@ function checkDev(targetCollection){
     });
 }
 
+async function syncData(){
+    for (const key in arrayToSync) {
+        if (Object.hasOwnProperty.call(arrayToSync, key)) {
+            const element = arrayToSync[key];
+            checkDev(key);
+            var goLen = element.length > 10000 ? 10000 : element.length;
+            var rest = 10000;
+            if(goLen == 10000)
+                rest = 1000; //需要处理的数据过多，加快处理速度
+            setTimeout(() => {
+                db.collection(key).insertMany(element.splice(0,goLen), (err, res) => {
+                    if (err) {
+                        console.log('ERR[-30]DataBase\t 数据插入失败！! \t %s', new Date().toLocaleString());
+                        throw err;
+                    }
+                })
+            }, rest);
+        }
+    }
+}
 
 exports.startDB = startDB;
 exports.insertInfo = insert;

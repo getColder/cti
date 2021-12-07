@@ -6,8 +6,8 @@ port = 9520
 
 var data = {
     "Type":"NULL",
-    "Id":2,
-    "Time":[0,0,0,0,0],
+    "Id":-98,
+    "Time":[2021,12,05,20,56],
     "TempData":
     [
         {"Floor":1,"WaterTemp":[99.8,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
