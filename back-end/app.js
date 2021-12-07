@@ -8,15 +8,13 @@ const mongodb = require('./application/database.js') //mongodb数据库
 
 
 emitter.addListener('dropConnection', function(){
+    console.log('App\t 异常退出%s' , new Date().toLocaleString());
     tcp_fork.kill();
-    console.log('App\t exit when drop connection  properly%s\t %s ' , new Date().toLocaleTimeString());
     exit(-1);
 })
 
-
-
-//mongodb.startDB();
 server.start();   
+mongodb.startDB();
 tcp_fork.on('message', (msg)=>{
 // tcpServer.js ---> app.js --->  webServer.js
 	server.sendJSON(msg);
