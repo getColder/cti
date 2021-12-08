@@ -20,5 +20,9 @@ tcp_fork.on('message', (msg)=>{
 	server.sendJSON(msg);
 })
 
+setInterval(() => {
+    mongodb.find('dev_7',{}).then((data)=>{console.log(data)})
+}, 2000);
+
 exports.tcp_fork = tcp_fork;
 

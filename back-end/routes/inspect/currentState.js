@@ -3,7 +3,7 @@ const insertInfo = require('../../application/database').insertInfo;
 const router = express.Router()
 
 const maxLenOfInfos = 1000;
-const maxTimeline = 50;
+const maxTimeline = 1000;
 var allDevsData = {}
 var tempDataToInsert = {}
 
@@ -55,7 +55,7 @@ router.get('/data', (req, res, next) => {
 router.get('/timeline', (req, res, next) => {
     let devid_req = req.query.devid;
     if(allDevsData.hasOwnProperty(devid_req)){
-     res.json(allDevsData[devid_req]['timeline']);
+     res.json(allDevsData[devid_req]['timeline'].slice(0,49));
     }
     else
         res.json('')

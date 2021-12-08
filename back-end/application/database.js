@@ -87,15 +87,19 @@ async function syncData(){
     console.log('DataBase\t 数据库插入%s条 \t %s', total, new Date().toLocaleString());
 }
 
-function find(collection, where){
-    db.collection(collection).find(where).toArray((err, res)=>{
-        if(err) {
-            console.log(err); 
-            throw err;
-        }
-        console.log(res);
+
+async function find(collection, where){
+    return new Promise(function(resolve, reject){
+        db.collection(collection).find(where).toArray(async (err, res)=>{
+            if(err) {
+                console.log(err); 
+                throw err;
+            }
+            resolve(res)
+        })
     })
 }
+
 
 
 

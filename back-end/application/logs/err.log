@@ -168,3 +168,124 @@
   port: 9520
 }	 function toLocaleString() { [native code] }
 [err:-21]tcpserver	 127.0.0.1-->-97进程读写错误,准备断开连接Error [ERR_IPC_CHANNEL_CLOSED]: Channel closed	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
+[err:-100]Error: listen EADDRINUSE: address already in use 0.0.0.0:9520
+    at Server.setupListenHandle [as _listen2] (node:net:1334:16)
+    at listenInCluster (node:net:1382:12)
+    at doListen (node:net:1520:7)
+    at processTicksAndRejections (node:internal/process/task_queues:84:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 9520
+}	 function toLocaleString() { [native code] }
