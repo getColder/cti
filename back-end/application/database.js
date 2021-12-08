@@ -10,7 +10,7 @@ var isConnected = false;
 
 
 
-async function startDB(){
+function startDB(){
     mongo.connect(url_mongo, (err, mongodb)=>{
         if(err) {
             console.log('ERR[-2]DataBase\t 数据库连接失败! \t %s',new Date().toLocaleTimeString());
@@ -21,7 +21,7 @@ async function startDB(){
             clearInterval(syncTimer)
         })
          console.log('DataBase\t 数据库连接成功! \t %s',new Date().toLocaleTimeString());
-         db = mongodb.db("concrete_temper_info"); //
+         db = mongodb.db("concrete_temper_info");
          isConnected = true;
          syncTimer = setInterval(() => {
              syncData();
@@ -64,6 +64,7 @@ function checkDev(targetCollection){
 }
 
 async function syncData(){
+    var total = 0;
     for (const key in arrayToSync) {
         if (Object.hasOwnProperty.call(arrayToSync, key)) {
             const element = arrayToSync[key];
@@ -72,6 +73,7 @@ async function syncData(){
             var rest = 10000;
             if(goLen == 10000)
                 rest = 1000; //需要处理的数据过多，加快处理速度
+            total += goLen;
             setTimeout(() => {
                 db.collection(key).insertMany(element.splice(0,goLen), (err, res) => {
                     if (err) {
@@ -82,7 +84,21 @@ async function syncData(){
             }, rest);
         }
     }
+    console.log('DataBase\t 数据库插入%s条 \t %s', total, new Date().toLocaleString());
 }
+
+function find(collection, where){
+    db.collection(collection).find(where).toArray((err, res)=>{
+        if(err) {
+            console.log(err); 
+            throw err;
+        }
+        console.log(res);
+    })
+}
+
+
 
 exports.startDB = startDB;
 exports.insertInfo = insert;
+exports.find = find;
