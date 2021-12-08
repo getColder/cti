@@ -1,11 +1,13 @@
 const express = require('express');
 const insertInfo = require('../../application/database').insertInfo;
+const find = require('../../application/database.js').find; //mongodb数据库
 const router = express.Router()
 
 const maxLenOfInfos = 1000;
 const maxTimeline = 1000;
 var allDevsData = {}
 var tempDataToInsert = {}
+var tempDataForQuery = {}
 
 
 router.get('/', (req, res) => {
@@ -52,10 +54,52 @@ router.get('/data', (req, res, next) => {
     }
 })
 
+router.get('/db', (req, res, next) => {
+    var devid_req = req.query.devid;
+    var date_lt = req.query.lt;
+    var date_gt = req.query.gt;
+    if(devid_req&&date_lt&&date_gt){
+        date_gt += ':00:00:00'
+        date_lt += ':23:59:00'
+        var dateTime1 = new Date(date_gt);
+        var dateTime2 = new Date(date_lt);
+        if(dateTime1 && dateTime2){
+            find('dev_'+ devid_req,{
+                "time": {
+                    $gte : dateTime1,
+                    $lte : dateTime2
+                }
+            })
+            .then((data)=>{
+                if(data.length > 0){
+                    res.json(data)
+                    res.end()
+                }
+                else{
+                    var empty = [];
+                    res.json(empty)
+                    res.end();
+                }
+            })
+        }
+        else{
+            var empty = [];
+            res.json(empty)
+            res.end();
+        }
+    }
+    else{
+        var empty = [];
+        res.json(empty)
+        res.end();
+    }
+
+})
+
 router.get('/timeline', (req, res, next) => {
     let devid_req = req.query.devid;
     if(allDevsData.hasOwnProperty(devid_req)){
-     res.json(allDevsData[devid_req]['timeline'].slice(0,49));
+     res.json(allDevsData[devid_req]['timeline'].slice(-50));
     }
     else
         res.json('')
@@ -94,7 +138,6 @@ module.exports.update = function (newJSON, ...JSONs){
         }
         allDevsData[devid_selected]['timeline'].push(newJSON_obj.Time);
         tempDataToInsert[devid_selected]['infoAry'].push(newJSON_obj)
-        
         //可变参数，添加多个JSON
         JSONs.forEach((value, key)=>{
             var JSON_obj = (typeof(value)==='object')?value:JSON.parse(value);

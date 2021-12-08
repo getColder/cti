@@ -37,7 +37,7 @@ async function insert(dealData){
         return;
     }
     var theLocation = '';
-    const theTime = new Date(dealData.Time[0],Number(dealData.Time[1]) - 1,dealData.Time[2],Number(dealData.Time[3]) + 8,dealData.Time[4])
+    const theTime = new Date(dealData.Time[0],Number(dealData.Time[1]) - 1,dealData.Time[2],Number(dealData.Time[3]),dealData.Time[4])
     var document = {
         time : theTime,
         location : theLocation,
@@ -75,12 +75,14 @@ async function syncData(){
                 rest = 1000; //需要处理的数据过多，加快处理速度
             total += goLen;
             setTimeout(() => {
-                db.collection(key).insertMany(element.splice(0,goLen), (err, res) => {
-                    if (err) {
-                        console.log('ERR[-30]DataBase\t 数据插入失败！! \t %s', new Date().toLocaleString());
-                        throw err;
-                    }
-                })
+                if(element.length > 0){
+                    db.collection(key).insertMany(arrayToSync[key].splice(0,goLen), (err, res) => {
+                        if (err) {
+                            console.log('ERR[-30]DataBase\t 数据插入失败！! \t %s', new Date().toLocaleString());
+                            throw err;
+                        }
+                    })
+                }
             }, rest);
         }
     }
@@ -92,8 +94,7 @@ async function find(collection, where){
     return new Promise(function(resolve, reject){
         db.collection(collection).find(where).toArray(async (err, res)=>{
             if(err) {
-                console.log(err); 
-                throw err;
+                reject(err)
             }
             resolve(res)
         })

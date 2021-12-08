@@ -22,16 +22,36 @@
     <div class='nav'>
         <img src="img/pic1.jpg" alt="图片失效" />
         <ul id="nav_default">
-            <li><a href="">首页</a></li>
-            <li>历史查询</li>
+            <li><a href=""><p>首页</p></a></li>
             <li id="nav-excel">
-                <a id="csvinfo" :href="linkTo">电子表格</a>
+                <a id="csvinfo" :href="linkTo"><p>电子表格</p></a>
                 <ul>
                     <li>下载最近200条</li>
-                    <li>从数据库下载</li>
+                    <li>从数据库下载</li> 
                 </ul>
             </li>
+            <li  v-on:click="optDb"><p>数据库查询</p></li>
+            <li><p>后台管理</p></li>
         </ul>
+        <div id="dbmdl"> 
+            <modal-t v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询">
+                <ul>
+                    <li>查询日期：
+                        <input type="date" ref="inputDbTimeMin" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
+                        至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
+                    </li>
+                    <li>查询设备ID或地址：
+                        <input type="input" ref="inputDbDev"  value="">
+                    </li>
+                </ul>
+                <img :class="turninfi?'turni':'turnoff'" src="img/loading.png" alt="" style="width: 75px;height: 75px;float: right;right: 10%;">
+                <button style="position: absolute;top:100%;left:10px;margin-top: 20px;width: 90px;height: 40px;
+                background-color: #2d8cf0;color: white;border-width: 0;
+                padding: 5px;font-size: medium; border-radius: 15%;">
+                    其他</button>
+                <br>
+            </modal>
+        </div>
     </div>
     
     <div id="options">
@@ -41,98 +61,62 @@
     </div>
 
     <div style="height: 50px;"></div>
-    <div id="timelineBox" v-show="showit">
-            <btn-timeline>近期数据</btn-timeline>
-            <lock-auto-up @lockupdate="lockAutoUpdate"></lock-auto-up>
-            <div id="timelineScroll">
-            <ul v-for="timenode in timenodes" :key='timenodes.length' v-show="timenode">
-                <li @click="getData(timenode)">{{ timenode[0]+'年'+timenode[1]+'月'+timenode[2]+'日'+timenode[3]+'时'+timenode[4]+'分' }}
-                    <img v-show="currentTime === timenode" src="img/this.png" width="15px" height="15px" alt="">
+    <div id="infoListBox">
+        <span id="fastSearch">
+            <img src="img/timelist_rise.png" alt="" width=" 20px" height="20px"
+            style="position:relative;top:4px;left: -6px;" @click="getItems().reverse();currentTime = getItems()[0];riseSort = !riseSort">{{title}} 
+        </span>
+        <lock-auto-up @lockupdate="lockAutoUpdate"></lock-auto-up>
+        <refresh @refresh="getTimeline(), getDevs()"></refresh>
+        <div id="timelineScroll">
+            <ul v-for="(item, i) in getItems()" :key='item' v-show="item">
+                <li @click="getData(item)" v-if="typeList===0">{{
+                    item[0]+'年'+item[1]+'月'+item[2]+'日'+item[3]+'时'+item[4]+'分'
+                 }}
+                    <img v-show="currentTime === item" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
-            </ul>
-            </div>
-    </div>
-    <div id="dataDisplay" v-show="showit" style="text-align:center;">
-            <table-info></table-info>
-            <div id="indic" v-show="true">
-                水位指示器<br><br>
-                <indictor></indictor>
-            </div>
-            <ul id="infoOptlist" style="margin:30px;margin-left:30%;margin-top:20px;list-style-type: none">
-                <li>
-                    <div class='infoOpt' @click="optCurve" >
-                        切换曲线图
-                        <span></span>
-                        <img class="infoOptPic" src="img/chart.png" alt="">
-                    </div>
+                <li @click="switchDev(item)" v-if="typeList===1">{{
+                    '设备'+ item
+                 }}
+                    <img v-show="currentDevId == item" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
-                <li>
-                    <div class='infoOpt' v-on:click="optDb">   
-                        数据库查询
-                        <span></span>
-                        <img class="infoOptPic" src="img/db.png" alt="">
-                    </div>
-                </li>
-                <modal-t  v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询">
-                    <ul>
-                        <li>查询日期：
-                            <input type="date" ref="inputDbTimeMin" value="2020-01-01" required min="2020-01-01" max="2099-12-31">
-                            至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="2020-01-01" max="2099-12-31">
-                        </li>
-                        <li>查询设备ID或地址：
-                            <input type="input" ref="inputDbDev"  :value="devID">
-                        </li>
-                    </ul>
-                    <button style="position: absolute;top:100%;left:10px;margin-top: 20px;width: 90px;height: 40px;
-                    background-color: #2d8cf0;color: white;border-width: 0;
-                    padding: 5px;font-size: medium; border-radius: 15%;">
-                        其他</button>
-                    <br>
-                </modal>
-            </ul>
-            <div style="border-bottom: 325px solid #208f9c;position: relative;top: 150px;"></div>
-    </div>
-
-    <div id="devTable" v-show="showit" style="font-size: large;">
-        <div id="devopt">
-            <ul>
-                <li>
-                    <div class='infoOpt' @click="alert('后台页面开发中..')">
-                        设备管理
-                        <span></span>
-                        <img class="infoOptPic" src="img/config.png" alt="">
-                    </div>
-                </li>
-                <li>
-                    <div class='infoOpt' @click="toggleModal">
-                        切换设备
-                        <span></span>
-                        <img class="infoOptPic" src="img/switch.png" alt="">
-                    </div>
-                </li>
-                <modal-t v-show="showModal" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="请选择需要切换的设备">设备列表:
-                    <select name="" id="devlist" v-model="devID">
-                        <option value="-1"></option>
-                        <option :value="dev" v-for="dev in devices">设备{{dev}}:贵州大学博学楼</option>
-                    </select>
-                </modal>
-            </ul>
-            <ul style="margin:30px;margin-left:30%;margin-top:20px;list-style-type: none">
-                <li>
+                <li @click="getQueryData(i)" v-if="typeList===2">{{
+                    new Date(item).toLocaleString()
+                 }}
+                    <img v-show="i === currentTime" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
             </ul>
         </div>
+    </div>
+    
+    <div id="dataDisplay" v-show="showit" style="text-align:center;">
+            <table-info></table-info>
+            <div id="indic" v-show="true">
+                <span style="font-size: x-large;">设备号</span><br>
+                <span style="font-size: large;">{{devID}}</span>
+                <br>
+                <br>
+                <div style="border: 2px dashed black">
+                    水位指示器<br><br>
+                    <indictor></indictor>
+                </div>
+            </div>
+            <ul id="infoOptlist" style="margin:30px;margin-left:30%;margin-top:20px;list-style-type: none">
+            </ul>
+            <div style="border-top:200px solid transparent;border-bottom: 325px solid #208f9c;position: relative;top: 150px;"></div>
+    </div>
+    <div id="devTable" v-show="showit" style="font-size: large;">
         <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
         <ul id="devitems" style="list-style: none;">
-            <li>设备ID: <span>{{devinfo.id}}</span></li>
-            <li>设备地址: <span>贵阳花溪区</span></li>
-            <li>隶属单位:YYYYY</li>
-            <li>负责人:XXX</li>
-            <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal">描述: </textarea>
+            <li>项目标号：YYYYY</li>
+            <li>地址: <span>贵阳花溪区</span></li>
+            <li>设备编号: <span>{{devinfo.id}}</span></li>
+            <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal">备注: </textarea>
         </ul>
         <img id="bg_img" src="img/pic4.jpg" alt="" width="700px" height="700px">
     </div>
-<script src="./js/main.js"></script>
+
+    <script src="./js/main.js"></script>
 </body>
 
 

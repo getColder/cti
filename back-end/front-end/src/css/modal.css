@@ -20,6 +20,7 @@
     flex-direction: column;
     border-radius: 16px;
     width: 700px;
+    color: black;
 } 
 .modal-header { 
     z-index: 2001;
@@ -60,4 +61,23 @@
     z-index: 2001;
     color: #fff; 
     background-color: #2d8cf0;
+}
+
+#dbmdl h3 {
+    color:black;
+    font-size: 25px;
+    margin: auto;
+}
+
+
+
+#dbmdl ul{
+    margin: 0;
+}
+
+#dbmdl li {
+    margin: 0;
+    font-size: medium;
+    color : brown;
+    margin-bottom: 10px;
 }
