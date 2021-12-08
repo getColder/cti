@@ -71,25 +71,24 @@
                         数据库查询
                         <span></span>
                         <img class="infoOptPic" src="img/db.png" alt="">
-                        <modal-t  v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询">
-                            <ul>
-                                <li>查询日期：
-                                    <input type="date"  value="2020-01-01" required min="2020-01-01" max="2099-12-31">
-                                    至 &nbsp;<input type="date" ref="inputDbTime" value="2020-01-01" required min="2020-01-01" max="2099-12-31">
-                                </li>
-                                <li>查询设备ID或地址：
-                                    <input type="input" ref="inputDbDev"  :value="devID">
-                                </li>
-                            </ul>
-                            
-                            <button style="position: absolute;top:100%;left:10px;margin-top: 20px;width: 90px;height: 40px;
-                            background-color: #2d8cf0;color: white;border-width: 0;
-                            padding: 5px;font-size: medium; border-radius: 15%;">
-                                其他</button>
-                            <br>
-                        </modal>
                     </div>
                 </li>
+                <modal-t  v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询">
+                    <ul>
+                        <li>查询日期：
+                            <input type="date" ref="inputDbTimeMin" value="2020-01-01" required min="2020-01-01" max="2099-12-31">
+                            至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="2020-01-01" max="2099-12-31">
+                        </li>
+                        <li>查询设备ID或地址：
+                            <input type="input" ref="inputDbDev"  :value="devID">
+                        </li>
+                    </ul>
+                    <button style="position: absolute;top:100%;left:10px;margin-top: 20px;width: 90px;height: 40px;
+                    background-color: #2d8cf0;color: white;border-width: 0;
+                    padding: 5px;font-size: medium; border-radius: 15%;">
+                        其他</button>
+                    <br>
+                </modal>
             </ul>
             <div style="border-bottom: 325px solid #208f9c;position: relative;top: 150px;"></div>
     </div>

@@ -10,6 +10,9 @@ document.write('<script src="js/component/lock.js"></script>') ///lock组件
 document.write('<script src="js/component/btnOptions.js"></script>') //btn-options组件
 document.write('<script src="js/component/modal.js"></script>') //modal组件
 
+window.onbeforeunload = function(){
+    localStorage.setItem("devid", currentDevId)
+}
 
 //文档加载完毕--> 开始渲染组件
 this.onload = function () {
@@ -81,31 +84,16 @@ this.onload = function () {
      
             },            
             closeM : function(){
-                setTimeout(() => {
-                    this.showdbInput = false;
-                }, 50);
+                this.showdbInput = false;
             },
             confirmM : function(){
-                const date = this.$refs.inputDbTime.value;
-                const time = this.$refs.inputDbTime.value;
+                const date1 = this.$refs.inputDbTimeMin.value;
+                const date2 = this.$refs.inputDbTimeMax.value;
                 const dev = this.$refs.inputDbDev.value;
-                var datestr="";
-                var timestr=""
-                var dateAry = date.split('-')
-                dateAry.forEach(element => {
-                    datestr += element.substr(-2, 2);
-                });
-                var timeAry = time.split(':')
-                timeAry.forEach(element => {
-                    timestr += element.substr(-2, 2);
-                });
-                var str = datestr + timestr;
-                str = str.substr(0, str.length -2);
-                alert((Number(dev)?Number(dev):dev) + 1 )
-                this.$children[0].updateData('/currentstate/data?devid='+ this.devID +'&' + "timenode=" + str);
-                setTimeout(() => {
-                    this.showdbInput = false;
-                }, 50);
+                alert(date1 + '\n' + dev)
+
+
+                //this.$children[0].updateData('/currentstate/data?devid='+ this.devID +'&' + "timenode=" + str);
             }
         },
         components: {
@@ -250,9 +238,6 @@ var timelineBox = new Vue({
         })
     }
   })
-  window.onbeforeunload = function(){
-      localStorage.setItem("devid", currentDevId)
-  }
 }
 
 

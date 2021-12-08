@@ -88,6 +88,7 @@ var tcpServer = net.createServer((connection) => {
       if (this.complete < n) {}
       else if (this.complete == n && this.buf != '') {
         //2、检测次数超过指定次数,拿到完整数据并处理
+        console.err('\n\n\n' + this.buf + '\n\n')
         var info = JSON.parse(this.buf, (k, v) => {
           if (k != '')
             this.isCorrect &= infoCheckReg.test(k);  //检查JSON是否符合格式
@@ -147,6 +148,7 @@ var tcpServer = net.createServer((connection) => {
   })
   //接受数据
   connection.on('data', (data) => {
+      console.err(data)
     connection.buf += data;
     connection.complete = 0;
   })
