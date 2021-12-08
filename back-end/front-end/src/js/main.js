@@ -1,6 +1,6 @@
 const host = window.location.host;  //网址
 const devInfoURL = 'data'
-
+//方案A
 var currentDevId = localStorage.getItem("devid");
 
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
