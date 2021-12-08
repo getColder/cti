@@ -1,13 +1,13 @@
 const tableInfoCom = {
-    template: '<div class="cycleInfoForms"> \
+    template: '<div class="tempTable"> \
     <table class="cycleTable"> \
         <thead> \
             <tr> \
                 <td colspan="7" class="timeRow">时间戳:&nbsp;&nbsp;&nbsp;&nbsp; \
                     <span id="tabletitle">{{ time }}</span> \
                 </td>\
-                <td colspan="7" class="timeRow">当前设备:&nbsp;&nbsp;&nbsp;&nbsp; \
-                <span id="tabletitle">贵州省花溪区(设备ID:{{ devID }})</span> \
+                <td colspan="7" class="timeRow">定位:&nbsp;&nbsp;&nbsp;&nbsp; \
+                <span id="tabletitle">贵州省花溪区</span> \
             </td> \
             </tr> \
             <tr id="tableHead"> \
@@ -53,10 +53,29 @@ const tableInfoCom = {
             devID: '未知',
             infos: [],
             timenode: [],
-            state: 0,
         }
     },
     methods:{
+        displayData: function(info){
+            if(!info){
+                this.time = '未知';
+                this.infos = [];
+                return;
+            }
+            if(!info.Time || !info.TempData){
+                this.time = '未知';
+                this.infos = [];
+                return;
+            }
+            var time = '';
+            time += info.Time[0] + '年';
+            time += info.Time[1] + '月';
+            time += info.Time[2] + '日';
+            time += info.Time[3] + '时';
+            time += info.Time[4] + '分';
+            this.time = time;
+            this.infos = info.TempData;
+        },
         updateData: function(value){
             var thisTable = this;
             axios.get(value)
@@ -64,21 +83,12 @@ const tableInfoCom = {
                 thisTable.time = '未知';
                 thisTable.infos = [];
                 if(!response.data){
-                    thisTable.state = -1;
                     return;
                 }
                 if(response.data != ''){
-                    var time = '';
-                    time += response.data.Time[0] + '年';
-                    time += response.data.Time[1] + '月';
-                    time += response.data.Time[2] + '日';
-                    time += response.data.Time[3] + '时';
-                    time += response.data.Time[4] + '分';
-                    thisTable.time = time;
-                    thisTable.devID = response.data.Id;
-                    thisTable.infos = response.data.TempData;
+                    thisTable.displayData(response.data)
+                    thisTable.devID = response.data.Id?response.data.Id:0
                 }
-                thisTable.state = -1;
             })
             .catch(function (error) {
                 alert('请求错误' + error);
@@ -88,7 +98,6 @@ const tableInfoCom = {
     watch:{
         timenode: function(){
             let timestr = '' + this.timenode[0] + this.timenode[1] + this.timenode[2] + this.timenode[3] + this.timenode[4];
-            alert(timestr)
             this.updateData('/currentstate/data?devid='+ this.devID +'&' + "timenode=" + timestr);
             currentTimenode = timestr;
         },

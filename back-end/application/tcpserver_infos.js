@@ -88,7 +88,7 @@ var tcpServer = net.createServer((connection) => {
       if (this.complete < n) {}
       else if (this.complete == n && this.buf != '') {
         //2、检测次数超过指定次数,拿到完整数据并处理
-        console.err('\n\n\n' + this.buf + '\n\n')
+        //console.error('\n\n\n' + this.buf + '\n\n')
         var info = JSON.parse(this.buf, (k, v) => {
           if (k != '')
             this.isCorrect &= infoCheckReg.test(k);  //检查JSON是否符合格式
@@ -110,7 +110,7 @@ var tcpServer = net.createServer((connection) => {
         console.log('tcpserver\t devID：%s\t write:%s\t %s ', this.DevID ,this.buf.length,new Date().toLocaleString('cn','hour12:false'));
         process.send(this.buf, (err) => {
           if (err) {
-            console.error('[err:-21]tcpserver\t %s-->%s进程读写错误,准备断开连接%s\t %s',address , connection.DevID , err, new Date().toLocaleString);
+            console.error('[err:-21]tcpserver\t %s-->%s进程读写错误,准备断开连接%s\t %s',address , connection.DevID , err, toLocaleString('cn','hour12:false'));
             connection.end(() => {
                 console.log('tcpserver\t %s\t feedback \t 成功断开连接[-21]',address);
             })
@@ -124,7 +124,7 @@ var tcpServer = net.createServer((connection) => {
           connection.write('', (err) => {
               if (err) {
                   setTimeout(() => {
-                    console.error('[err:-11]tcpserver\t %s-->%s心跳检测：连接无响应,断开连接%s\t %s',address , connection.DevID , err, new Date().toLocaleString);
+                    console.error('[err:-11]tcpserver\t %s-->%s心跳检测：连接无响应,断开连接%s\t %s',address , connection.DevID , err, toLocaleString('cn','hour12:false'));
                     connection.end(() => {
                         console.log('tcpserver\t %s\t feedback \t 成功断开连接[-11]',address);
                     })
@@ -148,7 +148,6 @@ var tcpServer = net.createServer((connection) => {
   })
   //接受数据
   connection.on('data', (data) => {
-      console.err(data)
     connection.buf += data;
     connection.complete = 0;
   })
@@ -158,9 +157,10 @@ var tcpServer = net.createServer((connection) => {
 tcpServer.listen(tcpServerPort, '0.0.0.0');
 
 process.on('uncaughtException', (err)=>{
-    console.error('[err:-100]%s\t %s', err, new Date().toLocaleString);
+    console.error('[err:-100]%s\t %s', err, new Date().toLocaleString('cn','hour12:false'));
     docheck = false;
 	emitter.emit('dropConnection')
+    throw err
 })
 process.on('exit', (err)=>{
     docheck = false;
