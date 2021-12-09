@@ -26,3 +26,7 @@ module.exports.start = start;
 module.exports.sendJSON = function update(data,...msgJSON){
     currentStateRoute.update(data,...msgJSON);
 }
+
+module.exports.devconf = function devconf(devID){
+    currentStateRoute.devconf(devID)
+}

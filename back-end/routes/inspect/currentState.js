@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs')
 const insertInfo = require('../../application/database').insertInfo;
 const find = require('../../application/database.js').find; //mongodb数据库
 const router = express.Router()
@@ -7,7 +8,11 @@ const maxLenOfInfos = 1000;
 const maxTimeline = 1000;
 var allDevsData = {}
 var tempDataToInsert = {}
-var tempDataForQuery = {}
+
+//3、初始化设备配置
+var defaultDevPath = __dirname + '/config/devices/dev.json'
+var defaultconfig = fs.readFileSync(defaultDevPath)
+console.log(JSON.parse('' + defaultconfig))
 
 
 router.get('/', (req, res) => {
@@ -107,6 +112,7 @@ router.get('/timeline', (req, res, next) => {
 
 
 module.exports = router;
+module.exports.allDevsData = allDevsData;
 //近N次的数据，由变量maxLenOfInofs设置。
 module.exports.update = function (newJSON, ...JSONs){
     try {
@@ -149,4 +155,6 @@ module.exports.update = function (newJSON, ...JSONs){
         }
 }
 
-module.exports.allDevsData = allDevsData;
+module.exports.devconf = function(devID){
+    console.log(devID)
+};
