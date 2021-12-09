@@ -19,10 +19,7 @@ tcp_fork.on('message', (msg)=>{
 // tcpServer.js ---> app.js --->  webServer.js
 	server.sendJSON(msg);
 })
-/*
-setInterval(() => {
-    mongodb.find('dev_7',{}).then((data)=>{console.log(data)})
-}, 2000);*/
+
 
 exports.tcp_fork = tcp_fork;
 
