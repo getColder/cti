@@ -7,19 +7,41 @@ const tcp_fork = child_process.fork('./application/tcpserver_infos.js')	//tcp服
 const mongodb = require('./application/database.js') //mongodb数据库
 
 
-emitter.addListener('dropConnection', function(){
-    console.log('App\t 异常退出%s' , new Date().toLocaleString());
+function devconf(devID){
+    server.devconf(devID)
+}
+
+function exitAll(){
+    console.log('App\t 异常退出\t%s' , new Date().toLocaleString());
     tcp_fork.kill();
     exit(-1);
-})
+}
+
 
 server.start();   
 mongodb.startDB();
 tcp_fork.on('message', (msg)=>{
 // tcpServer.js ---> app.js --->  webServer.js
-	server.sendJSON(msg);
+    switch (msg.index) {
+        case 0:
+            server.sendJSON(msg.data);
+            break;
+        case 1:
+            devconf(msg.data)
+            break;
+        case 2:
+            exitAll();
+            break;
+        default:
+            break;
+    }
 })
-
-
+process.on('beforeExit', ()=>{
+    try {
+        tcp_fork.kill()
+    } catch (error) {
+        
+    }
+})
 exports.tcp_fork = tcp_fork;
 
