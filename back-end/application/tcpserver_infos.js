@@ -88,7 +88,7 @@ var tcpServer = net.createServer((connection) => {
       if (this.complete < n) {}
       else if (this.complete == n && this.buf != '') {
         //2、检测次数超过指定次数,拿到完整数据并处理
-        //console.error('\n\n\n' + this.buf + '\n\n')
+        console.error('\n\n\n' + this.buf + '\n\n')
         var info = JSON.parse(this.buf, (k, v) => {
           if (k != '')
             this.isCorrect &= infoCheckReg.test(k);  //检查JSON是否符合格式
@@ -145,9 +145,9 @@ var tcpServer = net.createServer((connection) => {
     let mins = Math.floor(duration % 3600 / 60);
     let hours = Math.floor(duration / 3600);
     console.log('exit\t %s\t duration:%fhs%fmins%fsecs', address, hours, mins, secs);
-  })
-  //接受数据
-  connection.on('data', (data) => {
+})
+//接受数据
+connection.on('data', (data) => {
     connection.buf += data;
     connection.complete = 0;
   })
