@@ -200,4 +200,4 @@ setInterval(() => {
         data : Array.from(devlist)
     }
     process.send(message);  //读取设备配置
-}, 30 * 1000);
+}, 1000);

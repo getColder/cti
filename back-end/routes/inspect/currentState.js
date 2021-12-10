@@ -6,13 +6,12 @@ const router = express.Router()
 
 const maxLenOfInfos = 1000;
 const maxTimeline = 1000;
-var allDevsData = {}
-var tempDataToInsert = {}
+var allDevsCurrentData = {}
+var defalutConfig
+var devices = [];
 
-//3、初始化设备配置
-var defaultDevPath = __dirname + '/config/devices/dev.json'
-var defaultconfig = fs.readFileSync(defaultDevPath)
-console.log(JSON.parse('' + defaultconfig))
+init();
+
 
 
 router.get('/', (req, res) => {
@@ -20,7 +19,15 @@ router.get('/', (req, res) => {
 })
 
 router.get('/devs', (req, res) => {
-    res.json(Object.keys(allDevsData));
+    res.json(devices);
+    res.end()
+})
+
+router.get('/devconfig', (req, res) => {
+    var devid_req = req.query.devid;
+    const conf = allDevsCurrentData[devid_req]?allDevsCurrentData[devid_req]['config']:defalutConfig
+    res.json(conf);
+    res.end()
 })
 
 router.get('/data', (req, res, next) => {
@@ -31,26 +38,24 @@ router.get('/data', (req, res, next) => {
         return;
     }
 
-    if(!allDevsData.hasOwnProperty(devid_req)){
+    if(!allDevsCurrentData.hasOwnProperty(devid_req)){
         res.json('');
         console.log('WebServer\t 请求设备不存在！\t %s',new Date().toLocaleTimeString());
         return;
     }
 
     if(!time_req){
-        res.json(allDevsData[devid_req]["infoCurrent"]);
+        res.json(allDevsCurrentData[devid_req]["infoCurrent"]);
         return;
     }
-    else if(allDevsData[devid_req]["infoAry"].length > 0){
-        for(index in allDevsData[devid_req]["infoAry"]){
-            let timestr =  '' + allDevsData[devid_req]["infoAry"][index]['Time'][0] 
-            + allDevsData[devid_req]["infoAry"][index]['Time'][1]
-            + allDevsData[devid_req]["infoAry"][index]['Time'][2] 
-            + allDevsData[devid_req]["infoAry"][index]['Time'][3]
-            + allDevsData[devid_req]["infoAry"][index]['Time'][4];
+    else if(allDevsCurrentData[devid_req]["infoAry"].length > 0){
+        const dataAry = allDevsCurrentData[devid_req]["infoAry"];
+        for(index in dataAry){
+            const time = dataAry[index]['Time'];
+            let timestr =  '' + time[0] + time[1] + time[2] + time[3] + time[4];
             if(time_req === timestr){
-                res.json(allDevsData[devid_req]["infoAry"][index]);
-                break;  //设备d的“数据数组”中，时间t对应的数据
+                res.json(dataAry[index]);
+                break;  //设备devid_req，时间time_req对应的数据
             }
         }
     }
@@ -103,8 +108,8 @@ router.get('/db', (req, res, next) => {
 
 router.get('/timeline', (req, res, next) => {
     let devid_req = req.query.devid;
-    if(allDevsData.hasOwnProperty(devid_req)){
-     res.json(allDevsData[devid_req]['timeline'].slice(-50));
+    if(allDevsCurrentData.hasOwnProperty(devid_req)){
+     res.json(allDevsCurrentData[devid_req]['timeline'].slice(-50));
     }
     else
         res.json('')
@@ -112,49 +117,70 @@ router.get('/timeline', (req, res, next) => {
 
 
 module.exports = router;
-module.exports.allDevsData = allDevsData;
+module.exports.allDevsCurrentData = allDevsCurrentData;
 //近N次的数据，由变量maxLenOfInofs设置。
-module.exports.update = function (newJSON, ...JSONs){
+module.exports.update = function (newJSON){
     try {
-        var newJSON_obj = (typeof (newJSON) === 'object') ? newJSON : JSON.parse(newJSON);
-        console.log('Webserver\t DEV:%s-fetch \t %s',newJSON_obj.Id, new Date().toLocaleTimeString());
-        insertInfo(newJSON_obj);
-        var devid_selected = newJSON_obj["Id"]
-        //服务器维持100组,超过删除
-        if(!allDevsData[devid_selected]){
-            allDevsData[devid_selected] = {
-                infoAry : [],
-                infoCurrent : {},
-                timeline : []
-            }       //内存维护数据：dev{'A1','A2'....     }  -->A1:{ ary,current,timeline }
+        const newJSON_obj = JSON.parse(newJSON);    //解析设备数据
+        const devid_selected = newJSON_obj["Id"]
+        devCheckInit(devid_selected)
+        var DevCurrentData = allDevsCurrentData[devid_selected];
+        console.log('Webserver\t DEV:%s-fetch \t %s',newJSON_obj.Id, new Date().toLocaleString());
+        newJSON_obj['location'] = DevCurrentData['config']['location']
+        newJSON_obj['projectNumber'] = DevCurrentData['config']['projectNumber']
+        insertInfo(newJSON_obj); //加入数据库插入队列
+        //维持最近maxTimeline组按时间节点查询,每个设备内存保存最大maxLenOfInfos个数据对象
+        DevCurrentData["infoCurrent"] = newJSON_obj;
+        DevCurrentData["infoAry"].push(newJSON_obj);
+        if (DevCurrentData["infoAry"].length >= maxLenOfInfos) {
+            DevCurrentData["infoAry"].shift();
         }
-        if(!tempDataToInsert[devid_selected]){
-            tempDataToInsert[devid_selected] = {
-                infoAry : []    //数据库待插入数据
-            }
+        //加入“近期数据”内存维护,每个设备内存保存最大maxTimeline个时间节点
+        DevCurrentData['timeline'].push(newJSON_obj.Time);
+        if (DevCurrentData['timeline'].length >= maxTimeline) {
+            DevCurrentData['timeline'].shift();
         }
-        if (allDevsData[devid_selected]["infoAry"].length >= maxLenOfInfos) {
-            allDevsData[devid_selected]["infoAry"].shift();
-        }
-        allDevsData[devid_selected]["infoAry"].push(newJSON_obj);
-        allDevsData[devid_selected]["infoCurrent"] = newJSON_obj;
-        //维持最近10组按时间节点查询
-        if (allDevsData[devid_selected]['timeline'].length >= maxTimeline) {
-            allDevsData[devid_selected]['timeline'].shift();
-        }
-        allDevsData[devid_selected]['timeline'].push(newJSON_obj.Time);
-        tempDataToInsert[devid_selected]['infoAry'].push(newJSON_obj)
-        //可变参数，添加多个JSON
-        JSONs.forEach((value, key)=>{
-            var JSON_obj = (typeof(value)==='object')?value:JSON.parse(value);
-            allDevsData[devid_selected]["infoAry"].push(JSON_obj);
-        })
     }
-        catch (error){
-            console.log('Webserver\t EXCEPTION: %s', error);
-        }
+    catch (error){
+        console.log('Webserver\t currentstate解析错误EXCEPTION: %s\t%s', error, new Date());
+    }
 }
 
 module.exports.devconf = function(devID){
-    console.log(devID)
+    devices = devID;
 };
+
+function init(){
+    console.log('DevConfig\t读取设备默认配置...\t%s',new Date().toLocaleString())
+    var defaultDevPath = __dirname + '/config/devices/dev_default.json'
+    defalutConfig = JSON.parse('' + fs.readFileSync(defaultDevPath))
+    console.log('DevConfig\t %s\n默认配置：%s',new Date().toLocaleString(), defalutConfig)
+
+}
+
+function devCheckInit(devid_selected){
+    if(!allDevsCurrentData[devid_selected]){
+        //初始化设备配置
+        var theConfig;
+        var DevPath = __dirname + '/config/devices/dev_' + devid_selected + '.json'
+        try {
+            theConfig = JSON.parse(fs.readFileSync(DevPath,{flag: 'r'}))
+            console.log('Webserver\t currentstate读取设备配置文件成功.\t%s\n%s', new Date().toLocaleString(), theConfig);
+        } catch (error) {
+            console.log('Webserver\t currentstate设备配置文件读取失败\t%s', new Date().toLocaleString(), error);
+            theConfig = defalutConfig;
+        }
+        //创建数据集对象
+        allDevsCurrentData[devid_selected] = {
+            infoAry : [],
+            infoCurrent : {},
+            timeline : [],
+            config: {
+                location : theConfig.location,
+                projectNumber : theConfig.projectNumber,
+            },
+            keepAlive : true,
+        }       
+        //内存维护数据：dev{'A1','A2'....     }  -->A1:{ ary,current,timeline }
+    }
+}

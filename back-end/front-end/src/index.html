@@ -69,16 +69,17 @@
         <lock-auto-up @lockupdate="lockAutoUpdate"></lock-auto-up>
         <refresh @refresh="getTimeline(), getDevs()"></refresh>
         <div id="timelineScroll">
+            <div  v-show="showtip" :class='tipclass'>&nbsp;{{tip}}</div>
             <ul v-for="(item, i) in getItems()" :key='item' v-show="item">
                 <li @click="getData(item)" v-if="typeList===0">{{
                     item[0]+'年'+item[1]+'月'+item[2]+'日'+item[3]+'时'+item[4]+'分'
                  }}
                     <img v-show="currentTime === item" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
-                <li @click="switchDev(item)" v-if="typeList===1">{{
+                <li @click="switchDev(item)" style="margin-left: auto;font-size: 17px;" v-if="typeList===1">{{
                     '设备'+ item
                  }}
-                    <img v-show="currentDevId == item" src="img/this.png" width="15px" height="15px" alt="">
+                    <img v-show="currentDevId == item" src="img/this.png" width="17px" height="17px" alt="">
                 </li>
                 <li @click="getQueryData(i)" v-if="typeList===2">{{
                     new Date(item).toLocaleString()
@@ -90,27 +91,17 @@
     </div>
     
     <div id="dataDisplay" v-show="showit" style="text-align:center;">
-            <table-info></table-info>
-            <div id="indic" v-show="true">
-                <span style="font-size: x-large;">设备号</span><br>
-                <span style="font-size: large;">{{devID}}</span>
-                <br>
-                <br>
-                <div style="border: 2px dashed black">
-                    水位指示器<br><br>
-                    <indictor></indictor>
-                </div>
-            </div>
-            <ul id="infoOptlist" style="margin:30px;margin-left:30%;margin-top:20px;list-style-type: none">
-            </ul>
+            <table-info>
+                <indictor></indictor>
+            </table-info>
             <div style="border-top:200px solid transparent;border-bottom: 325px solid #208f9c;position: relative;top: 150px;"></div>
     </div>
     <div id="devTable" v-show="showit" style="font-size: large;">
         <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
         <ul id="devitems" style="list-style: none;">
-            <li>项目标号：YYYYY</li>
-            <li>地址: <span>贵阳花溪区</span></li>
-            <li>设备编号: <span>{{devinfo.id}}</span></li>
+            <li><span>项目标号：{{config.projectNumber}}</span></li>
+            <li><span> 地址: {{config.location}}</span></li>
+            <li><span>设备编号: {{devinfo.id}}</span></li>
             <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal">备注: </textarea>
         </ul>
         <img id="bg_img" src="img/pic4.jpg" alt="" width="700px" height="700px">

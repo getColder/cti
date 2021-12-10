@@ -80,13 +80,12 @@ ul,li{
 }
 
 .nav li{
-    
-  color: white;
-  float: left;
-  font-size: 30px;
-  margin: 0;
-  padding-left: 15px;
-  padding-right: 15px;
+    color: white;
+    float: left;
+    font-size: 30px;
+    margin: 0;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .nav a{
@@ -245,104 +244,6 @@ ul,li{
 }
 
 
-#indic {
-    color: brown;
-    position: absolute;
-    border: 1px solid black;
-    border-bottom-width: 0;
-    border-radius: 10%;
-    padding: 20px;
-    height: 225px;
-    top: 278px;
-    right: 0;
-    margin-right: 10px;
-    align-items: center;
-    width: 12%;
-    background-color: whitesmoke;
-}
-
-#indic table{
-    margin: auto;
-}
-
-#indic td{
-    font-weight: normal;
-    font-size: 16px;
-    color: #336666;
-    text-align: center;
-    width: 75px;
-}
-
-#indic th{
-    font-size: 18px;
-    color: black;
-    text-align: center;
-}
-
-
-.infoOpt{
-    padding-bottom: 10px;
-    padding-top: 10px;
-    position: relative;
-    height: 110px;
-    width: 200px;
-    font-weight: bold;
-    font-size: 18px;
-    text-align: center;
-    color: #7f2323;
-    border:3px solid white;
-    border-radius: 22%;
-    border-top-width: 5px;
-    border-bottom-width: 5px;
-    background-color: #adcaca;
-}
-
-.infoOpt span{
-    background-color: transparent;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    border-radius: 22%;
-}
-
-
-.infoOpt:hover > span{
-    width: 1;
-    height: 1;
-    box-shadow: 10px 10px 20px 7px #33334a;
-}
-
-.infoOpt:hover{
-    background-color: #669999;
-    cursor: pointer;
-}
-
-.infoOpt:hover > img{
-    width: 76px;
-    height: 76px;
-    position: absolute;
-    margin-left: -38px;
-}
-
-
-.infoOptPic{
-    width: 60px;
-    height: 60px;
-    position: absolute;
-    top: 33%;
-    left: 50%;
-    margin-left: -30px;
-}
-
-#infoOptlist li{
-    margin-bottom: 40px;
-    padding-left: 5%;
-    padding-right: 5%;
-    float: left;
-}
 
 #devopt {
     color: grey;
@@ -376,33 +277,60 @@ ul,li{
 
 
 .tempTable {
-    border: 1px solid black;
-    padding: 3px;
     position: relative;
     margin-left: 320px;
-    margin-right: 17%;
-    background-color: #eeeebb;
+    margin-right: 6%;
+    background-color: white;
     margin-bottom: 0px;
 }
 
+.tempTable {
+    font-size: 0;
+}
 
 .tempTable table{
+    font-size: 15px;
     position: relative;
     width: 100%;
-    border-width: 0;
+    padding: 0;
+    border-collapse: collapse;
+}
+
+
+.tempTable thead tr{
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.tempTable thead tr th{
+    color: white;
+    background-color: #027099;
+    border-right: 1px solid white;
+    font-size: 12px;
+    padding: 5px;
+    text-align: center;
+}
+
+.tempTable td{
+    color: #a52a2a;
+    font-size: 16px;
+    margin: 0;
+    text-align: center;
+}
+
+.tableConfig {
+    position: relative;
+    width: 30%;
+    padding-right: 5%;
+    margin-left:auto;
     color: brown;
+    font-size: 14px;
+}
+.tableConfig > div{
+    text-align: left;
 }
 
-.tempTable th{
-  border-style: solid;
-  border-width: 1px;
-  border-color: black;
-  color: black;
-}
-
-.tempTable td:not(.timeRow){
-  text-align: center;
-}
 
 #tabletitle{
     color: rgb(41, 38, 38);
@@ -477,8 +405,21 @@ ul,li{
 
 
 .led{
+    padding: auto;
+    background-image: url(../img/led_red.png) no-repeat left top;
+    width: 25px;
+    height: 25px;
+    box-shadow: 0px 0px 17px 1px red inset;
+    background-color: transparent;
+}
 
-    box-shadow: 0px -15px 80px 25px #ff0000ac;
+.ledoff{
+    background-image: url(img/pic1.jpg) no-repeat left top;
+    width: 250px;
+    height: 250px;
+    border: 1px solid black;
+    border-radius:35%;
+    box-shadow: 0px 0px 10px 1px green;
 }
 
 

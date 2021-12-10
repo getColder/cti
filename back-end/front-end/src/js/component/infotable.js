@@ -1,15 +1,10 @@
 const tableInfoCom = {
     template: '<div class="tempTable"> \
-    <table class="cycleTable"> \
+    <div style="font-size: 17px;text-align: left;padding: 10px;">\
+        数据与设备状态采集于<span style="color:green;font-weight:bold">{{ time }}</span>\
+    </div>\
+    <table> \
         <thead> \
-            <tr> \
-                <td colspan="7" class="timeRow">时间戳:&nbsp;&nbsp;&nbsp;&nbsp; \
-                    <span id="tabletitle">{{ time }}</span> \
-                </td>\
-                <td colspan="7" class="timeRow">定位:&nbsp;&nbsp;&nbsp;&nbsp; \
-                <span id="tabletitle">贵州省花溪区</span> \
-            </td> \
-            </tr> \
             <tr id="tableHead"> \
                 <th id="buttonHead_floor">层</th> \
                 <th id="buttonHead_entry">入口温度</th> \
@@ -28,7 +23,7 @@ const tableInfoCom = {
             </tr> \
         </thead> \
         <tbody v-if="infos.length > 0"> \
-            <tr class="tableRow" v-for="data in infos" :key="data.floor"> \
+            <tr v-for="data in infos" :key="data.floor"> \
                 <td>{{ data.Floor }}</td> \
                 <td>{{ data.WaterTemp[0] }}</td> \
                 <td>{{ data.WaterTemp[1] }}</td> \
@@ -46,6 +41,19 @@ const tableInfoCom = {
             </tr> \
         </tbody> \
     </table> \
+    <slot></slot>\
+    <div style="border-top:3px solid grey"></div>\
+    <div class="tableConfig">\
+        <div>设备号:\
+            <span id="tabletitle">{{ devID }}</span> \
+        </div>\
+        <div>定位:\
+                <span id="tabletitle">{{ location }}</span> \
+        </div>\
+        <div>标段:\
+            <span id="tabletitle">{{ projectNumber }}</span> \
+        </div> \
+    </div>\
 </div>',
     data() {
         return {
@@ -53,6 +61,8 @@ const tableInfoCom = {
             devID: '未知',
             infos: [],
             timenode: [],
+            location : '',
+            projectNumber : '',
         }
     },
     methods:{
@@ -75,6 +85,8 @@ const tableInfoCom = {
             time += info.Time[4] + '分';
             this.time = time;
             this.infos = info.TempData;
+            this.location = info.location;
+            this.projectNumber = info.projectNumber;
         },
         updateData: function(value){
             var thisTable = this;
