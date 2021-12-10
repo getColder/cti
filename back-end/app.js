@@ -17,8 +17,7 @@ function exitAll(){
     exit(-1);
 }
 
-
-server.start();   
+  
 mongodb.startDB();
 tcp_fork.on('message', (msg)=>{
 // tcpServer.js ---> app.js --->  webServer.js
@@ -36,6 +35,8 @@ tcp_fork.on('message', (msg)=>{
             break;
     }
 })
+server.start(); 
+
 process.on('beforeExit', ()=>{
     try {
         tcp_fork.kill()

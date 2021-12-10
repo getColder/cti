@@ -2,6 +2,7 @@ const host = window.location.host;  //网址
 const devInfoURL = 'data'
 
 var currentDevId = localStorage.getItem("devid");
+var devConfig = {}
 
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
 document.write('<script src="js/component/indictor.js"></script>') //indictor组件
@@ -54,7 +55,7 @@ this.onload = function () {
                         if(response.data){
                             setTimeout(() => {
                                 if(response.data.length <= 0){
-                                    alert('抱歉！没有找到任何数据')
+                                    vEvent.$emit('tipbox','抱歉！没有找到任何数据')
                                     that.showdbInput = false;
                                     vEvent.$emit('changelisttype',2)
                                     vEvent.$emit('updateQuerynode', {})
@@ -66,7 +67,7 @@ this.onload = function () {
                                 setTimeout(() => {
                                     vEvent.$emit('changelisttype',2)
                                     vEvent.$emit('updateQuerynode', {})
-                                    alert('一共查询到' + response.data.length + '条数据')
+                                    vEvent.$emit('tipbox','一共查询到' + response.data.length + '条数据')
                                 }, 100);
                               vEvent.$emit('loadingdb',false)
                                 that.showdbInput = false;  
@@ -105,43 +106,32 @@ this.onload = function () {
         el : '#devTable',
         data(){
             return{
-                showit : false,
+                showit : true,
                 devices : [],
                 showModal : false,
                 devID : currentDevId,
                 devinfo : {
                     id : currentDevId
                 },
+                config : {}
             }
         },
         methods: {
-            toggleModal : function(){
-                this.showModal = !this.showModal;
-                var devbord = this;
-                axios.get('/currentstate/devs')
+            getDevConfig: function (){
+                var that = this;
+                axios.get('/currentstate/devconfig?devid=' + currentDevId)
                 .then(function(response){
-                    if(response.data){
-                        devbord.devices = response.data;
-                    }
-                    else
-                        devbord.devices = [];
+                     that.config = response.data
                 })
-            },
-            closeM : function(){
-                this.showModal = !this.showModal;
-            },
-            confirmM : function(){
-                currentDevId = this.devID
-                this.devinfo.id = currentDevId;
-                vEvent.$emit('updateDev',currentDevId)
-                this.showModal = !this.showModal;
             }
         },
         mounted() {
-
+            var that = this;
+            setInterval(() => {
+                that.getDevConfig();
+            }, 3000);
         },
         components:{
-            'modal-t' : modalT
         }
     })
 
@@ -151,7 +141,7 @@ this.onload = function () {
         data(){
             return {
                 devID : currentDevId,
-                showit : true,
+                showit : false,
                 showdbInput : false,
             }
         },
@@ -182,16 +172,20 @@ this.onload = function () {
 var infoListBox = new Vue({
     el: '#infoListBox',
     data: {
-            typeList : 0, //0：近期， 1：数据库， 2： 设备
+            typeList : 1, //0：近期， 1：数据库， 2： 设备
             title : "近期数据",
-            timenodes : [],
-            devnodes : [],
-            querynodes : [],
-            currentTime : '',
-            currentDevId : '未知',
-            dbqueryData : [],
+            timenodes : [], //近期数据节点
+            devnodes : [], //设备数据节点
+            querynodes : [], //数据库节点
+            currentTime : '',  //选中时间设备
+            currentDevId : '未知', 
+            dbqueryData : [],  //数据库数据
             lockInterval : null,
-            riseSort : true
+            riseSort : true,
+            tip : '',
+            tipclass : "boxtiphide",
+            showtip :  false
+
     },
     methods: {
         getData: function(time){
@@ -251,6 +245,7 @@ var infoListBox = new Vue({
             else{
                 this.lockInterval = setInterval(() => {
                     this.getTimeline();
+                    this.getDevs();
                 }, 60000 * 1);
             }
         },
@@ -286,7 +281,26 @@ var infoListBox = new Vue({
             });
             that.lockInterval = true;
             that.currentTime = that.querynodes[0];
-        } )
+        })
+        vEvent.$on('tipbox',value=>{
+            that.showtip = true;
+            setTimeout(() => {
+                that.tipclass = 'boxtipshow'
+            }, 100);
+            setTimeout(() => {
+                that.tip = '提示';
+            }, 250);
+            setTimeout(() => {
+                that.tip = value;
+            }, 1750);
+            setTimeout(() => {
+                that.tipclass = 'boxtiphide'
+                that.tip = '';
+            }, 8000);
+            setTimeout(() => {
+                that.showtip = false; 
+            }, 9000);
+        })
         setTimeout(()=> {
             that.getTimeline();
             that.getDevs();
@@ -326,7 +340,7 @@ var infoListBox = new Vue({
                     }       //激活标签选项卡
                 }
             })
-            that.$children[0].isActive = true;
+            that.$children[1].isActive = true;
             vEvent.$on('changeopt',function(index){
                 that.$children.forEach(element => {
                     element.isActive = false;

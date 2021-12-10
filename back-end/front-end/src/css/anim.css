@@ -24,3 +24,22 @@
     750%{-webkit-transform:rotate(270deg);}
     100%{-webkit-transform:rotate(360deg);}
 }
+
+.boxtiphide{
+    text-align: center;
+    content: "0";
+    position: relative;
+    width: 0%; 
+    background-color: transparent;
+    color: white;
+    transition: all .75s cubic-bezier(0.455, 0.735, 0.475, 0.960);
+}
+
+.boxtipshow{
+    text-align: center;
+    background-color: brown;
+    color: white;
+    position: relative;
+    width: 100%;
+    transition: all .75s cubic-bezier(0.455, 0.735, 0.475, 0.960);
+}

@@ -1,6 +1,6 @@
 const indictor = {
     template: 
-    '<table>\
+    '<table style="margin:auto;width: 50%;margin-top:30px;">\
         <tbody>\
             <tr>\
                 <th></td>\
@@ -8,13 +8,13 @@ const indictor = {
                 <th>溢出</td>\
             </tr>\
             <tr>\
-                <td>热水</td>\
+                <td style="font-size: 25px">热水</td>\
                 <td><img  :src="indic[0]" width="25px" height="25px"></td>\
-                <td><img :src="indic[0]" width="25px" height="25px"></div></td>\
+                <td><img :src="indic[0]" width="25px" height="25px"></td>\
             </tr>\
             <tr>\
-                <td>冷水</td>\
-                <td><img :src="indic[1]" width="25px" height="25px"><div class="led"></td>\
+                <td style="font-size: 25px">冷水</td>\
+                <td><img :src="indic[1]" width="25px" height="25px"></td>\
                 <td><img :src="indic[0]" width="25px" height="25px"></td>\
             </tr>\
         </tbody>\
@@ -22,7 +22,7 @@ const indictor = {
     props:['showit'],
     data(){
         return{
-            indic : ["img/led_white.png","img/led_red.png"]
+            indic : ["img/led_green.png","img/led_red.png"]
             
         }
     }

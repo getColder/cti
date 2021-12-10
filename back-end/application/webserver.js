@@ -23,8 +23,8 @@ function start() {
 
 module.exports.start = start;
 //发一个或一组JSON数据
-module.exports.sendJSON = function update(data,...msgJSON){
-    currentStateRoute.update(data,...msgJSON);
+module.exports.sendJSON = function update(data){
+    currentStateRoute.update(data);
 }
 
 module.exports.devconf = function devconf(devID){
