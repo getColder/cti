@@ -68,7 +68,7 @@
         </span>
         <lock-auto-up @lockupdate="lockAutoUpdate"></lock-auto-up>
         <refresh @refresh="getTimeline(), getDevs()"></refresh>
-        <div id="timelineScroll">
+        <div id="timelineScroll" ref="scroll">
             <div  v-show="showtip" :class='tipclass'>&nbsp;{{tip}}</div>
             <ul v-for="(item, i) in getItems()" :key='item' v-show="item">
                 <li @click="getData(item)" v-if="typeList===0">{{
@@ -92,7 +92,7 @@
     
     <div id="dataDisplay" v-show="showit" style="text-align:center;">
             <table-info>
-                <indictor></indictor>
+                <indictor  ref='indic'></indictor>
             </table-info>
             <div style="border-top:200px solid transparent;border-bottom: 325px solid #208f9c;position: relative;top: 150px;"></div>
     </div>

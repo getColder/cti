@@ -319,6 +319,33 @@ ul,li{
     text-align: center;
 }
 
+#indic{
+    margin:auto;
+    width: 50%;
+    margin-top:30px;
+}
+
+#indic tr div{
+    margin: auto;
+    width: 1px;
+    height: 3px;
+    position: relative;
+    top: 12px;
+    right: 2px;
+    border-radius: 50%;
+    background-color: transparent;
+    opacity: 0.8; 
+}
+
+.waterHighLevel{
+    box-shadow: 0 -5px 25px 9px #00ff00;
+}
+
+
+.waterLowLevel{
+    box-shadow: 0 -5px 25px 9px #ff0000;
+}
+
 .tableConfig {
     position: relative;
     width: 30%;
@@ -349,6 +376,7 @@ ul,li{
     margin-bottom: 0px;
     box-shadow: 2px 2px 20px #33334a;
 }
+
 
 
 #devlist{

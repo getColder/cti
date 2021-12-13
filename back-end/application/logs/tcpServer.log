@@ -2131,3 +2131,135 @@ tcpserver	 devID：8	 write:730	 2021/12/10 下午7:42:50
 tcpserver	 devID：8	 write:730	 2021/12/10 下午7:43:10 
 tcpserver	 devID：8	 write:730	 2021/12/10 下午7:43:30 
 exit	 127.0.0.1	 duration:0hs51mins35secs
+
+begin 服务器启动-->日志打开成功	 2021/12/13 下午3:44:33
+
+begin 服务器启动-->日志打开成功	 2021/12/13 下午3:54:16
+new	 127.0.0.1	 start:	2021/12/13 下午3:54:29
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:54:53 
+exit	 127.0.0.1	 duration:0hs0mins26secs
+new	 127.0.0.1	 start:	2021/12/13 下午3:55:07
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:55:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:55:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:56:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:56:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:56:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:57:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:57:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:57:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:58:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:58:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:58:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:59:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:59:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午3:59:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:00:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:00:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:00:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:01:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:01:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:01:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:02:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:02:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:02:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:03:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:03:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:03:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:04:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:04:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:04:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:05:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:05:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:05:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:06:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:06:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:06:53 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:07:13 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:07:33 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:07:53 
+exit	 127.0.0.1	 duration:0hs12mins51secs
+
+begin 服务器启动-->日志打开成功	 2021/12/13 下午4:08:05
+new	 127.0.0.1	 start:	2021/12/13 下午4:08:28
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:08:54 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:09:14 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:09:34 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:09:54 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:10:14 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:10:34 
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:10:54 
+exit	 127.0.0.1	 duration:0hs2mins27secs
+new	 127.0.0.1	 start:	2021/12/13 下午4:11:49
+tcpserver	 devID：5	 write:734	 2021/12/13 下午4:12:15 
+exit	 127.0.0.1	 duration:0hs0mins42secs
+new	 127.0.0.1	 start:	2021/12/13 下午4:13:50
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:14:16 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:14:36 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:14:56 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:15:16 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:15:36 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:15:56 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:16:16 
+exit	 127.0.0.1	 duration:0hs2mins26secs
+
+begin 服务器启动-->日志打开成功	 2021/12/13 下午4:16:29
+new	 127.0.0.1	 start:	2021/12/13 下午4:21:05
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:21:31 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:21:51 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:22:11 
+exit	 127.0.0.1	 duration:0hs1mins25secs
+new	 127.0.0.1	 start:	2021/12/13 下午4:23:09
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:23:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:23:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:24:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:24:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:24:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:25:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:25:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:25:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:26:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:26:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:26:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:27:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:27:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:27:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:28:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:28:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:28:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:29:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:29:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:29:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:30:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:30:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:30:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:31:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:31:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:31:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:32:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:32:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:32:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:33:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:33:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:33:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:34:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:34:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:34:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:35:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:35:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:35:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:36:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:36:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:36:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:37:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:37:35 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:37:55 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:38:15 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:38:35 
+exit	 127.0.0.1	 duration:0hs15mins31secs
+
+begin 服务器启动-->日志打开成功	 2021/12/13 下午4:38:46
+new	 127.0.0.1	 start:	2021/12/13 下午4:45:47
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:46:13 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:46:33 
+tcpserver	 devID：6	 write:734	 2021/12/13 下午4:46:53 
+exit	 127.0.0.1	 duration:0hs1mins8secs

@@ -17,8 +17,10 @@ function exitAll(){
     exit(-1);
 }
 
-  
-mongodb.startDB();
+if(!mongodb.startDB()){
+    console.log('数据库连接失败，请联系管理员')
+}
+
 tcp_fork.on('message', (msg)=>{
 // tcpServer.js ---> app.js --->  webServer.js
     switch (msg.index) {
