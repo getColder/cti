@@ -17,9 +17,17 @@ function exitAll(){
     exit(-1);
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
   
 mongodb.startDB();
+=======
+
+if(!mongodb.startDB()){
+    console.log('数据库连接失败，请联系管理员')
+}
+
+>>>>>>> 131a863f19cc8b5734120ab3d8ab760d7ae35800
 =======
 
 if(!mongodb.startDB()){
