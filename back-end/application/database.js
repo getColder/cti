@@ -7,13 +7,23 @@ var dbconnection;
 var db;
 var syncTimer;
 var isConnected = false;
-
-
+var cCount = 0;
+var dbtip; //打印次数计时
 
 function startDB(){
-    mongo.connect(url_mongo, (err, mongodb)=>{
+    setTimeout(function() {
+        dbtip = setInterval(function() {
+            if(isConnected == false){
+                console.log('[%s]正在连接数据库..',cCount)
+                ++ cCount;
+            }
+        }.bind(this), 1000);
+    }.bind(this), 2000);
+    mongo.connect(url_mongo,async (err, mongodb)=>{
         if(err) {
             console.log('ERR[-2]DataBase\t 数据库连接失败! \t %s',new Date().toLocaleTimeString());
+            isConnected = false;
+            clearInterval(dbtip)
             return;
         }
         mongodb.on('serverClosed',()=>{
@@ -26,8 +36,8 @@ function startDB(){
         syncTimer = setInterval(() => {
             syncData();
         }, 1000 * 60);
+        clearInterval(dbtip)
     });
-    return isConnected;
 }
 
 

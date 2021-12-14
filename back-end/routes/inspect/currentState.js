@@ -10,7 +10,9 @@ var allDevsCurrentData = {}
 var defalutConfig
 var devices = [];
 
-init();
+setTimeout(function() {
+    init();
+}.bind(this), 1000);
 
 
 

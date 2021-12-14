@@ -16,25 +16,9 @@ function exitAll(){
     tcp_fork.kill();
     exit(-1);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-  
-mongodb.startDB();
-=======
+mongodb.startDB()
 
-if(!mongodb.startDB()){
-    console.log('数据库连接失败，请联系管理员')
-}
-
->>>>>>> 131a863f19cc8b5734120ab3d8ab760d7ae35800
-=======
-
-if(!mongodb.startDB()){
-    console.log('数据库连接失败，请联系管理员')
-}
-
->>>>>>> 131a863f19cc8b5734120ab3d8ab760d7ae35800
 tcp_fork.on('message', (msg)=>{
 // tcpServer.js ---> app.js --->  webServer.js
     switch (msg.index) {
