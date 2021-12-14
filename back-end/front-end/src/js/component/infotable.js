@@ -87,6 +87,7 @@ const tableInfoCom = {
             this.infos = info.TempData;
             this.location = info.location;
             this.projectNumber = info.projectNumber;
+            this.$parent.$refs['indic'].ledindic = info.SpareData
         },
         updateData: function(value){
             var thisTable = this;

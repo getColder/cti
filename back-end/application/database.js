@@ -14,19 +14,20 @@ function startDB(){
     mongo.connect(url_mongo, (err, mongodb)=>{
         if(err) {
             console.log('ERR[-2]DataBase\t 数据库连接失败! \t %s',new Date().toLocaleTimeString());
-            emitter.emit('dropConnection');
+            return;
         }
         mongodb.on('serverClosed',()=>{
             console.log('数据库已关闭')
             clearInterval(syncTimer)
         })
-         console.log('DataBase\t 数据库连接成功! \t %s',new Date().toLocaleTimeString());
-         db = mongodb.db("concrete_temper_info");
-         isConnected = true;
-         syncTimer = setInterval(() => {
-             syncData();
-         }, 1000 * 60);
+        console.log('DataBase\t 数据库连接成功! \t %s',new Date().toLocaleTimeString());
+        db = mongodb.db("concrete_temper_info");
+        isConnected = true;
+        syncTimer = setInterval(() => {
+            syncData();
+        }, 1000 * 60);
     });
+    return isConnected;
 }
 
 
@@ -65,6 +66,9 @@ function checkDev(targetCollection){
 
 async function syncData(){
     var total = 0;
+    if(!isConnected){
+        return;
+    }
     for (const key in arrayToSync) {
         if (Object.hasOwnProperty.call(arrayToSync, key)) {
             const element = arrayToSync[key];
@@ -92,6 +96,9 @@ async function syncData(){
 
 async function find(collection, where){
     return new Promise(function(resolve, reject){
+        if(!isConnected){
+            reject('数据库未连接');
+        }
         db.collection(collection).find(where).toArray(async (err, res)=>{
             if(err) {
                 reject(err)

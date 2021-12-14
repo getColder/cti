@@ -50,7 +50,7 @@ this.onload = function () {
                     alert('查询日期有误！')
                 else{
                     vEvent.$emit('loadingdb',true)
-                    axios.get('/currentstate/db?devid='+ dev +'&gt='+date1+ '&lt=' + date2)
+                    axios.get('/currentstate/db?devid='+ dev +'&gt='+date1+ '&lt=' + date2, {timeout: 20000})
                     .then(function(response){
                         if(response.data){
                             setTimeout(() => {
@@ -81,7 +81,8 @@ this.onload = function () {
                             }, 1000);
                         }    
                     }).catch(err=>{
-                        alert(err)
+                        alert('数据库查询超时，请稍后再试')
+                        console.log(err)
                     })
                 }
             }
@@ -283,6 +284,7 @@ var infoListBox = new Vue({
             that.currentTime = that.querynodes[0];
         })
         vEvent.$on('tipbox',value=>{
+            that.$refs['scroll'].scrollTop = 0;
             that.showtip = true;
             setTimeout(() => {
                 that.tipclass = 'boxtipshow'
