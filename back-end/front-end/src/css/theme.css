@@ -102,7 +102,6 @@ ul,li{
 }
 
 .nav li:hover ul{
-    display: block;
     background-color: #007237;
     display: block;
 }
@@ -117,7 +116,7 @@ ul,li{
 }
 
 .nav li ul li{
-    font-size: 17px;
+    font-size: 15px;
     text-align: center;
     border: 0;
     margin: 0;

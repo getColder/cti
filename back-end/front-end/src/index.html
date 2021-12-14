@@ -24,10 +24,10 @@
         <ul id="nav_default">
             <li><a href=""><p>首页</p></a></li>
             <li id="nav-excel">
-                <a id="csvinfo" :href="linkTo"><p>电子表格</p></a>
+                <a id="csvinfo"><p>电子表格</p></a>
                 <ul>
-                    <li>下载最近200条</li>
-                    <li>从数据库下载</li> 
+                    <li><a :href="linkTo"> 下载近期数据</a></li>
+                    <li><a :href="linkTodb"> 从设备数据库下载</a></li> 
                 </ul>
             </li>
             <li  v-on:click="optDb"><p>数据库查询</p></li>

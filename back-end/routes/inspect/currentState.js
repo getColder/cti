@@ -95,7 +95,7 @@ router.get('/db', (req, res, next) => {
                 }
             })
             .catch(reson => {
-                console.log('database\t 数据库请求错误： \t %s',new Date().toLocaleTimeString());
+                console.log('database\t 数据库请求错误： %s\t %s', reson, new Date().toLocaleTimeString());
                 var empty = [];
                 res.json(empty)
                 res.end();
