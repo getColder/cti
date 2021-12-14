@@ -4,6 +4,7 @@ const insertInfo = require('../../application/database').insertInfo;
 const find = require('../../application/database.js').find; //mongodb数据库
 const router = express.Router()
 
+
 const maxLenOfInfos = 1000;
 const maxTimeline = 1000;
 var allDevsCurrentData = {}
@@ -17,7 +18,7 @@ setTimeout(function() {
 
 
 router.get('/', (req, res) => {
-    res.send('当前状态---来自于硬件');
+    res.send('当前数据与状态---来自于硬件,本网页仅提供数据状态展示与查询功能。');
 })
 
 router.get('/devs', (req, res) => {
