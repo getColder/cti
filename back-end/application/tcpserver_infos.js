@@ -10,7 +10,7 @@ var tcpServerPort = 9520;
 //字段检查正则表达式
 const infoCheckReg = /[0-9]|\bType\b|\bId\b|\bTime\b|\bFloor\b|\bWaterTemp\b|\bPumpStaus\b|\bValveStatus\b|\bCementTemp\b|\bEnvirTemp\b|\bSpareData\b|\bTempData\b/;
 var devlist = new Set();
-var reListenTime = 1000; 
+var reListenTime = 15000; 
 
 //日志文件
 //1、普通输出

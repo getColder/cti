@@ -13,7 +13,7 @@ function preZero(num){
 
 var data = {
     "Type":"NULL",
-    "Id":7,
+    "Id":8,
     "Time":[2021,12,05,20,56],
     "TempData":
     [
@@ -22,11 +22,11 @@ var data = {
         {"Floor":3,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
         {"Floor":4,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
         {"Floor":5,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
-        {"Floor":6,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0}],
-    "SpareData":0
+        {"Floor":6,"WaterTemp":[7.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0}],
+    "SpareData": [1, 0]
 }
 
-const client = net.createConnection(port, address, ()=>{
+const client = net.createConnection(port, ali_address, ()=>{
     setInterval(() => {
         var date = new Date()
         const year = date.getUTCFullYear();
