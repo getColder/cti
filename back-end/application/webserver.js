@@ -15,7 +15,7 @@ const app = express()
     app.use('/', indexRoute);
     app.use('/currentstate', currentStateRoute);
     app.listen(port, () => {
-        console.log('Webserver\t服务器启动成功!\t listening:%s\t %s' ,port,new Date().toLocaleTimeString());
+        console.log('Webserver\t服务器启动成功!\t listening:%s\t %s' ,port,new Date().toLocaleString());
     })
 }
 

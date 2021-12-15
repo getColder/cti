@@ -31,6 +31,9 @@ tcp_fork.on('message', (msg)=>{
         case 2:
             exitAll();
             break;
+        case 10:
+            console.log('Tcpserver\t服务器启动成功!\t listening:%s\t %s' ,msg.data,new Date().toLocaleString());
+            break;
         default:
             break;
     }

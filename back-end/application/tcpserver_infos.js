@@ -9,7 +9,8 @@ const { basename } = require('path');
 var tcpServerPort = 9520;
 //字段检查正则表达式
 const infoCheckReg = /[0-9]|\bType\b|\bId\b|\bTime\b|\bFloor\b|\bWaterTemp\b|\bPumpStaus\b|\bValveStatus\b|\bCementTemp\b|\bEnvirTemp\b|\bSpareData\b|\bTempData\b/;
-var devlist = new Set(); 
+var devlist = new Set();
+var reListenTime = 1000; 
 
 //日志文件
 //1、普通输出
@@ -20,37 +21,8 @@ console.log('\nbegin 服务器启动-->日志打开成功\t %s', new Date().toLo
 //2、tcp连接列表,60s秒刷新
 var tcpList = [];
 var tcpListPath = __dirname + '/logs/tcpList.log';
-var docheck = false;
-var checkList =  function (){
-    fs.open(tcpListPath,'w',(err,fd)=>{
-        if(err){
-            console.error(err);
-        }
-        var buf = '';
-        for (const key in tcpList) {
-            if (Object.hasOwnProperty.call(tcpList, key)) {
-                const element = tcpList[key];
-                buf += '[' + key + ']'
-                buf += element;
-                buf += '\n'
-            }
-        }
-        tcpList = [];
-        fs.write(fd, buf, (err, written, Tbuffer) => {
-            if (err)
-                console.error(err)
-            fs.close(fd, ()=>{
-                if(docheck == true){
-                    setTimeout(() => {
-                        checkList();
-                    }, 3000);
-                }
-            })
-        })
-    });
-}
-docheck = true;
-checkList();
+
+
 
 
 
@@ -106,7 +78,12 @@ var tcpServer = net.createServer((connection) => {
                 });
             }   catch (error) {
                     console.error('[err:-12]tcpserver\t %s-->%sJSON解析错误,准备断开连接\t %s',address , connection.DevID , new Date().toLocaleString, );
-                    console.error('错误数据：' + this.buf)
+                    console.error('错误数据：' + this.buf);
+                    //发送方异常：暂停监听
+                    tcpServer.close();
+                    setTimeout(() => {
+                        tcpServer.listen(tcpServerPort, '0.0.0.0');
+                    }, reListenTime);
                     connection.end(() => {
                         console.log('tcpserver\t feedback \t 成功断开连接[-12]');
                     })
@@ -116,6 +93,11 @@ var tcpServer = net.createServer((connection) => {
             if (!this.isCorrect) {
                 //格式错误
                 console.error('[err:-13]tcpserver\t %s-->%s格式错误,准备断开连接\t %s',address , connection.DevID , new Date().toLocaleString, );
+                //发送方异常：暂停监听
+                tcpServer.close();
+                setTimeout(() => {
+                    tcpServer.listen(tcpServerPort, '0.0.0.0');
+                }, reListenTime);
                 connection.end(() => {
                     console.log('tcpserver\t feedback \t 成功断开连接[-13]');
                 })
@@ -129,6 +111,12 @@ var tcpServer = net.createServer((connection) => {
             }
             process.send(message, (err) => {
                 if (err) {
+                    //发送方异常：暂停监听
+                    try {
+                        tcpServer.close();
+                    } catch (error) {
+                        throw error;
+                    }
                     console.error('[err:-21]tcpserver\t %s-->%s进程读写错误,准备断开连接%s\t %s',address , connection.DevID , err, toLocaleString('cn','hour12:false'));
                     connection.end(() => {
                         console.log('tcpserver\t %s\t feedback \t 成功断开连接[-21]',address);
@@ -143,9 +131,14 @@ var tcpServer = net.createServer((connection) => {
         connection.write('', (err) => {
             if (err) {
                 setTimeout(() => {
-                    console.error('[err:-11]tcpserver\t %s-->%s心跳检测：连接无响应,断开连接%s\t %s',address , connection.DevID , err, toLocaleString('cn','hour12:false'));
+                    console.log('[WARN:11]tcpserver\t %s-->%s心跳检测：连接无响应,断开连接%s\t %s',address , connection.DevID , err, toLocaleString('cn','hour12:false'));
+                    //发送方异常：暂停监听
+                    tcpServer.close();
+                    setTimeout(() => {
+                        tcpServer.listen(tcpServerPort, '0.0.0.0');
+                    }, reListenTime);
                     connection.end(() => {
-                            console.log('tcpserver\t %s\t feedback \t 成功断开连接[-11]',address);
+                            console.log('tcpserver\t %s\t feedback \t 成功断开连接[11]',address);
                     })
                   }, 10000);
               }
@@ -167,7 +160,7 @@ var tcpServer = net.createServer((connection) => {
         let secs = Math.floor(duration % 60);
         let mins = Math.floor(duration % 3600 / 60);
         let hours = Math.floor(duration / 3600);
-        console.log('exit\t %s\t duration:%fhs%fmins%fsecs', address, hours, mins, secs);
+        console.log('exit\t %s\t duration:%fhs%fmins%fsecs\t 连接开始于%s', address, hours, mins, secs, connection.startTime.toLocaleString());
     })
     //接受数据存入buf，待完整性检测
     connection.on('data', (data) => {
@@ -178,10 +171,13 @@ var tcpServer = net.createServer((connection) => {
 })
 
 tcpServer.listen(tcpServerPort, '0.0.0.0');
+process.send({
+    index : 10,
+    data : tcpServerPort
+})
 
 process.on('uncaughtException', (err)=>{
     console.error('[err:-100]%s\t %s', err, new Date().toLocaleString('cn','hour12:false'));
-    docheck = false;
     var message = {
         index : 2,
         data : ''
@@ -190,7 +186,7 @@ process.on('uncaughtException', (err)=>{
     throw err
 })
 process.on('exit', (err)=>{
-    docheck = false;
+    console.log('Tcpserver Exit \t%s',new Date().toLocaleDateString())
 })
 
 

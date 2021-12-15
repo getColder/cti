@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs')
 const insertInfo = require('../../application/database').insertInfo;
 const find = require('../../application/database.js').find; //mongodb数据库
+const dbState = require('../../application/database.js').isConnected //数据库是否连接
 const router = express.Router()
 
 
@@ -14,7 +15,6 @@ var devices = [];
 setTimeout(function() {
     init();
 }.bind(this), 1000);
-
 
 
 router.get('/', (req, res) => {
@@ -160,10 +160,9 @@ module.exports.devconf = function(devID){
 };
 
 function init(){
-    console.log('DevConfig\t读取设备默认配置...\t%s',new Date().toLocaleString())
     var defaultDevPath = __dirname + '/config/devices/dev_default.json'
     defalutConfig = JSON.parse('' + fs.readFileSync(defaultDevPath))
-    console.log('DevConfig\t %s\n默认配置：%s',new Date().toLocaleString(), defalutConfig)
+    console.log('DevConfig\t读取设备默认配置\t%s',new Date().toLocaleString())
 
 }
 

@@ -2,16 +2,10 @@
 const express = require('express');
 const router = express.Router();  //路由级中间件
 const csv = require('../application/csvProcess');   //电子表格下载
-const fs = require('fs');
-var allDevsData = require('./inspect/currentState').allDevsData;
+var allDevsData = require('./inspect/currentState').allDevsData; //近期数据
 const find = require('../application/database.js').find; //mongodb数据库
 
 
-
-router.get('/',(req, res, next) =>{
-  res.redirect('/index.html');
-  next();
-});
 
 router.get('/download/csvinfodb', (req, res, next)=>{
     var devid_req = req.query.devid;
@@ -110,4 +104,4 @@ router.get('/download/csvinfo', async (req, res, next) => {
 
 
 
-module.exports = router;
+module.exports = router;  //导出路由
