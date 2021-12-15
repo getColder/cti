@@ -102,7 +102,7 @@
             <li><span>项目标号：{{config.projectNumber}}</span></li>
             <li><span> 地址: {{config.location}}</span></li>
             <li><span>设备编号: {{devinfo.id}}</span></li>
-            <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal">备注: </textarea>
+            <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal" :value="config.note?note+'\n'+config.note:note"></textarea>
         </ul>
         <img id="bg_img" src="img/pic4.jpg" alt="" width="700px" height="700px">
     </div>

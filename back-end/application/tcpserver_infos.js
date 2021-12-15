@@ -17,13 +17,11 @@ var reListenTime = 15000;
 var logFilePath = __dirname + '/logs/tcpServer.log';
 var logfilestream = fs.createWriteStream(logFilePath, { flags: 'a' });
 process.stdout.write = logfilestream.write.bind(logfilestream);   //学习：若果不bind，stdout.write内的函数的this指向process.stdout
-console.log('\nbegin 服务器启动-->日志打开成功\t %s', new Date().toLocaleString('cn','hour12:false'));
+setTimeout(() => {
+    console.log('\nbegin 服务器启动-->日志打开成功\t %s', new Date().toLocaleString('cn','hour12:false'));
+}, 5000);
 //2、tcp连接列表,60s秒刷新
 var tcpList = [];
-var tcpListPath = __dirname + '/logs/tcpList.log';
-
-
-
 
 
 //3、错误输出

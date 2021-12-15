@@ -160,9 +160,9 @@ module.exports.devconf = function(devID){
 };
 
 function init(){
-    var defaultDevPath = __dirname + '/config/devices/dev_default.json'
-    defalutConfig = JSON.parse('' + fs.readFileSync(defaultDevPath))
-    console.log('DevConfig\t读取设备默认配置\t%s',new Date().toLocaleString())
+    var defaultDevPath = __dirname + '/config/devices/dev_default.json';
+    defalutConfig = JSON.parse('' + fs.readFileSync(defaultDevPath));
+    console.log('DevConfig\t读取设备默认配置\t%s',new Date().toLocaleString());
 
 }
 
@@ -186,8 +186,8 @@ function devCheckInit(devid_selected){
             config: {
                 location : theConfig.location,
                 projectNumber : theConfig.projectNumber,
+                note: theConfig.note?theConfig.note:''
             },
-            keepAlive : true,
         }       
         //内存维护数据：dev{'A1','A2'....     }  -->A1:{ ary,current,timeline }
     }

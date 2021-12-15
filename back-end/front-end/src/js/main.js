@@ -50,7 +50,6 @@ this.onload = function () {
                 if(new Date(date1) > new Date(date2))
                     alert('查询日期有误！')
                 else{
-                    console.log(date1)
                     vEvent.$emit('loadingdb',true)
                     axios.get('/currentstate/db?devid='+ dev +'&gt='+date1+ '&lt=' + date2, {timeout: 20000})
                     .then(function(response){
@@ -116,7 +115,8 @@ this.onload = function () {
                 devinfo : {
                     id : currentDevId
                 },
-                config : {}
+                config : {},
+                note: '备注:'
             }
         },
         methods: {
@@ -222,7 +222,7 @@ var infoListBox = new Vue({
                         that.devnodes = response.data;
                     }
                     else
-                        devbord.devices = [];
+                        devTable.devices = [];
                 })
         },
         getTimeline : function(){

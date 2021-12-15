@@ -1,5 +1,6 @@
 {
     "projectNumber" : "模拟",
-    "location" : "贵州大学崇理楼"
+    "location" : "贵州大学崇理楼",
+    "note" : "这是一台PC机模拟的测试设备，每分钟发送3条数据"
 }
 
