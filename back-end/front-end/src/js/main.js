@@ -130,12 +130,10 @@ this.onload = function () {
         },
         mounted() {
             var that = this;
-             setInterval(() => {
-                that.getDevConfig();
-            }, 3000);
-	    setTimeout(() => {
+            setTimeout(() => {
                 that.getDevConfig();
             }, 100);
+	    vEvent.$on('updateDev',that.getDevConfig);
         },
        components:{
         }
@@ -227,6 +225,7 @@ var infoListBox = new Vue({
                     else
                         devTable.devices = [];
                 })
+            vEvent.$emit('updateDev',currentDevId)
         },
         getTimeline : function(){
             var thisTimeline = this;
