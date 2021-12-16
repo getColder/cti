@@ -35,7 +35,7 @@ function link() {
                 try {
                     link();
                 } catch (error) {
-                    console.log(连接失败)
+                    console.log('连接失败')
                 }
             }, 3000);
         })

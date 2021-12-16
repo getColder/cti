@@ -7,9 +7,10 @@ var modalT = {
                 <h3>{{title}}</h3>\
             </div>\
             <div class="modal-body">\
-                <slot><slot>\
+                <slot></slot>\
             </div>\
             <div class="modal-footer">\
+                <slot name="footbt"></slot>\
                 <button type="button" class="btn-close" @click="closeit">关闭</button>\
                 <button type="button" class="btn-confirm" @click="confirmit">确认</button>\
             </div>\

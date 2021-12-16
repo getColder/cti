@@ -26,8 +26,8 @@
             <li id="nav-excel">
                 <a id="csvinfo"><p>电子表格</p></a>
                 <ul>
-                    <li><a :href="linkTo"> 下载近期数据</a></li>
-                    <li><a :href="linkTodb"> 从设备数据库下载</a></li> 
+                    <li><a :href="linkTo"> 设备近期数据</a></li>
+                    <li><a :href="linkTodb"> 设备历史数据</a></li> 
                 </ul>
             </li>
             <li  class="navOpt" v-on:click="optDb"><p>数据库查询</p></li>
@@ -40,16 +40,16 @@
                         <input type="date" ref="inputDbTimeMin" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
                         至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
                     </li>
-                    <li>查询设备ID或地址：
+                    <li>查询 <span style="color: #22a037;">{{dbSearchByDev?'设备ID':'设备地址'}}</span> ：
                         <input type="input" ref="inputDbDev"  value="">
-                    </li>
+                    </li>      
                 </ul>
-                <img :class="turninfi?'turni':'turnoff'" src="img/loading.png" alt="" style="width: 75px;height: 75px;float: right;right: 10%;">
-                <button style="position: absolute;top:100%;left:10px;margin-top: 20px;width: 90px;height: 40px;
-                background-color: #2d8cf0;color: white;border-width: 0;
-                padding: 5px;font-size: medium; border-radius: 15%;">
-                    其他</button>
                 <br>
+                <img :class="turninfi?'turni':'turnoff'" src="img/loading.png" alt="" style="width: 75px;height: 75px;float: right;right: 10%;">
+                <div slot="footbt" id="buttonDB1" @click="dbSearchByDev=!dbSearchByDev">
+                    按{{dbSearchByDev?'设备地址':'设备ID'}}查询
+                    <img src="img/switch.png" alt="">
+                </div>
             </modal>
         </div>
     </div>

@@ -69,37 +69,66 @@ router.get('/data', (req, res, next) => {
 
 router.get('/db', (req, res, next) => {
     var devid_req = req.query.devid;
+    var loc_req = req.query.loc;
     var date_lt = req.query.lt;
     var date_gt = req.query.gt;
-    if(devid_req&&date_lt&&date_gt){
+    if((devid_req || loc_req)&&date_lt&&date_gt){
         date_gt += ':00:00:00'
         date_lt += ':23:59:00'
         var dateTime1 = new Date(date_gt);
         var dateTime2 = new Date(date_lt);
         if(dateTime1 && dateTime2){
-            find('dev_'+ devid_req,{
-                "time": {
-                    $gte : dateTime1,
-                    $lte : dateTime2
-                }
-            })
-            .then((data)=>{
-                if(data.length > 0){
-                    res.json(data)
-                    res.end()
-                }
-                else{
+            if(devid_req){
+                find('dev_'+ devid_req,{
+                    "time": {
+                        $gte : dateTime1,
+                        $lte : dateTime2
+                    }
+                }, 0)
+                .then((data)=>{
+                    if(data.length > 0){
+                        res.json(data)
+                        res.end()
+                    }
+                    else{
+                        var empty = [];
+                        res.json(empty)
+                        res.end();
+                    }
+                })
+                .catch(reson => {
+                    console.log('database\t 数据库请求错误： %s\t %s', reson, new Date().toLocaleString());
                     var empty = [];
                     res.json(empty)
                     res.end();
-                }
-            })
-            .catch(reson => {
-                console.log('database\t 数据库请求错误： %s\t %s', reson, new Date().toLocaleTimeString());
-                var empty = [];
-                res.json(empty)
-                res.end();
-            })
+                })
+            }
+            else if(loc_req){
+                find(loc_req,{
+                    "time": {
+                        $gte : dateTime1,
+                        $lte : dateTime2,
+                    },
+                    "location": loc_req
+                },1)
+                .then((data)=>{
+                    if(data.length > 0){
+                        res.json(data)
+                        res.end()
+                    }
+                    else{
+                        var empty = [];
+                        res.json(empty)
+                        res.end();
+                    }
+                })
+                .catch(reson => {
+                    console.log('database\t 数据库请求错误： %s\t %s', reson, new Date().toLocaleString());
+                    var empty = [];
+                    res.json(empty)
+                    res.end();
+                })
+            }
         }
         else{
             var empty = [];

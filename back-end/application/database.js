@@ -55,11 +55,13 @@ async function insert(dealData){
     if(!isConnected){
         return;
     }
-    var theLocation = '';
+    var theLocation = dealData.location;
+    var theProjectNumber = dealData.projectNumber;
     const theTime = new Date(dealData.Time[0],Number(dealData.Time[1]) - 1,dealData.Time[2],Number(dealData.Time[3]),dealData.Time[4])
     var document = {
         time : theTime,
         location : theLocation,
+        projectNumber: theProjectNumber,
         data : dealData
     }
     var targetCollection  = 'dev_' + devID;
@@ -112,17 +114,60 @@ async function syncData(){
 }
 
 
-async function find(collection, where){
-    return new Promise(function(resolve, reject){
+async function find(collection, where, queryType){
+    return new Promise(async function(resolve, reject){
         if(!isConnected){
             reject('数据库未连接');
+            return;
         }
-        db.collection(collection).find(where).toArray(async (err, res)=>{
-            if(err) {
-                reject(err)
-            }
-            resolve(res)
+        var tableNames = [];
+        tableNames = await db.listCollections().toArray()
+        .then(table =>{
+            var temp = [];
+             table.forEach(element => {
+                 temp.push(element.name)
+             });
+             return temp;
         })
+        if(queryType == 0){
+            //按设备查找
+            var collectionExist = false;
+            tableNames.forEach(theName => {
+                if (collection == theName)
+                    collectionExist = true;
+            });
+            if (!collectionExist) {
+                reject('集合' + collection + '不存在');
+                return;
+            }
+            db.collection(collection).find(where).toArray(async (err, res) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(res)
+            })
+        }
+        else if(queryType == 1){
+            //按地址信息查询
+            var ress = [];
+            for (const key in tableNames) {
+                if (Object.hasOwnProperty.call(tableNames, key)) {
+                    const element = tableNames[key];
+                    var resQ;
+                    resQ = await db.collection(element).find(where).toArray()
+                    .then(async (res) => {
+                        return res;
+                    })
+                    try {
+                        if(resQ.length > 0)
+                            ress = ress.concat(resQ)
+                    } catch (error) {
+                        console.log('ERR[-22]DataBase\t 数据库查询异常：%s! \t %s',error, new Date().toLocaleString());
+                    }
+                }
+            }
+            resolve(ress);
+        }
     })
 }
 

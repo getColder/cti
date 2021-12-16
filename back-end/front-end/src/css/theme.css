@@ -131,6 +131,7 @@ ul,li{
 
 }
 
+
 .nav a{
     color: white;
     text-decoration: none;    
@@ -139,6 +140,41 @@ ul,li{
 .navOpt:hover{
 background-color: #f1770e;
 border: 1px solid white;
+}
+
+#buttonDB1{
+    position: relative;
+    width: 170px;
+    height: 30px;
+    color: white;
+    background-color: #999999;
+    border: 1px solid #111539;
+    padding-left: 15px;
+    font-size: medium; 
+    border-radius: 15px;
+    z-index: 5000;
+    margin-right: 50%;
+}
+
+#buttonDB1:hover{
+    background-color: #2d8cf0;
+}
+
+#buttonDB1:active{
+    transform: rotateX(360deg);
+    transition: all 0.1s linear;
+}
+
+#buttonDB1 img{
+    background-color: #fff;
+    border-radius: 50%;
+    float: right;
+    top: 0px;
+    margin:0;
+    width: 30px;
+    height: 30px;
+    z-index: 5001;
+    transition: all 0.1s linear;
 }
 
 #options {
