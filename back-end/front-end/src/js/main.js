@@ -130,11 +130,14 @@ this.onload = function () {
         },
         mounted() {
             var that = this;
-            setInterval(() => {
+             setInterval(() => {
                 that.getDevConfig();
             }, 3000);
+	    setTimeout(() => {
+                that.getDevConfig();
+            }, 100);
         },
-        components:{
+       components:{
         }
     })
 
@@ -249,7 +252,7 @@ var infoListBox = new Vue({
                 this.lockInterval = setInterval(() => {
                     this.getTimeline();
                     this.getDevs();
-                }, 60000 * 1);
+                }, 7500);
             }
         },
         getItems(){
@@ -308,8 +311,8 @@ var infoListBox = new Vue({
         setTimeout(()=> {
             that.getTimeline();
             that.getDevs();
-        }, 1000)
-        this.lockAutoUpdate(false); //初始不锁定自动更新
+        }, 100)
+        this.lockAutoUpdate(true); //初始锁定自动更新
         this.currentDevId = currentDevId;
     },
     components:{

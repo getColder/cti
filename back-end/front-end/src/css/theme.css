@@ -333,8 +333,13 @@ ul,li{
     right: 2px;
     border-radius: 50%;
     background-color: transparent;
-    opacity: 0.8; 
+    opacity: 0.6; 
 }
+
+#indic img{
+	opacity: 0.8;
+}
+
 
 .waterHighLevel{
     box-shadow: 0 -5px 25px 9px #00ff00;
@@ -428,24 +433,4 @@ ul,li{
 #fastSearch img:hover{
     cursor: pointer;
 }
-
-
-.led{
-    padding: auto;
-    background-image: url(../img/led_red.png) no-repeat left top;
-    width: 25px;
-    height: 25px;
-    box-shadow: 0px 0px 17px 1px red inset;
-    background-color: transparent;
-}
-
-.ledoff{
-    background-image: url(img/pic1.jpg) no-repeat left top;
-    width: 250px;
-    height: 250px;
-    border: 1px solid black;
-    border-radius:35%;
-    box-shadow: 0px 0px 10px 1px green;
-}
-
 
