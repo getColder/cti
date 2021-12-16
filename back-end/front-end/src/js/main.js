@@ -184,7 +184,7 @@ var infoListBox = new Vue({
             devnodes : [], //设备数据节点
             querynodes : [], //数据库节点
             currentTime : '',  //选中时间设备
-            currentDevId : '未知', 
+            currentDevId : '', 
             dbqueryData : [],  //数据库数据
             lockInterval : null,
             riseSort : true,
@@ -273,6 +273,7 @@ var infoListBox = new Vue({
     },
     mounted(){
         var that = this;
+        this.currentDevId = currentDevId;
         vEvent.$on('updateDev',value=>{
             that.getTimeline();
         })
@@ -313,7 +314,6 @@ var infoListBox = new Vue({
             that.getDevs();
         }, 100)
         this.lockAutoUpdate(true); //初始锁定自动更新
-        this.currentDevId = currentDevId;
     },
     components:{
         'lock-auto-up': lockAutoUp,
