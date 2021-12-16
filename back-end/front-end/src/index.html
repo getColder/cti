@@ -63,8 +63,8 @@
     <div style="height: 50px;"></div>
     <div id="infoListBox">
         <span id="fastSearch">
-            <img src="img/timelist_rise.png" alt="" width=" 20px" height="20px"
-            style="position:relative;top:4px;left: -6px;" @click="getItems().reverse();currentTime = getItems()[0];riseSort = !riseSort">{{title}} 
+            <img src="img/timelist_rise.png" title="升序/降序" width=" 20px" height="20px"
+            style="position:relative;top:4px;left: -6px;" :class="riseSort?'turnX':'turnXback'" @click="getItems().reverse();currentTime = getItems()[0];riseSort = !riseSort">{{title}} 
         </span>
         <lock-auto-up @lockupdate="lockAutoUpdate"></lock-auto-up>
         <refresh @refresh="getTimeline(), getDevs()"></refresh>
@@ -76,7 +76,7 @@
                  }}
                     <img v-show="currentTime === item" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
-                <li @click="switchDev(item)" style="margin-left: auto;font-size: 17px;" v-if="typeList===1">{{
+                <li @click="switchDev(item)" style="margin-left: auto;padding: 14px;font-size: 17px;" v-if="typeList===1">{{
                     '设备'+ item
                  }}
                     <img v-show="currentDevId == item" src="img/this.png" width="17px" height="17px" alt="">

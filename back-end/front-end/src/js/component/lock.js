@@ -19,8 +19,8 @@ const lockAutoUp = {
      },
      data(){
          return {
-             state : false,
-             lockurl : "img/unlock.png"
+             state : true,
+             lockurl : "img/lock.png"
          }
      }
 }
