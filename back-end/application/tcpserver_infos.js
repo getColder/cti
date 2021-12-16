@@ -63,8 +63,9 @@ var tcpServer = net.createServer((connection) => {
         if (this.complete < n) {}
         else if (this.complete == n && this.buf != '') {
             //2、检测次数超过指定次数,拿到完整数据并处理
+            const datainfo = this.buf;
             try {
-                info = JSON.parse(this.buf, (k, v) => {
+                info = JSON.parse(datainfo, (k, v) => {
                     if (k != '')
                     this.isCorrect &= infoCheckReg.test(k);  //检查JSON是否符合格式
                     if (k === 'Id'){
@@ -75,8 +76,8 @@ var tcpServer = net.createServer((connection) => {
                     }
                 });
             }   catch (error) {
-                    console.error('[err:-12]tcpserver\t %s-->%sJSON解析错误,准备断开连接\t %s',address , connection.DevID , new Date().toLocaleString, );
-                    console.error('错误数据：' + this.buf);
+                    console.error('[err:-12]tcpserver\t %s-->%sJSON解析错误,准备断开连接\t %s',address , connection.DevID , new Date().toLocaleString('cn','hour12:false'));
+                    console.error('错误数据：' + datainfo);
                     //发送方异常：暂停监听
                     tcpServer.close();
                     setTimeout(() => {
@@ -90,7 +91,7 @@ var tcpServer = net.createServer((connection) => {
             //检测不通过,断开连接并打印到日志 err:-1x
             if (!this.isCorrect) {
                 //格式错误
-                console.error('[err:-13]tcpserver\t %s-->%s格式错误,准备断开连接\t %s',address , connection.DevID , new Date().toLocaleString, );
+               console.error('[err:-13]tcpserver\t %s-->%s格式错误,准备断开连接\t %s',address , connection.DevID , new Date().toLocaleString('cn','hour12:false'));
                 //发送方异常：暂停监听
                 tcpServer.close();
                 setTimeout(() => {
@@ -102,10 +103,10 @@ var tcpServer = net.createServer((connection) => {
                 return;
             }
             //检测通过，推送给web服务器进程
-            console.log('tcpserver\t devID：%s\t write:%s\t %s ', this.DevID ,this.buf.length,new Date().toLocaleString('cn','hour12:false'));
+            console.log('tcpserver\t devID：%s\t write:%s\t %s ', this.DevID ,datainfo.length, new Date().toLocaleString('cn','hour12:false'));
             var message = {
                 index : 0,
-                data : this.buf
+                data : datainfo
             }
             process.send(message, (err) => {
                 if (err) {
@@ -158,11 +159,10 @@ var tcpServer = net.createServer((connection) => {
         let secs = Math.floor(duration % 60);
         let mins = Math.floor(duration % 3600 / 60);
         let hours = Math.floor(duration / 3600);
-        console.log('exit\t %s\t duration:%fhs%fmins%fsecs\t 连接开始于%s', address, hours, mins, secs, connection.startTime.toLocaleString());
+        console.log('exit\t %s, 设备:%s\t duration:%fhs%fmins%fsecs\t 连接开始于%s\t',address,connection.DevID, hours, mins, secs, connection.startTime.toLocaleString());
     })
     //接受数据存入buf，待完整性检测
     connection.on('data', (data) => {
-        console.error('' + data)
         connection.buf += data;
         connection.complete = 0;
     })
