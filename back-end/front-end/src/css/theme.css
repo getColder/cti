@@ -249,7 +249,6 @@ border: 1px solid white;
 #infoListBox li{  
     scrollbar-width: none;
     list-style-type: none;
-    font-size: 80%;
     font-family: times new roman;
     color:#096868;
     margin: 14px;
