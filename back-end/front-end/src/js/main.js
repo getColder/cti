@@ -64,7 +64,7 @@ this.onload = function () {
                         const value = this.$refs.inputDbAddr.value;
                         requrl = '/currentstate/db?loc='+ value +'&gt='+date1+ '&lt=' + date2;
                     }
-                    axios.get(requrl, {timeout: 20000})
+                    axios.get(requrl)
                     .then(function(response){
                         if(response.data){
                             setTimeout(() => {
