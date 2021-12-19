@@ -30,7 +30,7 @@
                     <li><a :href="linkTodb"> 设备历史数据</a></li> 
                 </ul>
             </li>
-            <li  class="navOpt" v-on:click="optDb"><p>数据库查询</p></li>
+            <li  class="navOpt" v-on:click="optDb(), getDevs()"><p>数据库查询</p></li>
             <li  class="navOpt"><p>后台管理</p></li>
         </ul>
         <div id="dbmdl"> 
@@ -41,7 +41,11 @@
                         至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
                     </li>
                     <li>查询 <span style="color: #22a037;">{{dbSearchByDev?'设备ID':'地址'}}</span> ：
-                        <input type="input" ref="inputDbDev"  value="">
+                        <select ref="inputDbDev"  value="">
+                            <option v-for="item in dbSearchDevnodes" :value="item">
+                                {{'设备' + item }}
+                            </option>
+                        </select>
                     </li>      
                 </ul>
                 <br>

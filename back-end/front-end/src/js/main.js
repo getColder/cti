@@ -32,7 +32,8 @@ this.onload = function () {
                 linkTodb: "download/csvinfodb?devid=" + currentDevId,
                 showdbInput : false,
                 turninfi : false,
-                dbSearchByDev: true
+                dbSearchByDev: true,
+                dbSearchDevnodes : []
             }
         },
         methods:{ 
@@ -92,11 +93,29 @@ this.onload = function () {
                         console.log(err)
                     })
                 }
+            },
+            getDevs : async function() {
+                var that = nav;
+                await axios.get('/currentstate/devs',{timeout : 2000})
+                    .then(function(response){
+                        if(response.data){
+                            var devs = response.data.all;
+                            for (let index = 0; index < devs.length; index++) {
+                                devs[index] = devs[index].substring(4, devs.length);           
+                            }
+                            dbSearchDevnodes = devs; 
+                        }
+                        else
+                            that.dbSearchDevnodes  = [];
+                    }).catch(function(){
+                        alert('获取设备列表异常')
+                        console.log(err);
+                    })
+                
             }
         },
         mounted(){
             var that = this;
-            this.$refs.inputDbDev.value = currentDevId;
             vEvent.$on('updateDev',value=>{
                 this.linkTo = "download/csvinfo?devid=" + value;
             }),
