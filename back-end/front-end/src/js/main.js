@@ -199,8 +199,7 @@ var infoListBox = new Vue({
             riseSort : true,    //排序
             tip : '',   //弹出提示
             tipclass : "boxtiphide",
-            showtip :  false,
-            devOnline : []
+            showtip :  false
 
     },
     methods: {
@@ -289,8 +288,8 @@ var infoListBox = new Vue({
         }
     },
     computed:{
-        onlineDev : function(){
-            this.devOnline = devicesOnlineList;
+        devOnline : function(){
+            return devicesOnlineList;
         }
     },
     mounted(){
