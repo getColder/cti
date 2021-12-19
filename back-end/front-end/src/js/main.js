@@ -96,7 +96,7 @@ this.onload = function () {
                 }
             },
             getDevs : function() {
-                dbSearchDevnodes = devicesList;      
+                this.dbSearchDevnodes = devicesList;      
             }
         },
         mounted(){
