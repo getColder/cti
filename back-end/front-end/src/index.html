@@ -85,7 +85,7 @@
                     '设备'+ item
                 }}
                     <img v-show="currentDevId == item" src="img/this.png" width="17px" height="17px" alt="">
-                    <span>{{devOnline.indexOf(item)?'正在运行':'离线'}}</span>
+                    <span>{{devOnline.indexOf(item) !== -1?'正在运行':'离线'}}</span>
                 </li>
                 <li @click="getQueryData(i)" v-if="typeList===2">{{
                     new Date(item).toLocaleString()
