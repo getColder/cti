@@ -291,7 +291,7 @@ var infoListBox = new Vue({
         devOnline : function(){
             var devsStr = [];
             for(var i = 0;i < devicesOnlineList.length;i ++){
-                devsStr = '' + devicesOnlineList[i];
+                devsStr.push('' + devicesOnlineList[i]);
             }
             return devsStr;
         }
