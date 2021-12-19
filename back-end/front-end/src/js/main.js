@@ -95,8 +95,8 @@ this.onload = function () {
                     })
                 }
             },
-            getDevs : async function() {
-                that.dbSearchDevnodes = devicesList;            
+            getDevs : function() {
+                dbSearchDevnodes = devicesList;      
             }
         },
         mounted(){
