@@ -289,7 +289,8 @@ var infoListBox = new Vue({
     },
     computed:{
         devOnline : function(){
-            return devicesOnlineList;
+            //return devicesOnlineList;
+            return this.title;
         }
     },
     mounted(){
