@@ -58,6 +58,7 @@ ul,li{
     margin-left: -598px;
     margin-top: 17px;
     border-bottom-left-radius: 30px;
+    border-right: 3px solid black;
     align-content: center;
     -webkit-filter:blur(10px);
     filter: grayscale(100%);
