@@ -278,6 +278,7 @@ var infoListBox = new Vue({
                     return this.timenodes;
                 case 1:
                     this.title = '设备列表'
+                    console.log(this.devnodes)
                     return this.devnodes;
                 case 2:
                     this.title = '数据库查询结果'
