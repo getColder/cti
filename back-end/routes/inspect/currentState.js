@@ -3,6 +3,7 @@ const fs = require('fs')
 const insertInfo = require('../../application/database').insertInfo;
 const find = require('../../application/database.js').find; //mongodb数据库
 const dbState = require('../../application/database.js').isConnected //数据库是否连接
+const lsDevs = require('../../application/database.js').listDevs; //设备数据列表
 const router = express.Router()
 
 
@@ -10,7 +11,10 @@ const maxLenOfInfos = 1000;
 const maxTimeline = 1000;
 var allDevsCurrentData = {}
 var defalutConfig
-var devices = [];
+var devices = {
+    on : [],
+    all : []
+}
 
 setTimeout(function() {
     init();
@@ -19,10 +23,14 @@ setTimeout(function() {
 
 router.get('/', (req, res) => {
     res.send('当前数据与状态---来自于硬件,本网页仅提供数据状态展示与查询功能。');
+    res.end();
 })
 
-router.get('/devs', (req, res) => {
-    res.json(devices);
+router.get('/devs',async (req, res) => {
+    if(dbState()){
+        devices.all = await lsDevs();
+        res.json(devices);
+    }
     res.end()
 })
 
@@ -184,14 +192,14 @@ module.exports.update = function (newJSON){
     }
 }
 
-module.exports.devconf = function(devID){
-    devices = devID;
+module.exports.getDevOnline = function(devID_on){
+    devices.on = devID_on;
 };
 
 function init(){
     var defaultDevPath = __dirname + '/config/devices/dev_default.json';
-    defalutConfig = JSON.parse('' + fs.readFileSync(defaultDevPath));
-    console.log('DevConfig\t读取设备默认配置\t%s',new Date().toLocaleString());
+    defalutConfig = JSON.parse('' + fs.readFileSync(defaultDevPath)).config;
+    console.log('Devconfig\t读取设备默认配置\t%s',new Date().toLocaleString());
 
 }
 

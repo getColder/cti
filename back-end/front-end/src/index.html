@@ -40,14 +40,14 @@
                         <input type="date" ref="inputDbTimeMin" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
                         至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
                     </li>
-                    <li>查询 <span style="color: #22a037;">{{dbSearchByDev?'设备ID':'设备地址'}}</span> ：
+                    <li>查询 <span style="color: #22a037;">{{dbSearchByDev?'设备ID':'地址'}}</span> ：
                         <input type="input" ref="inputDbDev"  value="">
                     </li>      
                 </ul>
                 <br>
                 <img :class="turninfi?'turni':'turnoff'" src="img/loading.png" alt="" style="width: 75px;height: 75px;float: right;right: 10%;">
                 <div slot="footbt" id="buttonDB1" @click="dbSearchByDev=!dbSearchByDev">
-                    按{{dbSearchByDev?'设备地址':'设备ID'}}查询
+                    按{{dbSearchByDev?'地址':'设备ID'}}查询
                     <img src="img/switch.png" alt="">
                 </div>
             </modal>

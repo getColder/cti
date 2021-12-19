@@ -176,3 +176,15 @@ exports.startDB = startDB;
 exports.insertInfo = insert;
 exports.find = find;
 exports.isConnected = hasDbConnect;
+exports.listDevs = async function(){
+    var tableNames = [];
+    tableNames = await db.listCollections().toArray()
+    .then(table =>{
+        var temp = [];
+         table.forEach(element => {
+             temp.push(element.name)
+         });
+         return temp;
+    })
+    return temp;
+}

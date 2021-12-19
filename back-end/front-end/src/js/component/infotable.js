@@ -43,10 +43,10 @@ const tableInfoCom = {
     </table> \
     <slot></slot>\
     <div style="border-top:3px solid grey"></div>\
-    <div class="tableConfig">\
         <div>设备号:\
             <span id="tabletitle">{{ devID }}</span> \
         </div>\
+    <div class="tableConfig">\
         <div>定位:\
                 <span id="tabletitle">{{ location }}</span> \
         </div>\

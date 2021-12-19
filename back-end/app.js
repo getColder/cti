@@ -7,8 +7,8 @@ const tcp_fork = child_process.fork('./application/tcpserver_infos.js')	//tcp服
 const mongodb = require('./application/database.js') //mongodb数据库
 
 
-function devconf(devID){
-    server.devconf(devID)
+function getDevOnline(devID){
+    server.getDevOnline(devID)
 }
 
 function exitAll(){
@@ -26,7 +26,7 @@ tcp_fork.on('message', (msg)=>{
             server.sendJSON(msg.data);
             break;
         case 1:
-            devconf(msg.data)
+            getDevOnline(msg.data)
             break;
         case 2:
             exitAll();

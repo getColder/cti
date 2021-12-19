@@ -25,6 +25,6 @@ module.exports.sendJSON = function update(data){
     currentStateRoute.update(data);
 }
 
-module.exports.devconf = function devconf(devID){
-    currentStateRoute.devconf(devID)
+module.exports.getDevOnline = function getDevOnline(devsID_on){
+    currentStateRoute.getDevOnline(devsID_on)
 }
