@@ -100,11 +100,11 @@ this.onload = function () {
                     .then(function(response){
                         if(response.data){
                             console.log(response.data);
-                            var devs = response.data.all;/*
+                            var devs = response.data.all;
                             for (let index = 0; index < devs.length; index++) {
                                 devs[index] = devs[index].substring(4, devs.length);           
-                            }*/
-                            dbSearchDevnodes = devs; 
+                            }
+                            that.dbSearchDevnodes = devs; 
                         }
                         else
                             that.dbSearchDevnodes  = [];
@@ -245,7 +245,6 @@ var infoListBox = new Vue({
             var that = this;
             axios.get('/currentstate/devs')
                 .then(function(response){
-                    console.log(response.data)
                     if(response.data){
                         var devs = response.data.all;
                         for (let index = 0; index < devs.length; index++) {
