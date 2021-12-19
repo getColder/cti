@@ -226,7 +226,7 @@ var infoListBox = new Vue({
             axios.get('/currentstate/devs')
                 .then(function(response){
                     if(response.data){
-                        that.devnodes = response.data;
+                        that.devnodes = response.data.all;
                     }
                     else
                         devTable.devices = [];
