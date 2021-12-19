@@ -56,7 +56,6 @@ this.onload = function () {
                     vEvent.$emit('loadingdb',true);
                     var requrl = '';
                     if(this.dbSearchByDev){
-                        console.log(this.queryDev)
                         const value = this.queryDev;
                         requrl = '/currentstate/db?devid='+ value +'&gt='+date1+ '&lt=' + date2;
                     }

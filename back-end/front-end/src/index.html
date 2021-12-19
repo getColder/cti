@@ -41,12 +41,12 @@
                         至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
                     </li>
                     <li>查询 <span style="color: #22a037;">{{dbSearchByDev?'设备ID':'地址'}}</span> ：
-                        <select v-show="dbSearchByDev" ref="inputDbDev" v-model="queryDev" @change="queryDev = $event.target.value">
+                        <select v-show="dbSearchByDev" v-model="queryDev" @change="queryDev = $event.target.value">
                             <option v-for="(item,key) in dbSearchDevnodes" :value="item">
                                 {{'设备' + item }}
                             </option>
                         </select>
-                        <input v-show="!dbSearchByDev" type="input" ref="inputDbDev"  value="">
+                        <input v-show="!dbSearchByDev" type="input" ref="inputDbAddr"  value="">
                     </li>      
                 </ul>
                 <br>
