@@ -294,6 +294,25 @@ border: 1px solid white;
 background-color: #33445566
 }
 
+.devon {
+    display: inline-block;
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+    background-color: #11ff11;
+    box-shadow: 0 0 12px 2px #11ae11;
+    margin-right: 20px;
+}
+
+.devoff {
+    display: inline-block;
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+    background-color: #777777;
+    box-shadow: 0 0 12px 2px #333333;
+    margin-right: 20px;
+}
 
 
 #devopt {
