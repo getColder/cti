@@ -156,7 +156,6 @@ border: 1px solid white;
 
 #buttonDB1 img{
     border-radius: 0;
-    border: 1px solid black;
     border-top: 1px solid #111539;
     border-bottom: 1px solid #111539;
     background-color: #fff;
@@ -173,7 +172,7 @@ border: 1px solid white;
 }
 
 #dbload{
-    margin auto;
+    margin: auto;
     margin-right: 70px;
 }
 
