@@ -143,15 +143,19 @@ border: 1px solid white;
 }
 
 #buttonDB1{
+    font-size: 0;
+    padding: 0;
     position: relative;
     width: 170px;
     height: 30px;
     color: white;
     background-color: #999999;
     border: 1px solid #111539;
+    border-right-width: 0;
     padding-left: 15px;
     font-size: medium; 
-    border-radius: 15px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
     z-index: 5000;
     margin-right: 50%;
 }
@@ -160,17 +164,18 @@ border: 1px solid white;
     background-color: #2d8cf0;
 }
 
-#buttonDB1:active{
-    transform: rotateX(360deg);
-    transition: all 0.1s linear;
-}
-
 #buttonDB1 img{
+    border-radius: 0;
+    border: 1px solid black;
+    border-top: 1px solid #111539;
+    border-bottom: 1px solid #111539;
     background-color: #fff;
-    border-radius: 50%;
     float: right;
+    right: -30px;
     top: 0px;
-    margin:0;
+    margin: -1px;
+    margin-left: -3px;
+    padding: 0;
     width: 30px;
     height: 30px;
     z-index: 5001;
@@ -249,8 +254,8 @@ border: 1px solid white;
 #infoListBox li{  
     scrollbar-width: none;
     list-style-type: none;
-    font-size: 90%;
-    font-family: times new roman;
+    font-size: 80%;
+    font-family: 'Times New Roman', Times, serif;
     color:#096868;
     margin: 14px;
     margin-left: 8px;

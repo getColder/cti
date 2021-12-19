@@ -36,10 +36,6 @@
         <div id="dbmdl"> 
             <modal-t v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询">
                 <ul>
-                    <li>查询日期：
-                        <input type="date" ref="inputDbTimeMin" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
-                        至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
-                    </li>
                     <li>查询 <span style="color: #22a037;">{{dbSearchByDev?'设备ID':'地址'}}</span> ：
                         <select v-show="dbSearchByDev" v-model="queryDev" @change="queryDev = $event.target.value">
                             <option v-for="(item,key) in dbSearchDevnodes" :value="item">
@@ -47,13 +43,17 @@
                             </option>
                         </select>
                         <input v-show="!dbSearchByDev" type="input" ref="inputDbAddr"  value="">
-                    </li>      
+                    </li>    
+                    <li>查询日期：
+                        <input type="date" ref="inputDbTimeMin" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
+                        至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
+                    </li>  
                 </ul>
                 <br>
                 <img :class="turninfi?'turni':'turnoff'" src="img/loading.png" alt="" style="width: 75px;height: 75px;float: right;right: 10%;">
                 <div slot="footbt" id="buttonDB1" @click="dbSearchByDev=!dbSearchByDev;">
-                    按{{dbSearchByDev?'地址':'设备ID'}}查询
-                    <img src="img/switch.png" alt="">
+                    <span style="font-size: 19px;">按{{dbSearchByDev?'地址':'设备ID'}}查询</span>
+                    <img :class="dbSearchByDev?'turnYback':'turnY'" src="img/switch.png" alt="">
                 </div>
             </modal>
         </div>
@@ -75,20 +75,21 @@
         <refresh @refresh="getTimeline(), getDevs()"></refresh>
         <div id="timelineScroll" ref="scroll">
             <div  v-show="showtip" :class='tipclass'>&nbsp;{{tip}}</div>
-            <ul v-for="(item, i) in getItems()" :key='item' v-show="item">
+            <ul v-for="(item, i) in getItems()" v-show="item">
                 <li @click="getData(item)" v-if="typeList===0">{{
                     item[0]+'年'+item[1]+'月'+item[2]+'日'+item[3]+'时'+item[4]+'分'
-                 }}
+                }}
                     <img v-show="currentTime === item" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
                 <li @click="switchDev(item)" style="margin-left: auto;padding: 14px;font-size: 17px;" v-if="typeList===1">{{
                     '设备'+ item
-                 }}
+                }}
                     <img v-show="currentDevId == item" src="img/this.png" width="17px" height="17px" alt="">
+                    <span>{{(devOnline.indexOf(item)} == -1)?'正在运行':'离线'}</span>
                 </li>
                 <li @click="getQueryData(i)" v-if="typeList===2">{{
                     new Date(item).toLocaleString()
-                 }}
+                }}
                     <img v-show="i === currentTime" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
             </ul>

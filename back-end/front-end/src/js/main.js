@@ -2,6 +2,7 @@ const host = window.location.host;  //网址
 const devInfoURL = 'data'
 
 var devicesList = [];
+var devicesOnlineList = [];
 var currentDevId = localStorage.getItem("devid");
 var devConfig = {}
 
@@ -125,9 +126,6 @@ this.onload = function () {
                 showit : true,
                 showModal : false,
                 devID : currentDevId,
-                devinfo : {
-                    id : currentDevId
-                },
                 config : {},
                 note: '备注:'
             }
@@ -197,11 +195,12 @@ var infoListBox = new Vue({
             currentTime : '',  //选中时间设备
             currentDevId : '', 
             dbqueryData : [],  //数据库数据
-            lockInterval : null,
-            riseSort : true,
-            tip : '',
+            lockInterval : null,    //自动更新锁
+            riseSort : true,    //排序
+            tip : '',   //弹出提示
             tipclass : "boxtiphide",
-            showtip :  false
+            showtip :  false,
+            devOnline : []
 
     },
     methods: {
@@ -238,6 +237,7 @@ var infoListBox = new Vue({
                             devs[index] = devs[index].substring(4, devs.length);                 
                         }
                         devicesList = that.devnodes = devs;
+                        devicesOnlineList = response.data.on;
                     }
                     else
                     devicesList = that.devnodes = [];
@@ -285,6 +285,11 @@ var infoListBox = new Vue({
                 default:
                     return this.timenodes;
             }
+        }
+    },
+    computed:{
+        onlineDev : function(){
+            this.devOnline = devicesOnlineList;
         }
     },
     mounted(){

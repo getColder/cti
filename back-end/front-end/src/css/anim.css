@@ -29,6 +29,16 @@
     transform: rotateX(180deg);
 }
 
+.turnY{
+    transform: rotateY(180deg) translateX(100%);
+    transition: all 0.15s linear;
+}
+
+.turnYback{
+    transform: rotateY(360deg);
+    transition: all 0.15s linear;
+}
+
 @keyframes turnT{
     0%{-webkit-transform:rotate(0deg);}
     25%{-webkit-transform:rotate(90deg);}
