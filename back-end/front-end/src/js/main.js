@@ -289,7 +289,11 @@ var infoListBox = new Vue({
     },
     computed:{
         devOnline : function(){
-            return devicesOnlineList;
+            var devsStr = [];
+            for(var i = 0;i < devicesOnlineList.length;i ++){
+                devsStr = '' + devicesOnlineList[i];
+            }
+            return devsStr;
         }
     },
     mounted(){
