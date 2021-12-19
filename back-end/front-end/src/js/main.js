@@ -226,7 +226,7 @@ var infoListBox = new Vue({
             axios.get('/currentstate/devs')
                 .then(function(response){
                     if(response.data){
-                        let devs = response.data.all;
+                        var devs = response.data.all;
                         for (const key in devs) {
                             dev = devs[key];
                             dev = dev.substring(4, dev.length);
