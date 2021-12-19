@@ -1,6 +1,7 @@
 const host = window.location.host;  //网址
 const devInfoURL = 'data'
 
+var devicesList = [];
 var currentDevId = localStorage.getItem("devid");
 var devConfig = {}
 
@@ -95,24 +96,7 @@ this.onload = function () {
                 }
             },
             getDevs : async function() {
-                var that = nav;
-                await axios.get('/currentstate/devs',{timeout : 2000})
-                    .then(function(response){
-                        if(response.data){
-                            console.log(response.data);
-                            var devs = response.data.all;
-                            for (let index = 0; index < devs.length; index++) {
-                                devs[index] = devs[index].substring(4, devs.length);           
-                            }
-                            that.dbSearchDevnodes = devs; 
-                        }
-                        else
-                            that.dbSearchDevnodes  = [];
-                    }).catch(function(){
-                        alert('获取设备列表异常')
-                        console.log(err);
-                    })
-                
+                that.dbSearchDevnodes = devicesList;            
             }
         },
         mounted(){
@@ -135,7 +119,6 @@ this.onload = function () {
         data(){
             return{
                 showit : true,
-                devices : [],
                 showModal : false,
                 devID : currentDevId,
                 devinfo : {
@@ -250,11 +233,10 @@ var infoListBox = new Vue({
                         for (let index = 0; index < devs.length; index++) {
                             devs[index] = devs[index].substring(4, devs.length);                 
                         }
-                        that.devnodes = devs; 
-
+                        devicesList = that.devnodes = devs;
                     }
                     else
-                        devTable.devices = [];
+                    devicesList = that.devnodes = [];
                 })
             vEvent.$emit('updateDev',currentDevId)
         },
