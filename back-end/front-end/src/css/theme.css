@@ -300,7 +300,7 @@ background-color: #33445566
     height:15px;
     border-radius: 50%;
     background-color: #11ff11;
-    box-shadow: 0 0 12px 2px #11ae11;
+    box-shadow: 0 0 9px 2px #11ae11;
     margin-right: 20px;
 }
 
@@ -310,7 +310,7 @@ background-color: #33445566
     height:15px;
     border-radius: 50%;
     background-color: #a7a7a7;
-    box-shadow: 0 0 12px 2px #333333;
+    box-shadow: 0 0 6px 1px #333333;
     margin-right: 20px;
 }
 
