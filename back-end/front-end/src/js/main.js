@@ -228,10 +228,8 @@ var infoListBox = new Vue({
                     if(response.data){
                         let devs = response.data.all;
                         for (const key in devs) {
-                            if (Object.hasOwnProperty.call(devs, key)) {
-                                const dev = devs[key];
-                                dev = dev.substring(4, dev.length);                
-                            }
+                            dev = devs[key];
+                            dev = dev.substring(4, dev.length);                
                         }
                         that.devnodes = devs; 
 
