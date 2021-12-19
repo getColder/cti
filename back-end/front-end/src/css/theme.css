@@ -38,19 +38,8 @@ ul,li{
     opacity: 0.3;
 }
 
-#bg_img2 {
-    margin: 0;
-    padding: 0;
-    width: 50%;
-    position: static;
-    float: left;
-    bottom: 0;
-    z-index: -3000;
-    filter: grayscale(20%);
-    -webkit-filter: grayscale(25%);
-}
 
-.nav img{
+#bg_navimg{
     z-index: -1020;
     position: relative;
     height: 209px;
@@ -181,6 +170,11 @@ border: 1px solid white;
     height: 30px;
     z-index: 5001;
     transition: all 0.1s linear;
+}
+
+#dbload{
+    margin auto;
+    margin-right: 70px;
 }
 
 #options {

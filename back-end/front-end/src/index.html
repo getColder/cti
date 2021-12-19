@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class='nav'>
-        <img src="img/pic1.jpg" alt="图片失效" />
+        <img id="bg_navimg" src="img/pic1.jpg" alt="图片失效" />
         <ul id="nav_default">
             <li  class="navOpt"><a href=""><p>首页</p></a></li>
             <li id="nav-excel">
@@ -50,7 +50,7 @@
                     </li>  
                 </ul>
                 <br>
-                <img :class="turninfi?'turni':'turnoff'" src="img/loading.png" alt="" style="width: 75px;height: 75px;float: right;right: 10%;">
+                <img id="dbload" :class="turninfi?'turni':'turnoff'" src="img/loading.png" alt="" style="width: 75px;height: 75px;float: right;right: 10%;">
                 <div slot="footbt" id="buttonDB1" @click="dbSearchByDev=!dbSearchByDev;">
                     <span style="font-size: 19px;">按{{dbSearchByDev?'地址':'设备ID'}}查询</span>
                     <img :class="dbSearchByDev?'turnYback':'turnY'" src="img/switch.png" alt="">
