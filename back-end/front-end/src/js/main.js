@@ -288,7 +288,7 @@ var infoListBox = new Vue({
                             this.devnodes.remove(element);
                         }
                     }
-                    this.devnodes.prepend(temp);
+                    this.devnodes.push(temp)
                     return this.devnodes;
                 case 2:
                     this.title = '数据库查询结果'
