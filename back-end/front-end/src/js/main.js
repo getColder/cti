@@ -100,10 +100,10 @@ this.onload = function () {
                     .then(function(response){
                         if(response.data){
                             console.log(response.data);
-                            var devs = response.data.all;
+                            var devs = response.data.all;/*
                             for (let index = 0; index < devs.length; index++) {
                                 devs[index] = devs[index].substring(4, devs.length);           
-                            }
+                            }*/
                             dbSearchDevnodes = devs; 
                         }
                         else
@@ -247,10 +247,10 @@ var infoListBox = new Vue({
                 .then(function(response){
                     console.log(response.data)
                     if(response.data){
-                        var devs = response.data.all;
+                        var devs = response.data.all;/*
                         for (let index = 0; index < devs.length; index++) {
                             devs[index] = devs[index].substring(4, devs.length);                 
-                        }
+                        }*/
                         that.devnodes = devs; 
 
                     }
