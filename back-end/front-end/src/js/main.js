@@ -99,6 +99,7 @@ this.onload = function () {
                 await axios.get('/currentstate/devs',{timeout : 2000})
                     .then(function(response){
                         if(response.data){
+                            console.log(response.data);
                             var devs = response.data.all;
                             for (let index = 0; index < devs.length; index++) {
                                 devs[index] = devs[index].substring(4, devs.length);           

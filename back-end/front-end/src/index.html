@@ -42,7 +42,7 @@
                     </li>
                     <li>查询 <span style="color: #22a037;">{{dbSearchByDev?'设备ID':'地址'}}</span> ：
                         <select ref="inputDbDev"  value="">
-                            <option v-for="item in dbSearchDevnodes" :value="item">
+                            <option v-for="(item,key) in dbSearchDevnodes" :value="item">
                                 {{'设备' + item }}
                             </option>
                         </select>
