@@ -229,8 +229,7 @@ var infoListBox = new Vue({
                         var devs = response.data.all;
                         for (const key in devs) {
                             dev = devs[key];
-                            dev = dev.substring(4, dev.length);
-                            console.log(dev)                
+                            dev = dev.substring(4, dev.length);             
                         }
                         that.devnodes = devs; 
 
