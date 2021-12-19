@@ -277,18 +277,6 @@ var infoListBox = new Vue({
                     return this.timenodes;
                 case 1:
                     this.title = '设备列表';
-                    var temp = [];
-                    //在线设备排序在前面
-                    for (let index = 0; index < this.devnodes.length; index++) {
-                        var element = this.devnodes[index];
-                        if(devicesOnlineList.indexOf( Number(element) ) === -1)
-                            continue;
-                        else{
-                            temp.push(element)
-                            this.devnodes.remove(element);
-                        }
-                    }
-                    this.devnodes.push(temp)
                     return this.devnodes;
                 case 2:
                     this.title = '数据库查询结果'
