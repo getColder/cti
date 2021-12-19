@@ -238,7 +238,6 @@ var infoListBox = new Vue({
                         }
                         devicesList = that.devnodes = devs;
                         devicesOnlineList = response.data.on;
-                        console.log(devicesOnlineList)
                         console.log(response.data)
                     }
                     else
