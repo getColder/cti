@@ -273,10 +273,21 @@ var infoListBox = new Vue({
         getItems(){
             switch (this.typeList) {
                 case 0:
-                    this.title = '近期数据'
+                    this.title = '近期数据';
                     return this.timenodes;
                 case 1:
-                    this.title = '设备列表'
+                    this.title = '设备列表';
+                    var temp = [];
+                    for (let index = 0; index < devnodes.length; index++) {
+                        var element = devnodes[index];
+                        if(devicesOnlineList.indexOf( Number(element) ) === -1)
+                            continue;
+                        else{
+                            temp.push(element)
+                            devnodes.remove(element);
+                        }
+                    }
+                    devnodes.prepend(temp);
                     return this.devnodes;
                 case 2:
                     this.title = '数据库查询结果'
