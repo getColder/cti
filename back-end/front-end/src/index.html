@@ -34,7 +34,7 @@
             <li  class="navOpt"><p>后台管理</p></li>
         </ul>
         <div id="dbmdl"> 
-            <modal-t v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询">
+            <modal-t v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询" ref="dbmodel">
                 <ul>
                     <li>查询 <span style="color: #22a037;">{{dbSearchByDev?'设备ID':'地址'}}</span> ：
                         <select v-show="dbSearchByDev" v-model="queryDev" @change="queryDev = $event.target.value">

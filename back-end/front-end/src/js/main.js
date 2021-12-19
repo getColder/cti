@@ -47,7 +47,7 @@ this.onload = function () {
             closeM : function(){
                 this.showdbInput = false;
             },
-            confirmM : function(){
+            confirmM : async function(){
                 var that = this;
                 const date1 = this.$refs.inputDbTimeMin.value;
                 const date2 = this.$refs.inputDbTimeMax.value;
@@ -64,7 +64,7 @@ this.onload = function () {
                         const value = this.$refs.inputDbAddr.value;
                         requrl = '/currentstate/db?loc='+ value +'&gt='+date1+ '&lt=' + date2;
                     }
-                    axios.get(requrl)
+                    await axios.get(requrl)
                     .then(function(response){
                         if(response.data){
                             setTimeout(() => {
@@ -74,6 +74,7 @@ this.onload = function () {
                                     vEvent.$emit('changelisttype',2)
                                     vEvent.$emit('updateQuerynode', {})
                                     vEvent.$emit('loadingdb',false)
+                                    that.$refs.dbmodel.afterSubmit = false;
                                     return;
                                 }
                                 vEvent.$emit('dbquery', response.data)
@@ -82,16 +83,18 @@ this.onload = function () {
                                     vEvent.$emit('changelisttype',2)
                                     vEvent.$emit('updateQuerynode', {})
                                     vEvent.$emit('tipbox','一共查询到' + response.data.length + '条数据')
+                                    that.$refs.dbmodel.afterSubmit = false;
                                 }, 100);
-                              vEvent.$emit('loadingdb',false)
+                                vEvent.$emit('loadingdb',false)
                                 that.showdbInput = false;  
                             }, 1000);
                         }
                         else{
                             setTimeout(() => {
-                                vEvent.$emit('loadingdb',false)
+                                vEvent.$emit('loadingdb',false);
                                 that.showdbInput = false;
-                                alert('抱歉！没有找到任何数据,请检查是否存在该设备！')
+                                alert('抱歉！没有找到任何数据,请检查是否存在该设备！');
+                                that.$refs.dbmodel.afterSubmit = false;
                             }, 1000);
                         }    
                     }).catch(err=>{
