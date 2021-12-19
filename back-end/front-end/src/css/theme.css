@@ -296,8 +296,8 @@ background-color: #33445566
 
 .devon {
     display: inline-block;
-    width:30px;
-    height:30px;
+    width:15px;
+    height:15px;
     border-radius: 50%;
     background-color: #11ff11;
     box-shadow: 0 0 12px 2px #11ae11;
@@ -306,10 +306,10 @@ background-color: #33445566
 
 .devoff {
     display: inline-block;
-    width:30px;
-    height:30px;
+    width:15px;
+    height:15px;
     border-radius: 50%;
-    background-color: #777777;
+    background-color: #a7a7a7;
     box-shadow: 0 0 12px 2px #333333;
     margin-right: 20px;
 }
