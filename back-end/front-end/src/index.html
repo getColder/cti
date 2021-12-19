@@ -42,16 +42,16 @@
                     </li>
                     <li>查询 <span style="color: #22a037;">{{dbSearchByDev?'设备ID':'地址'}}</span> ：
                         <select v-show="dbSearchByDev" ref="inputDbDev"  value="">
-                            <option v-for="(item,key) in dbSearchDevnodes" :value="item">
+                            <option v-for="(item,key) in dbSearchDevnodes;alert(item)" :value="item">
                                 {{'设备' + item }}
                             </option>
                         </select>
-                        <input v-show="!dbSearchByDev" type="input" ref="inputDbDev"  value="">
+                        <input v-show="!dbSearchByDev" type="input" ref="inputDbAddr"  value="">
                     </li>      
                 </ul>
                 <br>
                 <img :class="turninfi?'turni':'turnoff'" src="img/loading.png" alt="" style="width: 75px;height: 75px;float: right;right: 10%;">
-                <div slot="footbt" id="buttonDB1" @click="dbSearchByDev=!dbSearchByDev">
+                <div slot="footbt" id="buttonDB1" @click="dbSearchByDev=!dbSearchByDev;">
                     按{{dbSearchByDev?'地址':'设备ID'}}查询
                     <img src="img/switch.png" alt="">
                 </div>

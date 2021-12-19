@@ -49,16 +49,19 @@ this.onload = function () {
                 var that = this;
                 const date1 = this.$refs.inputDbTimeMin.value;
                 const date2 = this.$refs.inputDbTimeMax.value;
-                const value = this.$refs.inputDbDev.value;
                 if(new Date(date1) > new Date(date2))
                     alert('查询日期有误！')
                 else{
                     vEvent.$emit('loadingdb',true);
                     var requrl = '';
-                    if(this.dbSearchByDev)
+                    if(this.dbSearchByDev){
+                        const value = this.$refs.inputDbDev.value;
                         requrl = '/currentstate/db?devid='+ value +'&gt='+date1+ '&lt=' + date2;
-                    else
-                        requrl = '/currentstate/db?loc='+ value +'&gt='+date1+ '&lt=' + date2
+                    }
+                    else{
+                        const value = this.$refs.inputDbAddr.value;
+                        requrl = '/currentstate/db?loc='+ value +'&gt='+date1+ '&lt=' + date2;
+                    }
                     axios.get(requrl, {timeout: 20000})
                     .then(function(response){
                         if(response.data){
