@@ -34,7 +34,8 @@ this.onload = function () {
                 showdbInput : false,
                 turninfi : false,
                 dbSearchByDev: true,
-                dbSearchDevnodes : []
+                dbSearchDevnodes : [],
+                queryDev : 0
             }
         },
         methods:{ 
@@ -55,6 +56,7 @@ this.onload = function () {
                     vEvent.$emit('loadingdb',true);
                     var requrl = '';
                     if(this.dbSearchByDev){
+                        console.log(this.$refs.inputDbDev.value)
                         const value = this.$refs.inputDbDev.value;
                         requrl = '/currentstate/db?devid='+ value +'&gt='+date1+ '&lt=' + date2;
                     }
