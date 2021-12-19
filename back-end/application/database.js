@@ -186,5 +186,5 @@ exports.listDevs = async function(){
          });
          return temp;
     })
-    return temp;
+    return tableNames;
 }
