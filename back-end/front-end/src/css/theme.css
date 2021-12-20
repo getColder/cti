@@ -281,31 +281,31 @@ border: 1px solid white;
 }
 
 #infoListBox li:hover{
-  cursor: pointer;
-  border: 1px solid #eee;
-  border-radius: 5px;
-  color: brown;
-background-color: #33445566
+    cursor: pointer;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    color: brown;
+    background-color: #33445566
 }
 
 .devon {
     display: inline-block;
-    width:15px;
-    height:15px;
+    width:7px;
+    height:7px;
     border-radius: 50%;
-    background-color: #11ff11;
-    box-shadow: 0 0 9px 2px #11ae11;
+    background-color: #11ef11;
+    box-shadow: 0 0 4px 2px #11fe11;
     margin-right: 20px;
 }
 
 .devoff {
+    border: 1px solid #bbbbbb;
     display: inline-block;
-    border-width: 0;
-    width:15px;
-    height:15px;
+    width:7px;
+    height:7px;
     border-radius: 50%;
     background-color: #a7a7a7;
-    box-shadow: 0 0 3px 1px #737373;
+    box-shadow: 0 0 3px 1px #535353;
     margin-right: 20px;
 }
 

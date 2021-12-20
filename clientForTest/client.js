@@ -14,7 +14,7 @@ function preZero(num){
 
 var data = {
     "Type":"NULL",
-    "Id": 8,
+    "Id": 7,
     "Time":[2021,12,05,20,56],
     "TempData":
     [
@@ -28,7 +28,7 @@ var data = {
 }
 
 function link() {
-    client = net.createConnection(port, address, () => {
+    client = net.createConnection(port, ali_address, () => {
         client.on('end', () => {
             clearInterval(sendPerman);
             setTimeout(() => {

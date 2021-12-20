@@ -82,7 +82,7 @@
                     <img v-show="currentTime === item" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
                 <li v-for="(item, i) in getItems()" @click="switchDev(item)" style="margin-left: auto;padding: 14px;font-size: 17px;" v-if="typeList===1">
-                    <div :class="(devOnline.indexOf(Number(item)) !== -1)?'devon':'devoff'"></div>
+                    <div :class="(devOnline.list.indexOf(Number(item)) !== -1)?'devon':'devoff'"></div>
                     {{
                         '设备'+ item
                     }}

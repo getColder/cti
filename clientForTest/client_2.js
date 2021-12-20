@@ -13,7 +13,7 @@ function preZero(num){
 
 var data = {
     "Type":"NULL",
-    "Id":8,
+    "Id":3,
     "Time":[2021,12,05,20,56],
     "TempData":
     [
@@ -26,7 +26,13 @@ var data = {
     "SpareData": [1, 0]
 }
 
-const client = net.createConnection(port, ali_address, ()=>{
+const client = net.createConnection(port, address, ()=>{
+    client.write(JSON.stringify(data),(err)=>{
+        console.log(data.Time);
+        if(err)
+         console.log('写入失败，请检查连接',err);
+    });
+    
     setInterval(() => {
         var date = new Date()
         const year = date.getUTCFullYear();

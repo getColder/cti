@@ -202,7 +202,8 @@ var infoListBox = new Vue({
             riseSort : true,    //排序
             tip : '',   //弹出提示
             tipclass : "boxtiphide",
-            showtip :  false
+            showtip :  false,
+            onelineKeep: false
 
     },
     methods: {
@@ -231,6 +232,7 @@ var infoListBox = new Vue({
         },
         getDevs : function() {
             var that = this;
+            this.onelineKeep = false;
             axios.get('/currentstate/devs')
                 .then(function(response){
                     if(response.data){
@@ -291,7 +293,11 @@ var infoListBox = new Vue({
     },
     computed:{
         devOnline : function(){
-            return devicesOnlineList;
+            this.onelineKeep = true;
+            return {
+                list : devicesOnlineList,
+                keep : this.onelineKeep
+            }
         }
     },
     mounted(){
