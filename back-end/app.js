@@ -17,7 +17,7 @@ function exitAll(){
     exit(-1);
 }
 
-mongodb.startDB()
+mongodb.startDB();
 
 tcp_fork.on('message', (msg)=>{
 // tcpServer.js ---> app.js --->  webServer.js
