@@ -16,6 +16,11 @@ var devices = {
     all : []
 }
 
+//时间测试
+var startTime = new Date();
+var endTime = new Date();
+
+
 setTimeout(function() {
     init();
 }.bind(this), 1000);
@@ -91,6 +96,7 @@ router.get('/db', (req, res, next) => {
         var dateTime2 = new Date(date_lt);
         if(dateTime1 && dateTime2){
             if(devid_req){
+                startTime = new Date();
                 find('dev_'+ devid_req,{
                     "time": {
                         $gte : dateTime1,
@@ -107,6 +113,8 @@ router.get('/db', (req, res, next) => {
                         res.json(empty)
                         res.end();
                     }
+                    endTime = new Date();
+                    console.log('DataBase\t 查询%s条记录IO耗时: %s\t%s',data.length,endTime.getTime() - startTime.getTime(), new Date());
                 })
                 .catch(reson => {
                     console.log('database\t 数据库请求错误： %s\t %s', reson, new Date().toLocaleString());
