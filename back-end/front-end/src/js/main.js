@@ -6,6 +6,10 @@ var devicesOnlineList = [];
 var currentDevId = localStorage.getItem("devid");
 var devConfig = {}
 
+//性能测试
+var startTime = new Date();
+var endTime = new Date();
+
 document.write('<script src="js/component/infotable.js"></script>') //tableInfo组件
 document.write('<script src="js/component/indictor.js"></script>') //indictor组件
 document.write('<script src="js/component/lock.js"></script>') ///lock组件
@@ -48,6 +52,7 @@ this.onload = function () {
                 this.showdbInput = false;
             },
             confirmM : async function(){
+                startTime = new Date();
                 var that = this;
                 const date1 = this.$refs.inputDbTimeMin.value;
                 const date2 = this.$refs.inputDbTimeMax.value;
@@ -66,6 +71,8 @@ this.onload = function () {
                     }
                     await axios.get(requrl)
                     .then(function(response){
+                        endTime = new Date();
+                        console.log(endTime.getTime() - startTime.getTime())
                         if(response.data){
                             setTimeout(() => {
                                 if(response.data.length <= 0){
