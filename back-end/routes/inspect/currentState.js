@@ -37,7 +37,7 @@ eventBus.event.on('updateAllDevConf', () => {
                 const newConf = JSON.parse(data);
                 if (allDevsCurrentData[devid]) {
                     allDevsCurrentData[devid]['config'] = newConf;
-                    console.log('Devconf \t 设备%s更新 \t %s', file, new Date())
+                    console.log('Devconf \t 设备%s更新 \t %s', file, new Date().toLocaleString())
                 }
             })
         })
@@ -155,7 +155,7 @@ router.get('/db', (req, res, next) => {
                             res.end();
                         }
                         endTime = new Date();
-                        console.log('DataBase\t 查询%s条记录IO耗时: %s\t%s', data.length, endTime.getTime() - startTime.getTime(), new Date());
+                        console.log('DataBase\t 查询%s条记录IO耗时: %s\t%s', data.length, endTime.getTime() - startTime.getTime(), new Date().toLocaleString());
                     })
                     .catch(reson => {
                         console.log('database\t 数据库请求错误： %s\t %s', reson, new Date().toLocaleString());
@@ -241,7 +241,7 @@ function update(newJSON) {
         }
     }
     catch (error) {
-        console.log('Webserver\t currentstate解析错误EXCEPTION: %s\t%s', error, new Date());
+        console.log('Webserver\t currentstate解析错误EXCEPTION: %s\t%s', error, new Date().toLocaleString());
     }
 }
 
@@ -274,7 +274,7 @@ function devconfUpdate(devid, _projectNumber, _location, _note) {
     }
     try {
         fs.writeFile(DevPath, JSON.stringify(conf), (err) => {
-            console.log('Devconfig\t 设备配置写入失败\t %s', new Date())
+            console.log('Devconfig\t 设备配置写入失败\t %s', new Date().toLocaleString())
             console.error(err)
         })
     } catch (error) {

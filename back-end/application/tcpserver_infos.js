@@ -4,6 +4,7 @@ const fs = require('fs');
 const { error } = require('console');
 
 var tcpServerPort = 9520;
+
 //字段检查正则表达式
 const infoCheckReg = /[0-9]|\bType\b|\bId\b|\bTime\b|\bFloor\b|\bWaterTemp\b|\bPumpStaus\b|\bValveStatus\b|\bCementTemp\b|\bEnvirTemp\b|\bSpareData\b|\bTempData\b/;
 var devlist = new Set();
@@ -237,5 +238,10 @@ var interval_getdevlist = setInterval(() => {
     }
 }, 200);
 
+var tip = {
+    index: 10,
+    data: tcpServerPort
+}
+process.send(tip);
 
 

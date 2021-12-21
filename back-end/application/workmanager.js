@@ -9,6 +9,10 @@ function startTcpServer(){
     if(!isTcpServerRun){
         tcp_fork = child_process.fork('./application/tcpserver_infos.js')	//tcp服务器
         isTcpServerRun = true;
+        var message = {
+            index: 10,
+            data: ''
+        }
     }
     this.tcpfork = tcp_fork;
     return tcp_fork;

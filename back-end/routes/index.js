@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();  //路由级中间件
 const csv = require('../application/csvProcess');   //电子表格下载
-var allDevsData = require('./inspect/currentState').allDevsData; //近期数据
+var allDevsCurrentData = require('./inspect/currentState').allDevsCurrentData; //近期数据
 const find = require('../application/database.js').find; //mongodb数据库
 
 
@@ -24,7 +24,7 @@ router.get('/download/csvinfodb', (req, res, next)=>{
                     //$gte : dateTime1,
                     //$lte : dateTime2
                 //}
-            })
+            },0)
             .then((data)=>{
                 if(data.length > 0){
                     const thefile = 'info_' + devid_req + '.csv';
@@ -33,15 +33,15 @@ router.get('/download/csvinfodb', (req, res, next)=>{
                         "Content-Disposition": "attachment; filename = " + thefile
                     }
                     res.set(HD);
+                    console.log(123)
                     var infos = [];
                     res.attachment(thefile);
                     data.forEach(element => {
                         infos.push(element.data);
                     });
                     csv.csvMake(infos).then(value => {
-                        console.log('开始下载');
                         res.end(Buffer.from(value, 'utf-8'));
-                        console.log('下载完毕');
+                        console.log('csv\t 下载csv%s条 \t %s', allDevsCurrentData[devid_req]['infoAry'].length, new Date().toLocaleString());
                     })
                 }
                 else{
@@ -78,25 +78,18 @@ router.get('/download/csvinfo', async (req, res, next) => {
         "Content-Disposition": "attachment; filename = infos.csv"
     });
     res.attachment('info.csv');
-    if (!allDevsData) {
+    if (!allDevsCurrentData[devid_req]) {
         csv.csvMake([]).then(value => {
             res.end(Buffer.from(value, 'utf-8'));
             console.log('下载为空.');
         })
         return;
     }
-    if (!allDevsData.hasOwnProperty(devid_req + '')) {
-        csv.csvMake([]).then(value => {
-            res.end(Buffer.from(value, 'utf-8'));
-            console.log('下载为空');
-        })
-        return;
-    }
-    csv.csvMake(allDevsData[devid_req]["infoAry"]).then(value => {
+    csv.csvMake(allDevsCurrentData[devid_req]['infoAry']).then(value => {
         res.end(Buffer.from(value, 'utf-8'));
-        console.log('下载完毕');
+        console.log('csv\t 下载csv%s条 \t %s', allDevsCurrentData[devid_req]['infoAry'].length, new Date().toLocaleString());
+
     })
-    console.log('开始下载');
     next();
 });
 

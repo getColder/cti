@@ -6,15 +6,11 @@ function checkInfo(data) {
     isCorrect &= data.hasOwnProperty("TempData");
     isCorrect &= data.hasOwnProperty("SpareData");
     if (isCorrect === false) {
-        console.log('JSON格式错误!');
+        console.log('JSON-F格式错误!');
         return false;
     }
     if (data["Time"].length != 5) {
-        console.log('JSON格式错误!');
-        return false;
-    }
-    if (Object.keys(data).length != 5) {
-        console.log('JSON格式错误!');
+        console.log('JSON-T格式错误!');
         return false;
     }
     return isCorrect;
@@ -32,7 +28,6 @@ function makeRow(rowObj, row) {
 }
 
 async function csvMake(dataObjArry) {
-    console.log('生成csv中.........');
     var head = 'timeStap,floor,temp entry,temp out,vavle state,cool rotation,back rotation,\
   temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp envir\r\n';
     for (index in dataObjArry) {
