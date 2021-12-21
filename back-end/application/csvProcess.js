@@ -1,5 +1,6 @@
 function checkInfo(data) {
     var isCorrect = true;
+    console.log(data)
     isCorrect &= data.hasOwnProperty("Type");
     isCorrect &= data.hasOwnProperty("Id");
     isCorrect &= data.hasOwnProperty("Time");
