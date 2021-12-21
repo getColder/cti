@@ -73,7 +73,7 @@
         </span>
         <lock-auto-up @lockupdate="lockAutoUpdate"></lock-auto-up>
         <refresh @refresh="getTimeline(), getDevs()"></refresh>
-        <div id="timelineScroll" ref="scroll">
+        <div id="timelineScroll" ref="scroll" v-on:scroll="loadQuery">
             <div  v-show="showtip" :class='tipclass'>&nbsp;{{tip}}</div>
             <ul>
                 <li v-for="(item, i) in getItems()" @click="getData(item)" v-if="typeList===0">{{

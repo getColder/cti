@@ -199,12 +199,13 @@ var infoListBox = new Vue({
     data: {
             typeList : 1, //0：近期， 1：数据库， 2： 设备
             title : "近期数据",
-            timenodes : [], //近期数据节点
-            devnodes : [], //设备数据节点
-            querynodes : [], //数据库节点
-            currentTime : '',  //选中时间设备
-            currentDevId : '', 
-            dbqueryData : [],  //数据库数据
+            timenodes : [], //节点近期数据
+            devnodes : [], //节点设备
+            querynodes : [], //缓存数据库数据
+            currentTime : '',  //选中时间
+            currentDevId : '', //选中设备
+            dbqueryData : [],  //
+            displayQuery : [], //部分query
             lockInterval : null,    //自动更新锁
             riseSort : true,    //排序
             tip : '',   //弹出提示
@@ -215,8 +216,8 @@ var infoListBox = new Vue({
     },
     methods: {
         getData: function(time){
-          if(time)
-            vEvent.$emit('updateTimenode', time)          
+            if(time)
+                vEvent.$emit('updateTimenode', time)          
         },
         getQueryData: function(key) {
             if(!this.riseSort){ 
@@ -296,6 +297,16 @@ var infoListBox = new Vue({
                 default:
                     return this.timenodes;
             }
+        },
+        loadQuery(){
+            if(this.typeList !==2 )
+                return;
+            const scroll = this.$refs['scroll'];
+            if(scroll.scrollHeight - scroll.scrollTop < 30){
+                alert(123)
+            }
+            //console.log(this.$refs['scroll'].scrollHeight);
+            console.log(this.$refs['scroll'].scrollHeight);
         }
     },
     computed:{
@@ -318,10 +329,10 @@ var infoListBox = new Vue({
         })
         vEvent.$on('dbquery', function(value) {
             that.dbqueryData = value.reverse();
+            var len = that.dbqueryData.length;
             that.querynodes = [];
-            that.dbqueryData.forEach(element => {
-                that.querynodes.push(element.time)
-            });
+            for (let index = 0; index < ((len < 200)?len:200); index++) 
+                that.querynodes.push(that.dbqueryData[index].time); //先载入200条
             that.lockInterval = true;
             that.currentTime = that.querynodes[0];
         })
