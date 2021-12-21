@@ -96,12 +96,13 @@ router.get('/data', (req, res, next) => {
     var devid_req = req.query.devid;
     if (!devid_req) {
         json('');
+        res.end();
         return;
     }
 
     if (!allDevsCurrentData.hasOwnProperty(devid_req)) {
         res.json('');
-        console.log('WebServer\t 请求设备不存在！\t %s', new Date().toLocaleTimeString());
+        res.end();
         return;
     }
 
