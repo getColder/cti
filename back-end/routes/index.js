@@ -33,7 +33,6 @@ router.get('/download/csvinfodb', (req, res, next)=>{
                         "Content-Disposition": "attachment; filename = " + thefile
                     }
                     res.set(HD);
-                    console.log(123)
                     var infos = [];
                     res.attachment(thefile);
                     data.forEach(element => {
