@@ -21,10 +21,4 @@ const app = express()
 
 module.exports.start = start;
 //发一个或一组JSON数据
-module.exports.sendJSON = function update(data){
-    currentStateRoute.update(data);
-}
 
-module.exports.getDevOnline = function getDevOnline(devsID_on){
-    currentStateRoute.getDevOnline(devsID_on)
-}

@@ -1,10 +1,7 @@
 const net = require('net')
 const path = require('path')
 const fs = require('fs');
-const { exit, stdout } = require('process');
-const emitter = require('./event').emitter;
-const { basename } = require('path');
-
+const { error } = require('console');
 
 var tcpServerPort = 9520;
 //字段检查正则表达式
@@ -16,9 +13,9 @@ var reListenTime = 15000;
 //1、普通输出
 var logFilePath = __dirname + '/logs/tcpServer.log';
 var logfilestream = fs.createWriteStream(logFilePath, { flags: 'a' });
-process.stdout.write = logfilestream.write.bind(logfilestream);   //学习：若果不bind，stdout.write内的函数的this指向process.stdout
+process.stdout.write = logfilestream.write.bind(logfilestream);   
+//若果不bind，stdout.write内的函数的this指向process.stdout
 //2、tcp连接列表,60s秒刷新
-var tcpList = [];
 
 
 
@@ -31,21 +28,6 @@ console.log('\nbegin 服务器启动-->日志打开成功\t %s', new Date().toLo
 var tcpServer = net.createServer((connection) => {
     var address = connection.address().address;
     connection.DevID = '';
-    connection.intvl_listitem = setInterval(() => {
-        var info = address + '-->' + connection.DevID;
-        for (const key in tcpList) {
-            if (Object.hasOwnProperty.call(tcpList, key)) {
-                const element = tcpList[key];
-                if (info === element)
-                    return;
-            }
-        }
-        tcpList.push(info)
-    }, 1000);
-    connection.on('end', () => {
-        clearInterval(connection.intvl_listitem)   //全局
-    })
-
     connection.isCorrect = true;
     connection.startTime = new Date()
     connection.buf = '';
@@ -65,7 +47,7 @@ var tcpServer = net.createServer((connection) => {
                 var checkRes = checkStickJSON(this.buf);
                 const arrayJSON = checkRes.jsonstr;
                 connection.wrongStr += checkRes.wrongStr;
-                if(connection.wrongStr.length > 5000){
+                if (connection.wrongStr.length > 5000) {
                     console.error('[err:-13]tcpserver\t %s-->设备%s :设备发送过量错误数据，已强制断开\t %s\n错误数据:%s', address, connection.DevID, new Date().toLocaleString(), connection.wrongStr);
                     //发送方异常：暂停监听
                     tcpServer.close();
@@ -123,7 +105,7 @@ var tcpServer = net.createServer((connection) => {
                     //检测通过，推送给web服务器进程
                     console.log('tcpserver\t devID：%s\t write:%s\t %s ', this.DevID, theStr.length, new Date().toLocaleString('cn', 'hour12:false'));
                     var message = {
-                        index: 0,
+                        index: 20,
                         data: theStr
                     }
                     process.send(message, (err) => {
@@ -188,8 +170,8 @@ var tcpServer = net.createServer((connection) => {
 
 function checkStickJSON(str) {
     var out = {
-        jsonstr : [],
-        wrongstr : ''
+        jsonstr: [],
+        wrongstr: ''
     }
     if (str[0] !== '{') {
         out.wrongstr = str;
@@ -206,7 +188,8 @@ function checkStickJSON(str) {
         else if (element === '}') {
             braceStack.pop();
             if (braceStack.length < 1) {
-                output.push(str.slice(headPos, index + 1));
+                let data = str.slice(headPos, index + 1);
+                output.push(data?data:str);
                 headPos = index + 2;
             }
         }
@@ -216,29 +199,43 @@ function checkStickJSON(str) {
 }
 
 tcpServer.listen(tcpServerPort, '0.0.0.0');
-process.send({
-    index: 10,
-    data: tcpServerPort
-})
 
 process.on('uncaughtException', (err) => {
     console.error('[err:-100]未知异常:%s\t %s', err, new Date().toLocaleString('cn', 'hour12:false'));
     var message = {
-        index: 2,
+        index: 19,
         data: ''
     }
     process.send(message)
-    throw err
+    throw error;
 })
-process.on('exit', (err) => {
-    console.log('Tcpserver Exit \t%s', new Date().toLocaleDateString())
-})
-
-
-setInterval(() => {
-    var message = {
-        index: 1,
-        data: Array.from(devlist)
+process.on('Exit', () => {
+    clearInterval(interval_getdevlist)
+    console.log(exitTip)
+    var exitTip = 'Tcpserver Exit \t' + new Date().toLocaleString();
+    try {
+        var message = {
+            index: 18,
+            data: exitTip
+        }
+        process.send(message)
+    } catch (error) {   
     }
-    process.send(message);  //读取设备配置
+
+})
+
+
+var interval_getdevlist = setInterval(() => {
+    try {
+        var message = {
+            index: 21,
+            data: Array.from(devlist)
+        }
+        process.send(message);  //读取设备配置
+    } catch (error) {
+        console.error(error)
+    }
 }, 200);
+
+
+
