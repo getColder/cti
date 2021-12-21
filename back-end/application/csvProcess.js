@@ -31,7 +31,6 @@ function makeRow(rowObj, row) {
 async function csvMake(dataObjArry) {
     var head = 'timeStap,floor,temp entry,temp out,vavle state,cool rotation,back rotation,\
   temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp envir\r\n';
-    console.log(dataObjArry)
     for (index in dataObjArry) {
         var data = dataObjArry[index];
         if(data === null || data === undefined){
