@@ -40,7 +40,7 @@ router.get('/download/csvinfodb', (req, res, next)=>{
                     });
                     csv.csvMake(infos).then(value => {
                         res.end(Buffer.from(value, 'utf-8'));
-                        console.log('csv\t 下载csv%s条 \t %s', allDevsCurrentData[devid_req]['infoAry'].length, new Date().toLocaleString());
+                        console.log('csv\t 下载csv%s条 \t %s', info.length, new Date().toLocaleString());
                     })
                 }
                 else{
