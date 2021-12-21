@@ -181,7 +181,7 @@ module.exports.update = function (newJSON){
     try {
         const newJSON_obj = JSON.parse(newJSON);    //解析设备数据
         const devid_selected = newJSON_obj["Id"]
-        devCheckInit(devid_selected)
+        devCheckInit(devid_selected);
         var DevCurrentData = allDevsCurrentData[devid_selected];
         console.log('Webserver\t DEV:%s-fetch \t %s',newJSON_obj.Id, new Date().toLocaleString());
         newJSON_obj['location'] = DevCurrentData['config']['location']
@@ -213,6 +213,33 @@ function init(){
     defalutConfig = JSON.parse('' + fs.readFileSync(defaultDevPath)).config;
     console.log('Devconfig\t读取设备默认配置\t%s',new Date().toLocaleString());
 
+}
+
+function devUpdateInit(devid,_projectNumber,_location,_note) {
+    //null为不修改
+    var oConfig = {};
+    var DevPath = __dirname + '/config/devices/dev_' + devid + '.json'
+    try {
+        oConfig = JSON.parse(fs.readFileSync(DevPath,{flag: 'r+'}))
+        console.log('Webserver\t currentstate修改设备dev_%s配置.\t%s\n%s', devid,new Date().toLocaleString(), oConfig);
+    } catch (error) {
+        console.log('Webserver\t currentstate设备配置文件读取失败\t%s', new Date().toLocaleString(), error);
+        return
+    }
+    var conf = {
+        projectNumber : _projectNumber?_projectNumber:oConfig.projectNumber,
+        location : _location?_location:oConfig.location,
+        note : _node?_note:oConfig.note
+    }
+    try {
+        fs.writeFile(DevPath,JSON.stringify(conf),(err)=>{
+            console.log('Devconfig\t 设备配置写入失败\t %s',new Date())
+            console.error(err)
+        })
+    } catch (error) {
+        console.error(error)
+    }
+    devCheckInit(devid)
 }
 
 function devCheckInit(devid_selected){

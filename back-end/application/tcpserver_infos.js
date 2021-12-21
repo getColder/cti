@@ -10,16 +10,13 @@ var tcpServerPort = 9520;
 //字段检查正则表达式
 const infoCheckReg = /[0-9]|\bType\b|\bId\b|\bTime\b|\bFloor\b|\bWaterTemp\b|\bPumpStaus\b|\bValveStatus\b|\bCementTemp\b|\bEnvirTemp\b|\bSpareData\b|\bTempData\b/;
 var devlist = new Set();
-var reListenTime = 15000; 
+var reListenTime = 15000;
 
 //日志文件
 //1、普通输出
 var logFilePath = __dirname + '/logs/tcpServer.log';
 var logfilestream = fs.createWriteStream(logFilePath, { flags: 'a' });
 process.stdout.write = logfilestream.write.bind(logfilestream);   //学习：若果不bind，stdout.write内的函数的this指向process.stdout
-setTimeout(() => {
-    console.log('\nbegin 服务器启动-->日志打开成功\t %s', new Date().toLocaleString('cn','hour12:false'));
-}, 5000);
 //2、tcp连接列表,60s秒刷新
 var tcpList = [];
 
@@ -29,7 +26,7 @@ var tcpList = [];
 var errFilePath = __dirname + '/logs/err.log';
 var errfilestream = fs.createWriteStream(errFilePath, { flags: 'a' });
 process.stderr.write = errfilestream.write.bind(errfilestream);
-
+console.log('\nbegin 服务器启动-->日志打开成功\t %s', new Date().toLocaleString('cn', 'hour12:false'));
 //4、服务器listen
 var tcpServer = net.createServer((connection) => {
     var address = connection.address().address;
@@ -39,13 +36,13 @@ var tcpServer = net.createServer((connection) => {
         for (const key in tcpList) {
             if (Object.hasOwnProperty.call(tcpList, key)) {
                 const element = tcpList[key];
-                if(info === element)
+                if (info === element)
                     return;
             }
         }
         tcpList.push(info)
     }, 1000);
-    connection.on('end', ()=>{
+    connection.on('end', () => {
         clearInterval(connection.intvl_listitem)   //全局
     })
 
@@ -53,34 +50,53 @@ var tcpServer = net.createServer((connection) => {
     connection.startTime = new Date()
     connection.buf = '';
     connection.complete = 0;
+    connection.wrongStr = ''; //错误数据
     //检测次数检测，t * n 秒没有发送数据说明拿到完整数据, 接收后断开连接
     connection.check = function () {
-    let n = 3;    // n次检测，超过认定数据传输完成
-    let t = 2000; // 一次检测等待豪秒数
-    var info = {} //JSON解析buf
-    //1、数据完整性检测 t 秒一次
-    this.timer = setInterval(() => {
-        this.complete++;
-        if (this.complete < n) {}
-        else if (this.complete == n && this.buf != '') {
-            //2、检测次数超过指定次数,拿到完整数据并处理
-            try {
+        let n = 3;    // n次检测，超过认定数据传输完成
+        let t = 2000; // 一次检测等待豪秒数
+        var info = {} //JSON解析buf
+        //1、数据完整性检测 t 秒一次
+        this.timer = setInterval(() => {
+            this.complete++;
+            if (this.complete < n) { }
+            else if (this.complete == n && this.buf != '') {
+                //2、检测次数超过指定次数,拿到完整数据并处理
                 const arrayJSON = checkStickJSON(this.buf);
                 this.buf = '';
                 for (let index = 0; index < arrayJSON.length; index++) {
                     const theStr = arrayJSON[index];
-                    JSON.parse(theStr, (k, v) => {
-                        if (k != '')
-                            this.isCorrect &= infoCheckReg.test(k);  //检查JSON是否符合格式
-                        if (k === 'Id') {
-                            connection.DevID = v;
-                            devlist.add(connection.DevID)
-                        }
-                    });
+                    try {
+                        JSON.parse(theStr, (k, v) => {
+                            if (k != '')
+                                this.isCorrect &= infoCheckReg.test(k);  //检查JSON是否符合格式
+                            if (this.isCorrect === false) {
+                                connection.wrongStr += theStr;
+                            }
+                            if (k === 'Id') {
+                                connection.DevID = v;
+                                devlist.add(connection.DevID)
+                            }
+                        });
+                    } catch (error) {
+                        console.error(error)
+                        console.error('[err:-12]tcpserver\t %s-->%sJSON解析错误,准备断开连接\t %s', address, connection.DevID, new Date().toLocaleString());
+                        console.error('错误数据：' + connection.wrongStr);
+                        connection.wrongStr = '';
+                        //发送方异常：暂停监听
+                        tcpServer.close();
+                        setTimeout(() => {
+                            tcpServer.listen(tcpServerPort, '0.0.0.0');
+                        }, reListenTime);
+                        connection.end(() => {
+                            console.log('tcpserver\t feedback \t 成功断开连接[-12]');
+                        })
+                        return;
+                    }
                     //检测不通过,断开连接并打印到日志 err:-1x
                     if (!this.isCorrect) {
                         //格式错误
-                        console.error('[err:-13]tcpserver\t %s-->设备%s :格式错误,准备断开连接\t %s', address, connection.DevID, new Date().toLocaleString, theStr);
+                        console.error('[err:-13]tcpserver\t %s-->设备%s :格式错误,准备断开连接\t %s\n错误数据:%s', address, connection.DevID, new Date().toLocaleString(), connection.wrongStr);
                         //发送方异常：暂停监听
                         tcpServer.close();
                         setTimeout(() => {
@@ -112,43 +128,29 @@ var tcpServer = net.createServer((connection) => {
                         }
                     });
                 }
-            } catch (error) {
-                console.error('[err:-12]tcpserver\t %s-->%sJSON解析错误,准备断开连接\t %s', address, connection.DevID, new Date().toLocaleString,);
-                console.error('错误数据：' + theStr);
-                //发送方异常：暂停监听
-                tcpServer.close();
-                setTimeout(() => {
-                    tcpServer.listen(tcpServerPort, '0.0.0.0');
-                }, reListenTime);
-                connection.end(() => {
-                    console.log('tcpserver\t feedback \t 成功断开连接[-12]');
-                })
-                return;
             }
-
-        }
-    }, t);
-    //2、心跳检测 30s一次，断掉僵尸连接或长时间无数据发来的长连接
-    this.heartbeat = setInterval(() => {
-        connection.write('', (err) => {
-            if (err) {
-                setTimeout(() => {
-                    console.log('[WARN:11]tcpserver\t %s-->%s心跳检测：连接无响应,断开连接%s\t %s',address , connection.DevID , err, toLocaleString('cn','hour12:false'));
-                    //发送方异常：暂停监听
-                    tcpServer.close();
+        }, t);
+        //2、心跳检测 30s一次，断掉僵尸连接或长时间无数据发来的长连接
+        this.heartbeat = setInterval(() => {
+            connection.write('', (err) => {
+                if (err) {
                     setTimeout(() => {
-                        tcpServer.listen(tcpServerPort, '0.0.0.0');
-                    }, reListenTime);
-                    connection.end(() => {
-                            console.log('tcpserver\t %s\t feedback \t 成功断开连接[11]',address);
-                    })
-                  }, 10000);
-              }
-          });
-      }, 30000);
-  }
+                        console.log('[WARN:11]tcpserver\t %s-->%s心跳检测：连接无响应,断开连接%s\t %s', address, connection.DevID, err, toLocaleString('cn', 'hour12:false'));
+                        //发送方异常：暂停监听
+                        tcpServer.close();
+                        setTimeout(() => {
+                            tcpServer.listen(tcpServerPort, '0.0.0.0');
+                        }, reListenTime);
+                        connection.end(() => {
+                            console.log('tcpserver\t %s\t feedback \t 成功断开连接[11]', address);
+                        })
+                    }, 10000);
+                }
+            });
+        }, 30000);
+    }
     //日志报告新连接
-    console.log("new\t %s\t start:\t%s", address, connection.startTime.toLocaleString('cn','hour12:false'));
+    console.log("new\t %s\t start:\t%s", address, connection.startTime.toLocaleString('cn', 'hour12:false'));
     //1、检测数据完整性   
     //2、检测检测次数
     connection.check();
@@ -172,7 +174,7 @@ var tcpServer = net.createServer((connection) => {
 })
 
 function checkStickJSON(str) {
-    if(str[0] !== '{'){
+    if (str[0] !== '{') {
         return [];
     }
     var output = [];
@@ -180,44 +182,44 @@ function checkStickJSON(str) {
     var headPos = 0;
     for (let index = 0; index < str.length; index++) {
         const element = str[index];
-        if(element === '{'){
+        if (element === '{') {
             braceStack.push('{')
         }
-        else if(element === '}'){
+        else if (element === '}') {
             braceStack.pop();
-            if(braceStack.length < 1){
-                output.push(str.slice(headPos,index + 1 ));
+            if (braceStack.length < 1) {
+                output.push(str.slice(headPos, index + 1));
                 headPos = index + 2;
             }
         }
     }
-    return output; 
+    return output;
 }
 
 tcpServer.listen(tcpServerPort, '0.0.0.0');
 process.send({
-    index : 10,
-    data : tcpServerPort
+    index: 10,
+    data: tcpServerPort
 })
 
-process.on('uncaughtException', (err)=>{
-    console.error('[err:-100]%s\t %s', err, new Date().toLocaleString('cn','hour12:false'));
+process.on('uncaughtException', (err) => {
+    console.error('[err:-100]未知异常:%s\t %s', err, new Date().toLocaleString('cn', 'hour12:false'));
     var message = {
-        index : 2,
-        data : ''
+        index: 2,
+        data: ''
     }
-	process.send(message)
+    process.send(message)
     throw err
 })
-process.on('exit', (err)=>{
-    console.log('Tcpserver Exit \t%s',new Date().toLocaleDateString())
+process.on('exit', (err) => {
+    console.log('Tcpserver Exit \t%s', new Date().toLocaleDateString())
 })
 
 
 setInterval(() => {
     var message = {
         index: 1,
-        data : Array.from(devlist)
+        data: Array.from(devlist)
     }
     process.send(message);  //读取设备配置
 }, 200);

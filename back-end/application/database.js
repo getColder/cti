@@ -70,7 +70,7 @@ async function insert(dealData){
     arrayToSync[targetCollection].push(document);
 }
 
-function checkDev(targetCollection){
+async function checkDev(targetCollection){
     db.listCollections().toArray(async (err, collections)=>{
         var isNotExsisted = true;
         collections.some(col=>{
@@ -84,6 +84,7 @@ function checkDev(targetCollection){
     });
 }
 
+
 async function syncData(){
     var total = 0;
     if(!isConnected || arrayToSync.length <= 0){
@@ -92,22 +93,17 @@ async function syncData(){
     for (const key in arrayToSync) {
         if (Object.hasOwnProperty.call(arrayToSync, key)) {
             const element = arrayToSync[key];
-            checkDev(key);
-            var goLen = element.length > 10000 ? 10000 : element.length;
-            var rest = 10000;
-            if(goLen == 10000)
-                rest = 1000; //需要处理的数据过多，加快处理速度
-            total += goLen;
+            await checkDev(key);
             setTimeout(() => {
-                if(element.length > 0){
-                    db.collection(key).insertMany(arrayToSync[key].splice(0,goLen), (err, res) => {
-                        if (err) {
-                            console.log('ERR[-30]DataBase\t 数据插入失败！! \t %s', new Date().toLocaleString());
-                            throw err;
-                        }
-                    })
-                }
-            }, rest);
+                if(arrayToSync[key].length < 0)
+                    return;
+                db.collection(key).insertMany(arrayToSync[key].splice(0,arrayToSync[key].length), (err, res) => {
+                    if (err) {
+                        console.log('ERR[-30]DataBase\t 数据插入失败！ \t %s', new Date().toLocaleString());
+                        throw err;
+                    }
+                })
+            }, 1000);
         }
     }
     console.log('DataBase\t 数据库插入%s条 \t %s', total, new Date().toLocaleString());
