@@ -95,13 +95,14 @@ async function syncData(){
             const element = arrayToSync[key];
             await checkDev(key);
             setTimeout(() => {
-                if(arrayToSync[key].length < 0)
-                    return;
-                db.collection(key).insertMany(arrayToSync[key].splice(0,arrayToSync[key].length), (err, res) => {
-                    if (err) {
-                        console.log('ERR[-30]DataBase\t 数据插入失败！ \t %s', new Date().toLocaleString());
-                        throw err;
-                    }
+                    if(arrayToSync[key].length <= 0)
+                        return;
+                    db.collection(key).insertMany(arrayToSync[key], (err, res) => {
+                        if (err) {
+                            console.log('ERR[-30]DataBase\t 数据插入失败！ \t %s', new Date().toLocaleString());
+                            throw err;
+                        }
+                    arrayToSync[key] = [];
                 })
             }, 1000);
         }

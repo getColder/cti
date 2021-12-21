@@ -62,7 +62,20 @@ var tcpServer = net.createServer((connection) => {
             if (this.complete < n) { }
             else if (this.complete == n && this.buf != '') {
                 //2、检测次数超过指定次数,拿到完整数据并处理
-                const arrayJSON = checkStickJSON(this.buf);
+                var checkRes = checkStickJSON(this.buf);
+                const arrayJSON = checkRes.jsonstr;
+                connection.wrongStr += checkRes.wrongStr;
+                if(connection.wrongStr.length > 5000){
+                    console.error('[err:-13]tcpserver\t %s-->设备%s :设备发送过量错误数据，已强制断开\t %s\n错误数据:%s', address, connection.DevID, new Date().toLocaleString(), connection.wrongStr);
+                    //发送方异常：暂停监听
+                    tcpServer.close();
+                    setTimeout(() => {
+                        tcpServer.listen(tcpServerPort, '0.0.0.0');
+                    }, reListenTime);
+                    connection.end(() => {
+                        console.log('tcpserver\t feedback \t 成功断开连接[-13]');
+                    })
+                }
                 this.buf = '';
                 for (let index = 0; index < arrayJSON.length; index++) {
                     const theStr = arrayJSON[index];
@@ -174,8 +187,13 @@ var tcpServer = net.createServer((connection) => {
 })
 
 function checkStickJSON(str) {
+    var out = {
+        jsonstr : [],
+        wrongstr : ''
+    }
     if (str[0] !== '{') {
-        return [];
+        out.wrongstr = str;
+        return out;
     }
     var output = [];
     var braceStack = [];
@@ -193,7 +211,8 @@ function checkStickJSON(str) {
             }
         }
     }
-    return output;
+    out.jsonstr = output;
+    return out;
 }
 
 tcpServer.listen(tcpServerPort, '0.0.0.0');
