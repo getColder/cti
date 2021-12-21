@@ -35,13 +35,13 @@ async function csvMake(dataObjArry) {
     for (index in dataObjArry) {
         var data = dataObjArry[index];
         if(data === null || data === undefined){
-            return head;
+            continue;
         }
         if(data === []){
-            return head;
+            continue;
         }
         if(data === {}){
-            return head;
+            continue;
         }
         if (!checkInfo(data)) {
             console.log('返回前' + index + '条数据.')
