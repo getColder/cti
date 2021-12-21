@@ -118,6 +118,7 @@ this.onload = function () {
             var that = this;
             vEvent.$on('updateDev',value=>{
                 this.linkTo = "download/csvinfo?devid=" + value;
+                this.linkTodb = "download/csvinfodb?devid=" + value;
             }),
             vEvent.$on('loadingdb',function(isloading){
                 that.turninfi = isloading;
