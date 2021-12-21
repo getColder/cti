@@ -14,21 +14,21 @@ function preZero(num){
 
 var data = {
     "Type":"NULL",
-    "Id": 8,
+    "Id": 7,
     "Time":[2021,12,05,20,56],
     "TempData":
     [
-        {"Floor":1,"WaterTemp":[99.5,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
+        {"Floor":1,"WaterTemp":[71.5,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
         {"Floor":2,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
         {"Floor":3,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
         {"Floor":4,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
         {"Floor":5,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
         {"Floor":6,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0}],
-    "SpareData":[1,0],
+    "SpareData":[0,0],
 }
 
 function link() {
-    client = net.createConnection(port, ali_address, () => {
+    client = net.createConnection(port, address, () => {
         client.on('end', () => {
             clearInterval(sendPerman);
             setTimeout(() => {
@@ -59,7 +59,9 @@ function link() {
 link();
 
 process.on('uncaughtException',(err)=>{
-    console.log('程序崩溃');
+    setTimeout(() => {
+        console.log('程序异常')
+    }, 1000);
     setTimeout(() => {
         try {
             link();

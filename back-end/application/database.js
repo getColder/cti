@@ -86,7 +86,7 @@ function checkDev(targetCollection){
 
 async function syncData(){
     var total = 0;
-    if(!isConnected || arrayToSync.length > 0){
+    if(!isConnected || arrayToSync.length <= 0){
         return;
     }
     for (const key in arrayToSync) {
