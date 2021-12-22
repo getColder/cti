@@ -51,13 +51,16 @@ var tcpServer = net.createServer((connection) => {
                 if (connection.wrongStr.length > 5000) {
                     console.error('[err:-13]tcpserver\t %s-->设备%s :设备发送过量错误数据，已强制断开\t %s\n错误数据:%s', address, connection.DevID, new Date().toLocaleString(), connection.wrongStr);
                     //发送方异常：暂停监听
+                    connection.pause();
                     tcpServer.close();
                     setTimeout(() => {
                         tcpServer.listen(tcpServerPort, '0.0.0.0');
                     }, reListenTime);
-                    connection.end(() => {
-                        console.log('tcpserver\t feedback \t 成功断开连接[-13]');
-                    })
+                    setTimeout(() => {
+                        connection.end(() => {
+                            console.log('tcpserver\t feedback \t 成功断开连接[-13]');
+                        })
+                    }, 1000);
                 }
                 this.buf = '';
                 for (let index = 0; index < arrayJSON.length; index++) {
@@ -80,13 +83,16 @@ var tcpServer = net.createServer((connection) => {
                         console.error('错误数据：' + connection.wrongStr);
                         connection.wrongStr = '';
                         //发送方异常：暂停监听
+                        connection.pause();
                         tcpServer.close();
                         setTimeout(() => {
                             tcpServer.listen(tcpServerPort, '0.0.0.0');
                         }, reListenTime);
-                        connection.end(() => {
-                            console.log('tcpserver\t feedback \t 成功断开连接[-12]');
-                        })
+                        setTimeout(() => {
+                            connection.end(() => {
+                                console.log('tcpserver\t feedback \t 成功断开连接[-12]');
+                            })
+                        }, 1000);
                         return;
                     }
                     //检测不通过,断开连接并打印到日志 err:-1x
@@ -94,13 +100,16 @@ var tcpServer = net.createServer((connection) => {
                         //格式错误
                         console.error('[err:-13]tcpserver\t %s-->设备%s :格式错误,准备断开连接\t %s\n错误数据:%s', address, connection.DevID, new Date().toLocaleString(), connection.wrongStr);
                         //发送方异常：暂停监听
+                        connection.pause();
                         tcpServer.close();
                         setTimeout(() => {
                             tcpServer.listen(tcpServerPort, '0.0.0.0');
                         }, reListenTime);
-                        connection.end(() => {
-                            console.log('tcpserver\t feedback \t 成功断开连接[-13]');
-                        })
+                        setTimeout(() => {
+                            connection.end(() => {
+                                console.log('tcpserver\t feedback \t 成功断开连接[-13]');
+                            })
+                        }, 1000);
                         return;
                     }
                     //检测通过，推送给web服务器进程
@@ -112,15 +121,16 @@ var tcpServer = net.createServer((connection) => {
                     process.send(message, (err) => {
                         if (err) {
                             //发送方异常：暂停监听
-                            try {
-                                tcpServer.close();
-                            } catch (error) {
-                                throw error;
-                            }
-                            console.error('[err:-21]tcpserver\t %s-->设备%s: 进程读写错误,准备断开连接%s\t %s', address, connection.DevID, err, toLocaleString('cn', 'hour12:false'));
-                            connection.end(() => {
-                                console.log('tcpserver\t %s\t feedback \t 成功断开连接[-21]', address);
-                            })
+                            connection.pause();
+                            tcpServer.close();
+                            setTimeout(() => {
+                                tcpServer.listen(tcpServerPort, '0.0.0.0');
+                            }, reListenTime);
+                            setTimeout(() => {
+                                connection.end(() => {
+                                    console.error('[err:-21]tcpserver\t %s-->设备%s: 进程读写错误,准备断开连接%s\t %s', address, connection.DevID, err, toLocaleString('cn', 'hour12:false'));
+                                })
+                            }, 1000);
                         }
                     });
                 }
