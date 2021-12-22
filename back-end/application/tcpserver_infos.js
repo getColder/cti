@@ -43,7 +43,7 @@ var tcpServer = net.createServer((connection) => {
         this.timer = setInterval(() => {
             this.complete++;
             if (this.complete < n) { }
-            else if (this.complete == n && this.buf != '') {
+            else if (this.complete == n && this.buf.length > 0) {
                 //2、检测次数超过指定次数,拿到完整数据并处理
                 var checkRes = checkStickJSON(this.buf);
                 const arrayJSON = checkRes.jsonstr;
@@ -164,8 +164,14 @@ var tcpServer = net.createServer((connection) => {
     })
     //接受数据存入buf，待完整性检测
     connection.on('data', (data) => {
-        connection.buf += data;
-        connection.complete = 0;
+	try{
+        	connection.buf += data;
+   		connection.complete = 0;
+	}
+	catch(error)
+	{
+    		console.error('[err:-12]读写错误！:%s\t %s', err, new Date().toLocaleString('cn', 'hour12:false'));
+	}
     })
 })
 
