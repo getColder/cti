@@ -23,6 +23,8 @@
         <img id="bg_navimg" src="img/pic1.jpg" alt="图片失效" />
         <ul id="nav_default">
             <li  class="navOpt"><a href=""><p>首页</p></a></li>
+            <li  class="navOpt" v-on:click="optDb(), getDevs()"><p>数据库查询</p></li>
+            <li  class="navOpt"><p>后台管理</p></li>
             <li id="nav-excel">
                 <a id="csvinfo"><p>电子表格</p></a>
                 <ul>
@@ -30,8 +32,6 @@
                     <li><a :href="linkTodb"> 数据库</a></li> 
                 </ul>
             </li>
-            <li  class="navOpt" v-on:click="optDb(), getDevs()"><p>数据库查询</p></li>
-            <li  class="navOpt"><p>后台管理</p></li>
         </ul>
         <div id="dbmdl"> 
             <modal-t v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询" ref="dbmodel">
