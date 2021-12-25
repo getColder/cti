@@ -136,24 +136,21 @@ var tcpServer = net.createServer((connection) => {
                 }
             }
         }, t);
-        //2、心跳检测 30s一次，断掉僵尸连接或长时间无数据发来的长连接
-        this.heartbeat = setInterval(() => {
-            connection.write('', (err) => {
-                if (err) {
-                    setTimeout(() => {
-                        console.log('[WARN:11]tcpserver\t %s-->%s心跳检测：连接无响应,断开连接%s\t %s', address, connection.DevID, err, toLocaleString('cn', 'hour12:false'));
-                        //发送方异常：暂停监听
-                        tcpServer.close();
-                        setTimeout(() => {
-                            tcpServer.listen(tcpServerPort, '0.0.0.0');
-                        }, reListenTime);
-                        connection.end(() => {
-                            console.log('tcpserver\t %s\t feedback \t 成功断开连接[11]', address);
-                        })
-                    }, 10000);
-                }
-            });
-        }, 30000);
+        //2、心跳检测 ,30分钟一次，断掉不活跃连接和僵尸连接
+        connection.setTimeout(30 * 60 * 1000,()=>{
+            console.error('[err:-14]tcpserver\t %s-->设备%s :连接不活跃，已强制断开\t %s\n错误数据:%s', address, connection.DevID, new Date().toLocaleString(), connection.wrongStr);
+            //发送方异常：暂停监听
+            connection.pause();
+            tcpServer.close();
+            setTimeout(() => {
+                tcpServer.listen(tcpServerPort, '0.0.0.0');
+            }, reListenTime);
+            setTimeout(() => {
+                connection.end(() => {
+                    console.log('tcpserver\t feedback \t 成功断开连接[-14]');
+                })
+            }, 1000);
+        })
     }
     //日志报告新连接
     console.log("new\t %s\t start:\t%s", address, connection.startTime.toLocaleString('cn', 'hour12:false'));
@@ -164,7 +161,6 @@ var tcpServer = net.createServer((connection) => {
     connection.on('end', () => {
         devlist.delete(connection.DevID);
         clearInterval(connection.timer);
-        clearInterval(connection.heartbeat);
         let duration = new Date().getTime() - connection.startTime.getTime();
         duration /= 1000;
         let secs = Math.floor(duration % 60);
