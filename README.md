@@ -1,2 +1,0 @@
-# cti
-concrete-temper-inspector

@@ -1,7 +1,0 @@
-{
-  "name": "use_mongoose",
-  "version": "0.0.1",
-  "dependencies": {
-    "mongoose": "^6.0.12"
-  }
-}
