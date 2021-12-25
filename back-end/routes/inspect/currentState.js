@@ -95,7 +95,7 @@ router.get('/data', (req, res, next) => {
     var time_req = req.query.timenode;
     var devid_req = req.query.devid;
     if (!devid_req) {
-        json('');
+    res.json('');
         res.end();
         return;
     }
