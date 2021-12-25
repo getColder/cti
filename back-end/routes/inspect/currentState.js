@@ -74,7 +74,7 @@ router.get('/', (req, res) => {
 router.get('/devs', async (req, res) => {
     if (dbState()) {
         try {
-            devices.all.push(await lsDevs());
+            devices.all.concat(await lsDevs());
         } catch (error) {
             console.error(error);
             res.json({
