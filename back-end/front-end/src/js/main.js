@@ -246,12 +246,13 @@ var infoListBox = new Vue({
                 .then(function(response){
                     if(response.data){
                         var devs = response.data.all;
+                        console.log(devs)
                         for (let index = 0; index < devs.length; index++) {
                             devs[index] = devs[index].substring(4, devs.length);                 
                         }
                         devicesList = that.devnodes = devs;
                         devicesOnlineList = response.data.on;
-                        console.log(that.devnodes)
+                        
                     }
                     else{
                         devicesList = that.devnodes = [];
