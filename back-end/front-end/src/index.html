@@ -44,7 +44,7 @@
                             </option>
                         </select>
                         <input v-show="!dbSearchByDev" type="input" ref="inputDbAddr"  value="">
-                        <div v-show="!dbSearchByDev">位置：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <div v-show="!dbSearchByDev">项目位置：</span>
                         <input v-show="!dbSearchByDev" type="input" ref="inputDbAddr"  value="不限">
                     </li>    
                     <li :class = "servert?'flashB':'flashA'" @click="servert=!servert">{{servert?'数据存储':'设备采集'}}日期：
@@ -111,7 +111,7 @@
         <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
         <ul id="devitems" style="list-style: none;">
             <li><span>项目标号：{{config.projectNumber}}</span></li>
-            <li><span>位置: {{config.location}}</span></li>
+            <li><span>项目位置: {{config.location}}</span></li>
             <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal" :value="config.note?note+'\n'+config.note:note"></textarea>
         </ul>
         <img id="bg_img" src="img/pic4.jpg" alt="" width="700px" height="700px">
