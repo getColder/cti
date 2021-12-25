@@ -30,7 +30,6 @@ eventBus.event.on('updateAllDevConf', () => {
         }
         files.forEach(async file => {
             fs.readFile(dir + '/' + file, async (err, data) => {
-
                 if (err)
                     console.error('Devconf \t 读取设备文件%s失败 \t %s', file, new Date().toLocaleString())
                 const devid = file.slice(4, file.length).split(".json")[0]
@@ -77,7 +76,8 @@ router.get('/devs', async (req, res) => {
         try {
             devices.all = await lsDevs();
         } catch (error) {
-            console.error(error)
+            console.error(error);
+            res.json([])
         }
         res.json(devices);
     }
