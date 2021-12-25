@@ -77,8 +77,12 @@ router.get('/devs', async (req, res) => {
             devices.all = await lsDevs();
         } catch (error) {
             console.error(error);
-            res.json([])
+            res.json({
+                on: [],
+                all: []
+            })
         }
+        console.log(devices)
         res.json(devices);
     }
     res.end()
