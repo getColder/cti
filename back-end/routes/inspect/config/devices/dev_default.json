@@ -1,0 +1,9 @@
+{
+    "config": {
+        "projectNumber" : "未知",
+        "location" : "未知",
+        "note" : "没有获取到设备信息"
+    },
+    "queribleDevs" : ["dev_8", "dev_9"]
+}
+
