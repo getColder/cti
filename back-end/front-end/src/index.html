@@ -36,7 +36,7 @@
         <div id="dbmdl"> 
             <modal-t v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询" ref="dbmodel">
                 <ul>
-                    <li>{{dbSearchByDev?'设备ID':'项目标号'}} ：
+                    <li>{{dbSearchByDev?'设备ID':'项目标号'}}：
                         <select v-show="dbSearchByDev" v-model="queryDev" @change="queryDev = $event.target.value">
                             <option value="">   </option>
                             <option v-for="(item,key) in dbSearchDevnodes" :value="item">
