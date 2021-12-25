@@ -251,13 +251,13 @@ var infoListBox = new Vue({
                         }
                         devicesList = that.devnodes = devs;
                         devicesOnlineList = response.data.on;
+                        console.log(that.devnodes)
                     }
                     else{
                         devicesList = that.devnodes = [];
                         devicesOnlineList = [];
                     }
                 })
-            console.log(this.devnodes)
             vEvent.$emit('updateDev',currentDevId)
         },
         getTimeline : function(){
