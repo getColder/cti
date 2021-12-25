@@ -247,13 +247,15 @@ var infoListBox = new Vue({
                     if(response.data){
                         var devs = response.data.all;
                         for (let index = 0; index < devs.length; index++) {
-                            devs[index] = devs[index].substring(3, devs.length);                 
+                            devs[index] = devs[index].substring(4, devs.length);                 
                         }
                         devicesList = that.devnodes = devs;
                         devicesOnlineList = response.data.on;
                     }
-                    else
-                    devicesList = that.devnodes = [];
+                    else{
+                        devicesList = that.devnodes = [];
+                        devicesOnlineList = [];
+                    }
                 })
             vEvent.$emit('updateDev',currentDevId)
         },
@@ -291,6 +293,7 @@ var infoListBox = new Vue({
                     return this.timenodes;
                 case 1:
                     this.title = '设备列表';
+                    console.log(this.devnodes)
                     return this.devnodes;
                 case 2:
                     this.title = '数据库查询结果'
