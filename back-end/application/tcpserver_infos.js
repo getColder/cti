@@ -220,7 +220,7 @@ process.on('uncaughtException', (err) => {
         data: ''
     }
     process.send(message)
-    throw error;
+    throw err;
 })
 process.on('Exit', () => {
     clearInterval(interval_getdevlist)

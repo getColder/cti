@@ -47,11 +47,11 @@ const tableInfoCom = {
             <span id="tabletitle">{{ devID }}</span> \
         </div>\
     <div class="tableConfig">\
-        <div>定位:\
-                <span id="tabletitle">{{ location }}</span> \
+        <div>项目标号:\
+                <span id="tabletitle">{{ projectNumber }}</span> \
         </div>\
-        <div>标段:\
-            <span id="tabletitle">{{ projectNumber }}</span> \
+        <div>位置:\
+            <span id="tabletitle">{{ location }}</span> \
         </div> \
     </div>\
 </div>',

@@ -2,7 +2,6 @@
 const { exit } = require('process')
 const work = require('./application/workmanager.js') //进程和线程池管理
 work.startTcpServer();
-
 const server = require('./application/webserver.js')	//web服务器
 const mongodb = require('./application/database.js') //mongodb数据库
 const ipc = require('./application/ipc.js') // IPC

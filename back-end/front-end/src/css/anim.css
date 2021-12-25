@@ -30,15 +30,35 @@
 }
 
 .turnY{
-    border-right: 1px solid black;
-    transform: rotateY(180deg) translateX(-100%);
+    background-color: chartreuse;
+    transform: rotateZ(180deg);
     transition: all 0.15s linear;
 }
 
 .turnYback{
-    border-left: 1px solid black;
-    transform: rotateY(360deg);
+    transform: rotateZ(360deg);
     transition: all 0.15s linear;
+}
+
+.flashA{
+    border-radius: 13px;
+    animation: bgFlash 1.75s cubic-bezier(.34, .05, 0, 1.0);
+}
+
+.flashB{
+    border-radius: 13px;
+    animation: bgFlashR 1.75s cubic-bezier(.34, .05, 0, 1.0);
+}
+@keyframes bgFlash {
+    0%{background-color:transparent;}
+    50%{background-color:#bbebbb;}
+    100%{background-color:transparent;}
+}
+
+@keyframes bgFlashR {
+    0%{background-color:transparent;}
+    50%{background-color:#a56e6e;}
+    100%{background-color:transparent;}
 }
 
 @keyframes turnT{

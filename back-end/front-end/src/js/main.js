@@ -40,7 +40,8 @@ this.onload = function () {
                 turninfi : false,
                 dbSearchByDev: true,
                 dbSearchDevnodes : [],
-                queryDev : 0
+                queryDev : 0,
+                servert: false,
             }
         },
         methods:{ 
@@ -63,7 +64,8 @@ this.onload = function () {
                     var requrl = '';
                     if(this.dbSearchByDev){
                         const value = this.queryDev;
-                        requrl = '/currentstate/db?devid='+ value +'&gt='+date1+ '&lt=' + date2;
+                        alert(this.servert)
+                        requrl = '/currentstate/db?devid='+ value +'&gt='+date1+ '&lt=' + date2 + '&servert=' + (this.servert?'y':'n');
                     }
                     else{
                         const value = this.$refs.inputDbAddr.value;
@@ -72,7 +74,7 @@ this.onload = function () {
                     await axios.get(requrl)
                     .then(function(response){
                         endTime = new Date();
-                        console.log(endTime.getTime() - startTime.getTime())
+                        console.log('请求时间：'+ endTime.getTime() - startTime.getTime() + 'ms')
                         if(response.data){
                             setTimeout(() => {
                                 if(response.data.length <= 0){

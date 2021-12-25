@@ -136,16 +136,18 @@ border: 1px solid white;
     font-size: 0;
     padding: 0;
     position: relative;
+    float: right;
     width: 170px;
     height: 30px;
     color: white;
     background-color: #999999;
     border: 1px solid #111539;
-    border-right-width: 0;
     padding-left: 15px;
     font-size: medium; 
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
     z-index: 5000;
     margin-right: 50%;
 }
@@ -155,15 +157,10 @@ border: 1px solid white;
 }
 
 #buttonDB1 img{
-    border-radius: 0;
-    border-top: 1px solid #111539;
-    border-bottom: 1px solid #111539;
+    border-radius: 50%;
     background-color: #fff;
     float: right;
     right: -30px;
-    top: 0px;
-    margin: -1px;
-    margin-left: -3px;
     padding: 0;
     width: 30px;
     height: 30px;

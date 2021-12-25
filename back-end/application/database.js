@@ -1,4 +1,5 @@
 const mongo = require('../node_modules/mongodb').MongoClient //database
+const ObjectId = require('mongodb').ObjectId
 const emitter = require('./event').emitter
 var url_mongo = "mongodb://localhost:27017/concrete_temper_info";
 
@@ -185,4 +186,21 @@ exports.listDevs = async function(){
     })
     tableNames.sort();
     return tableNames;
+}
+
+const offset = 8 * 60 * 60 * 1000
+function timeToObjId(time){
+    var date = new Date(time)
+    var t = new Date(date.getTime() - offset);
+    t = t.getTime()/1000;
+    return t.toString(16) + '0000000000000000';
+}
+
+exports.whereByServerTime = function(time1,time2){
+   return {
+        '_id':{
+            '$gt': ObjectId(timeToObjId(time1)),
+            '$lt': ObjectId(timeToObjId(time2))
+        }
+    }   
 }

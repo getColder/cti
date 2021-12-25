@@ -3,6 +3,7 @@ const router = express.Router()
 const fs = require('fs')
 const insertInfo = require('../../application/database').insertInfo;
 const find = require('../../application/database.js').find; //mongodb数据库
+const whereByServerTime = require('../../application/database.js').whereByServerTime; //设备数据列表
 const dbState = require('../../application/database.js').isConnected //数据库是否连接
 const lsDevs = require('../../application/database.js').listDevs; //设备数据列表
 const eventBus = require('../../application/eventBus.js')
@@ -82,7 +83,6 @@ router.get('/devs', async (req, res) => {
                 all: []
             })
         }
-        console.log(devices)
         res.json(devices);
     }
     res.end()
@@ -135,20 +135,31 @@ router.get('/db', (req, res, next) => {
     var loc_req = req.query.loc;
     var date_lt = req.query.lt;
     var date_gt = req.query.gt;
+    var byServerTime = req.query.servert;
     if ((devid_req || loc_req) && date_lt && date_gt) {
         date_gt += ':00:00:00'
         date_lt += ':23:59:00'
         var dateTime1 = new Date(date_gt);
         var dateTime2 = new Date(date_lt);
         if (dateTime1 && dateTime2) {
+            var byTime = '设备时间';
             if (devid_req) {
                 startTime = new Date();
-                find('dev_' + devid_req, {
-                    "time": {
-                        $gte: dateTime1,
-                        $lte: dateTime2
-                    }
-                }, 0)
+                var where;
+                if(byServerTime === 'y'){
+                    where = whereByServerTime(date_gt,date_lt);
+                    byTime = '服务器时间';
+                }
+                else{
+                    console.log
+                    where = {
+                        "time": {
+                            $gte: dateTime1,
+                            $lte: dateTime2
+                        }
+                    };
+                }
+                find('dev_' + devid_req, where, 0)
                     .then((data) => {
                         if (data.length > 0) {
                             res.json(data)
@@ -160,7 +171,7 @@ router.get('/db', (req, res, next) => {
                             res.end();
                         }
                         endTime = new Date();
-                        console.log('DataBase\t 查询%s条记录IO耗时: %s\t%s', data.length, endTime.getTime() - startTime.getTime(), new Date().toLocaleString());
+                        console.log('DataBase\t 查询%s条记录IO耗时: %sms\t%s\t 通过：%s', data.length, endTime.getTime() - startTime.getTime(), new Date().toLocaleString(),byTime);
                     })
                     .catch(reson => {
                         console.log('database\t 数据库请求错误： %s\t %s', reson, new Date().toLocaleString());
