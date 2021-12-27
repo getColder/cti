@@ -301,6 +301,7 @@ border: 1px solid white;
 #btn-dbres li:hover {
     margin: 0;
     margin-bottom: 5px;
+    background-color: #eeeeeeb5;
 }
 
 #btn-dbres li div img{
