@@ -291,7 +291,7 @@ border: 1px solid white;
 
 #btn-dbres li {
     font-size: 16px;
-    color: brown;
+    color: #223355;
     border-width: 0;
     border-bottom: 2px solid #33666644;
     margin: 0;
@@ -299,13 +299,10 @@ border: 1px solid white;
 }
 
 #btn-dbres li:hover {
-    color: white;
-    background-color: #bcaeee75;
-}
-
-#btn-dbres li div:hover {
     background-color: #bcaeee25;
 }
+
+
 
 #btn-dbres li div img{
     height: 40px;
