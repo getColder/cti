@@ -299,9 +299,11 @@ border: 1px solid white;
 }
 
 #btn-dbres li:hover {
-    margin: 0;
-    margin-bottom: 5px;
     background-color: #bcaeee75;
+}
+
+#btn-dbres li div:hover {
+    background-color: #bcaeee25;
 }
 
 #btn-dbres li div img{
