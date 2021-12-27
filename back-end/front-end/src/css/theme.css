@@ -299,6 +299,7 @@ border: 1px solid white;
 }
 
 #btn-dbres li:hover {
+    color: white;
     background-color: #bcaeee75;
 }
 
