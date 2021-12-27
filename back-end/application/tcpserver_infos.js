@@ -1,7 +1,6 @@
 const net = require('net')
 const path = require('path')
 const fs = require('fs');
-const { error } = require('console');
 
 var tcpServerPort = 9520;
 
@@ -170,14 +169,12 @@ var tcpServer = net.createServer((connection) => {
     })
     //接受数据存入buf，待完整性检测
     connection.on('data', (data) => {
-	try{
-        	connection.buf += data;
+        connection.buf += data;
    		connection.complete = 0;
-	}
-	catch(error)
-	{
-    		console.error('[err:-12]读写错误！:%s\t %s', err, new Date().toLocaleString('cn', 'hour12:false'));
-	}
+    })
+    connection.on('error', (error)=>{
+        connection.destroy();
+        console.error('[err:-12]读写错误！连接%s已销毁:%s\t %s', address, error, new Date().toLocaleString('cn', 'hour12:false'));
     })
 })
 

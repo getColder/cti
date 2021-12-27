@@ -285,6 +285,30 @@ border: 1px solid white;
     background-color: #33445566
 }
 
+#btn-dbres{
+    background-color: transparent;
+}
+
+#btn-dbres li {
+    font-size: 16px;
+    color: brown;
+    border-top: 3px solid #888888;
+    border-bottom: 3px solid #888888;
+}
+
+#btn-dbres li:hover {
+    color: brown;
+    border-top: 3px solid #888888;
+    border-bottom: 3px solid #888888;
+    transition: all .1s ease-out;
+}
+
+#btn-dbres li div img{
+    height: 40px;
+    width: 40px;
+}
+
+
 .devon {
     display: inline-block;
     width:7px;
