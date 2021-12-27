@@ -64,7 +64,6 @@ this.onload = function () {
                     var requrl = '';
                     if(this.dbSearchByDev){
                         const value = this.queryDev;
-                        alert(this.servert)
                         requrl = '/currentstate/db?devid='+ value +'&gt='+date1+ '&lt=' + date2 + '&servert=' + (this.servert?'y':'n');
                     }
                     else{
@@ -307,7 +306,7 @@ var infoListBox = new Vue({
                 return;
             const scroll = this.$refs['scroll'];
             if(scroll.scrollHeight - scroll.scrollTop < 30){
-                alert(123)
+                
             }
             //console.log(this.$refs['scroll'].scrollHeight);
             console.log(this.$refs['scroll'].scrollHeight);

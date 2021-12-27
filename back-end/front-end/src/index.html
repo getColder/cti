@@ -47,7 +47,7 @@
                         <div v-show="!dbSearchByDev">项目位置：</span>
                         <input v-show="!dbSearchByDev" type="input" ref="inputDbAddr"  value="不限">
                     </li>    
-                    <li :class = "servert?'flashB':'flashA'" @click="servert=!servert">{{servert?'数据存储':'设备采集'}}日期：
+                    <li :class = "servert?'flashB':'flashA'" ><span @click="servert=!servert">{{servert?'数据存储':'设备采集'}}日期：</span>
                         <input type="date" ref="inputDbTimeMin" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
                         至 &nbsp;<input type="date" ref="inputDbTimeMax" value="2020-01-01" required min="1990-01-01" max="2099-12-31">
                     </li>  
