@@ -1,7 +1,9 @@
 const host = window.location.host;  //网址
 const devInfoURL = 'data'
-
 var tempCurrentDevId = localStorage.getItem("devid");
+
+//中央vue事件中转
+var vEvent = new Vue({})
 
 var infoCurrentState = {
     devconfig : [],
@@ -23,13 +25,11 @@ document.write('<script src="js/component/refresh.js"></script>') //refresh组�
 document.write('<script src="lib/echarts.js"></script>') //echarts组件
 
 window.onbeforeunload = function(){
-    localStorage.setItem("devid", currentDevId)
+    localStorage.setItem("devid", infoCurrentState.currentDevId)
 }
 
 //文档加载完毕--> 开始渲染组件
 this.onload = function () {
-//中央vue事件中转
-    var vEvent = new Vue({})
     vEvent.$on('updateConf',(data)=>{infoCurrentState.devconfig = data});
     vEvent.$on('updateDevAll', (data)=> {infoCurrentState.devicesList = data;});
     vEvent.$on('updateDevOn', (data)=>{infoCurrentState.devicesOnlineList = data;});
@@ -323,7 +323,7 @@ var infoListBox = new Vue({
         devOnline : function(){
             this.onelineKeep = true;
             return {
-                list : devicesOnlineList,
+                list : infoCurrentState.devicesOnlineList,
                 keep : this.onelineKeep
             }
         }
@@ -431,12 +431,14 @@ var infoListBox = new Vue({
             })
         },
     })
-
 }
 
 
 
 
+function init(){
+    vEvent.$emit('init', infoCurrentState);
+}
 
 async function reqTimeline(){
     return new Promise((resolve,reject) =>{

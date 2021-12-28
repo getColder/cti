@@ -119,6 +119,10 @@ const tableInfoCom = {
         }
     },
     mounted(){
+        var that = this;
+        vEvent.$on('init',(data)=>{
+            that.devID = data.currentDevId
+        })
         this.devID = currentDevId;
         this.updateData('/currentstate/data?devid='+ this.devID)
     }
