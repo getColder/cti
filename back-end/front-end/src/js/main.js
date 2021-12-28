@@ -97,7 +97,7 @@ this.onload = function () {
                                     return;
                                 }
                                 dbqueryRes = response.data.reverse();
-                                vEvent.$emit('dbquery');
+                                vEvent.$emit('dbquery',-1);
                                 vEvent.$emit('changeopt', 0) 
                                 setTimeout(() => {
                                     vEvent.$emit('changelisttype',2)
@@ -347,13 +347,18 @@ var infoListBox = new Vue({
         })
         vEvent.$on('dbquery', function(number) {
             that.lockInterval = true;
+            that.lazyLoading = true; //开始加载
+            if(number === -1){
+                //新的查询集合
+                number = 500;
+                that.lazyLoadIndex = 0;
+            }
             const numberOnceLoad = Number(number?number:2000);
             const len = dbqueryRes.length;
             var tempNode = that.querynodes;
             if(that.lazyLoading === true || that.lazyLoadIndex >= dbqueryRes.length){
                 return;
             }
-            that.lazyLoading = true; //开始加载
             for (let i = 0; i < ((len < numberOnceLoad)?len:numberOnceLoad); i++) {
                 if(that.lazyLoadIndex >= dbqueryRes.length){
                     vEvent.$emit('tipbox',"所有数据已加载完毕!")
