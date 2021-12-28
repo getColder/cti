@@ -296,19 +296,6 @@ border: 1px solid white;
 }
 
 
-#btn-dbres div{
-    font-size: 16px;
-    color: #223355;
-    border-width: 0;
-    border-bottom: 2px solid #33666644;
-    margin: 0;
-    margin-bottom: 5px;
-}
-
-#btn-dbres div:hover {
-    background-color: #bcaeee25;
-}
-
 
 
 #btn-dbres div img{
@@ -534,3 +521,15 @@ border: 1px solid white;
     cursor: pointer;
 }
 
+#btn-dbres div{
+    font-size: 16px;
+    color: #223355;
+    border-width: 0;
+    border-bottom: 2px solid #33666644;
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+#btn-dbres div:hover {
+    background-color: #bcaeee25;
+}
