@@ -348,11 +348,13 @@ var infoListBox = new Vue({
         vEvent.$on('dbquery', function(number) {
             that.lockInterval = true;
             that.lazyLoading = true; //开始加载
-            if(number === -1){
+            if(Number(number) === -1){
                 //新的查询集合
                 number = 500;
                 that.lazyLoadIndex = 0;
+                console.log(500)
             }
+            console.log(number)
             const numberOnceLoad = Number(number?number:2000);
             const len = dbqueryRes.length;
             var tempNode = that.querynodes;
