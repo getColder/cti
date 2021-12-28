@@ -96,7 +96,8 @@ this.onload = function () {
                                     that.$refs.dbmodel.afterSubmit = false;
                                     return;
                                 }
-                                vEvent.$emit('dbquery', response.data.reverse());
+                                dbqueryRes = response.data.reverse();
+                                vEvent.$emit('dbquery');
                                 vEvent.$emit('changeopt', 0) 
                                 setTimeout(() => {
                                     vEvent.$emit('changelisttype',2)
@@ -340,14 +341,14 @@ var infoListBox = new Vue({
         vEvent.$on('changelisttype',(type)=>{
             this.typeList = type;
         })
-        vEvent.$on('dbquery', function(value) {
+        vEvent.$on('dbquery', function() {
             const len = dbqueryRes.length;
-            console.log(len)
+            console.log(dbqueryRes)
             that.querynodes = [];
             for (let index = 0; index < ((len < 200)?len:200); index++) {
                 console.log(dbqueryRes[index])
                 if(that.riseSort === true)
-                    that.querynodes.push(dbqueryRes[index].time); //先载入200条
+                    that.querynodes.push(value[index].time); //先载入200条
                 else
                     that.querynodes.unshift(dbqueryRes[index].time); //先载入200条
             }
