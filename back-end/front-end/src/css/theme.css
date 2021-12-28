@@ -231,6 +231,7 @@ border: 1px solid white;
 }
 
 #timelineScroll{
+    border-radius: 18px;
     background-color: #cccccc81;
     height: 390px;
     width: 225px;
