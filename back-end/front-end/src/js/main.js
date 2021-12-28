@@ -346,7 +346,7 @@ var infoListBox = new Vue({
         vEvent.$on('dbquery', function(pos) {
             that.lockInterval = true;
             const len = dbqueryRes.length;
-            var tempNode = [];
+            var tempNode = that.querynodes;
             if(that.lazyLoading === true){
                 return;
             }
