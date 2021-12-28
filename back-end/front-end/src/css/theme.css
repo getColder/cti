@@ -226,6 +226,7 @@ border: 1px solid white;
     float: left;
     list-style: none;
     padding-right: 10px;
+    height: 350px;
     border-left: 12px solid gray;
 }
 
@@ -237,10 +238,6 @@ border: 1px solid white;
     overflow-y: auto;
 }
 
-#infoListBox img:hover{
-	background-color: #7e7e7f1f;
-	border-radius: 30%;
-}
 
 .btn-listbox{
     cursor:pointer; 
@@ -296,12 +293,35 @@ border: 1px solid white;
 }
 
 
-
-
 #btn-dbres div img{
-    height: 40px;
-    width: 40px;
+    height: 25px;
+    width: 25px;
 }
+
+#btn-dbres{
+    border: 2px solid red;
+    inherits:initial;
+    text-align: center;
+    list-style: none;
+    margin-top: 6%;
+    padding: 0;
+}
+
+#btn-dbres:hover{
+    padding: 0;
+    background: khaki;
+}
+
+#btn-dbres div{
+    float: none;
+    font-size: 14px;
+    color: #223355;
+    border-width: 0;
+    border-bottom: 2px solid #33666644;
+    margin: 0;
+    margin-bottom: 5px;
+}
+
 
 
 .devon {
@@ -521,15 +541,3 @@ border: 1px solid white;
     cursor: pointer;
 }
 
-#btn-dbres div{
-    font-size: 16px;
-    color: #223355;
-    border-width: 0;
-    border-bottom: 2px solid #33666644;
-    margin: 0;
-    margin-bottom: 5px;
-}
-
-#btn-dbres div:hover {
-    background-color: #bcaeee25;
-}

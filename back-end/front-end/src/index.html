@@ -82,6 +82,10 @@
         <lock-auto-up class="btn-listbox" v-show="typeList === 0 || typeList === 1" @lockupdate="lockAutoUpdate"></lock-auto-up>
         <refresh v-show="typeList === 0 || typeList === 1" @refresh="getTimeline(), getDevs()"></refresh>
         <span @click="loadAll" v-show="typeList===2"><img :class="lazyLoading?'turni':'turnoff'"  :src="lazyLoading?'img/loadingAll.png':'img/loadAll.png'" class="btn-listbox" title="一次性加载"></span>
+        <div id="btn-dbres" v-show="typeList !==2">
+            <div><img src="img/curve.png" alt="">查看曲线视图</div>
+            <div><img src="img/excel.png" alt="">下载电子表格</div>
+        </div>
         <div id="timelineScroll" ref="scroll" v-on:scroll="loadQuery">
             <ul>
                 <li v-for="(item, i) in getItems()" @click="getData(item)" v-if="typeList===0">{{
@@ -94,6 +98,7 @@
                     {{
                         '设备'+ item
                     }}
+
                  <img v-show="slctDevId == item" src="img/this.png" width="17px" height="17px" alt="">
                 </li>
                 <li v-for="(item, i) in getItems()" @click="getQueryData(i)" v-if="typeList===2">{{
@@ -103,17 +108,11 @@
                 </li>
             </ul>
         </div>
-        <div id="btn-dbres" v-if="typeList===2">
-            <div @click=alert(123)><img src="img/curve.png" alt="">查看曲线视图</div>
-            <div><img src="img/excel.png" alt="">下载电子表格</div>
-        </div>
     </div>
-    
     <div id="dataDisplay" v-show="showit" style="text-align:center;">
             <table-info>
                 <indictor  ref='indic'></indictor>
             </table-info>
-            <div style="border-top:200px solid transparent;border-bottom: 325px solid #208f9c;position: relative;top: 150px;"></div>
     </div>
     <div id="devTable" v-show="showit" style="font-size: large;">
         <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
@@ -128,6 +127,7 @@
     图表在此
     </div>
     <script src="./js/main.js"></script>
+    <div style="border-top:200px solid transparent;border-bottom: 325px solid #208f9c;position: relative;top: 150px;"></div>
 
 </body>
 
