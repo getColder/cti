@@ -316,9 +316,9 @@ var infoListBox = new Vue({
             if(this.typeList !==2 )
                 return;
             const scroll = this.$refs['scroll'];
-            var distToBottom = scroll.scrollHeight - scroll.scrollTop;
+            var distToBottom = scroll.scrollHeight - scroll.scrollTop - document.body.clientHeight;
             if(distToBottom < 30){
-                console.log(distToBottom);
+                console.log(distToBottom + "\t" + document.body.clientHeight);          
             }
         }
     },
