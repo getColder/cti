@@ -175,6 +175,54 @@ this.onload = function () {
         }
     })
 
+//提示栏
+    var tipBox = new Vue({
+        el: '#tipBox',
+        data() {
+            return {
+                box : [{
+                    tip : '',   //弹出提示
+                    tipclass : "boxtiphide",
+                    showtip :  false,
+                },
+                {
+                    tip : '',   //弹出提示
+                    tipclass : "boxtiphide",
+                    showtip :  false,
+                }],
+                buzy : [false, false],
+            }
+        },
+        mounted() {
+            var that = this;
+            vEvent.$on('tipbox',value=>{
+                for(var index = 0;index < that.buzy.length;index++){
+                    var i = index;
+                    if(!that.buzy[i]){
+                        that.box[i].tip = '提示';
+                        that.buzy[i] = true;
+                        that.box[i].tipclass = 'boxtipshow'
+                        setTimeout(() => {
+                            that.box[i].tip = value;
+                        }, 1750);
+                        setTimeout(() => {
+                            that.box[i].tipclass = 'boxtiphide'
+                            that.box[i].tip = '';
+                        }, 8000);
+                        setTimeout(() => {
+                            that.buzy[i] = false; 
+                        }, 9000);
+                        return;
+                    }
+                }
+                setTimeout(() => {
+                    vEvent.$emit('tipbox',value);
+                }, 2000);
+            })
+        },
+    })
+
+
 //表格组件
     var dataDisplay = new Vue({
         el: '#dataDisplay',
@@ -226,9 +274,6 @@ var infoListBox = new Vue({
             displayQuery : [], //部分query
             lockInterval : null,    //自动更新锁
             riseSort : true,    //排序
-            tip : '',   //弹出提示
-            tipclass : "boxtiphide",
-            showtip :  false,
             onelineKeep: false
 
     },
@@ -375,31 +420,11 @@ var infoListBox = new Vue({
                 that.lazyLoading = false;
                 that.currentTime = that.querynodes[0];
             }, 100);
-        })
-        vEvent.$on('tipbox',value=>{
-            that.$refs['scroll'].scrollTop = 0;
-            that.showtip = true;
-            setTimeout(() => {
-                that.tipclass = 'boxtipshow'
-            }, 100);
-            setTimeout(() => {
-                that.tip = '提示';
-            }, 250);
-            setTimeout(() => {
-                that.tip = value;
-            }, 1750);
-            setTimeout(() => {
-                that.tipclass = 'boxtiphide'
-                that.tip = '';
-            }, 8000);
-            setTimeout(() => {
-                that.showtip = false; 
-            }, 9000);
-        })
+        });
         setTimeout(()=> {
             that.getTimeline();
             that.getDevs();
-        }, 100)
+        }, 100);
         this.lockAutoUpdate(true); //初始锁定自动更新
     },
     components:{

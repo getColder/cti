@@ -68,7 +68,12 @@
         <btn-options>图表</btn-options>
     </div>
 
-    <div style="height: 50px;"></div>
+    <div id="tipBox" style="height: 50px;">
+        <ul>
+            <div :class='box[0].tipclass'>&nbsp;{{box[0].tip}}</div></li>
+            <div :class='box[1].tipclass'>&nbsp;{{box[1].tip}}</div></li>
+        </ul>
+    </div>
     <div id="infoListBox">
         <span id="fastSearch">
             <img src="img/timelist_rise.png" title="升序/降序" width=" 20px" height="20px"
@@ -78,7 +83,6 @@
         <refresh v-show="typeList === 0 || typeList === 1" @refresh="getTimeline(), getDevs()"></refresh>
         <span @click="loadAll" v-show="typeList===2"><img :class="lazyLoading?'turni':'turnoff'"  :src="lazyLoading?'img/loadingAll.png':'img/loadAll.png'" class="btn-listbox" title="一次性加载"></span>
         <div id="timelineScroll" ref="scroll" v-on:scroll="loadQuery">
-            <div  v-show="showtip" :class='tipclass'>&nbsp;{{tip}}</div>
             <ul>
                 <li v-for="(item, i) in getItems()" @click="getData(item)" v-if="typeList===0">{{
                     item[0]+'年'+item[1]+'月'+item[2]+'日'+item[3]+'时'+item[4]+'分'
