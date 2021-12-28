@@ -83,6 +83,8 @@ router.get('/devs', async (req, res) => {
                 all: []
             })
         }
+        for (let index = 0; index < devices.all.length; index++) 
+            devices.all[index] = '' + devices.all[index].substring(4, devices.all[index].length);    
         res.json(devices);
     }
     res.end()

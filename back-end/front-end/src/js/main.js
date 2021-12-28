@@ -6,6 +6,11 @@ var devicesOnlineList = [];
 var currentDevId = localStorage.getItem("devid");
 var devConfig = {}
 
+var infoCurrentState = {
+    devconfig : [],
+
+}
+
 //性能测试
 var startTime = new Date();
 var endTime = new Date();
@@ -15,8 +20,8 @@ document.write('<script src="js/component/indictor.js"></script>') //indictor组
 document.write('<script src="js/component/lock.js"></script>') ///lock组件
 document.write('<script src="js/component/btnOptions.js"></script>') //btn-options组件
 document.write('<script src="js/component/modal.js"></script>') //modal组件
-document.write('<script src="js/component/refresh.js"></script>') //modal组件
-
+document.write('<script src="js/component/refresh.js"></script>') //refresh组件
+document.write('<script src="lib/echarts.js"></script>') //echarts组件
 
 window.onbeforeunload = function(){
     localStorage.setItem("devid", currentDevId)
@@ -24,10 +29,11 @@ window.onbeforeunload = function(){
 
 //文档加载完毕--> 开始渲染组件
 this.onload = function () {
-
 //中央vue事件中转
-    var vEvent = new Vue()
+    var vEvent = new Vue({})
+    vEvent.$on('updateConf',(data)=>{infoCurrentState.devconfig = data});
 
+    
 
     var nav = new Vue({
         el: '.nav',
@@ -147,7 +153,8 @@ this.onload = function () {
                 var that = this;
                 axios.get('/currentstate/devconfig?devid=' + currentDevId)
                 .then(function(response){
-                     that.config = response.data
+                     that.config = response.data;
+                     vEvent.$emit('updateConf', response.data);
                 })
             }
         },
@@ -246,11 +253,11 @@ var infoListBox = new Vue({
             axios.get('/currentstate/devs')
                 .then(function(response){
                     if(response.data){
-                        var devs = response.data.all;
-                        for (let index = 0; index < devs.length; index++) 
-                            devs[index] = '' + devs[index].substring(4, devs[index].length);                
+                        var devs = response.data.all;            
                         devicesList = that.devnodes = devs;
-                        devicesOnlineList = response.data.on;                      
+                        devicesOnlineList = response.data.on;
+                        vEvent.$emit('updateDevAll', devs);
+                        vEvent.$emit('updateDevOn', response.data.on);                           
                     }
                     else{
                         devicesList = that.devnodes = [];
@@ -428,3 +435,8 @@ var infoListBox = new Vue({
 
 
 
+async function reqTimeline(){
+    return new Promise((resolve,reject) =>{
+        
+    })
+}

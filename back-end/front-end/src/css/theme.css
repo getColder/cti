@@ -498,6 +498,11 @@ border: 1px solid white;
     right: -2px;
 }
 
+.infoCharts{
+    background-color: rgb(245, 245, 245);
+    border-radius: 18px;
+    padding: 15px;
+}
 
 
 
