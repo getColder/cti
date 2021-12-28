@@ -232,10 +232,11 @@ border: 1px solid white;
 
 #timelineScroll{
     border-radius: 18px;
-    background-color: #cccccc81;
+    background-color: #cccccc61;
     height: 390px;
     width: 225px;
     margin: 0;
+    margin-top: 20px;
     padding: 0;
     overflow-y: auto;
 }
