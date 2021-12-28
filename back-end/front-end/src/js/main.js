@@ -242,6 +242,9 @@ var infoListBox = new Vue({
                 vEvent.$emit('updateQuerynode',dbqueryRes[key]);
             this.currentTime = key;
         },
+        loadAll: function(){
+            vEvent.$emit('dbqeury',dbqueryRes.length);
+        },
         switchDev: function(dev){
             vEvent.$emit('updateDevId', dev);
             vEvent.$emit('updateDev',infoCurrentState.currentDevId);
@@ -342,15 +345,16 @@ var infoListBox = new Vue({
         vEvent.$on('changelisttype',(type)=>{
             this.typeList = type;
         })
-        vEvent.$on('dbquery', function() {
+        vEvent.$on('dbquery', function(numer) {
             that.lockInterval = true;
+            const numberOnceLoad = Number(number?number:2000);
             const len = dbqueryRes.length;
             var tempNode = that.querynodes;
             if(that.lazyLoading === true || that.lazyLoadIndex >= dbqueryRes.length){
                 return;
             }
             that.lazyLoading = true; //开始加载
-            for (let i = 0; i < ((len < 2000)?len:2000); i++) {
+            for (let i = 0; i < ((len < numberOnceLoad)?len:numberOnceLoad); i++) {
                 if(that.lazyLoadIndex >= dbqueryRes.length){
                     vEvent.$emit('tipbox',"所有数据已加载完毕!")
                     break;
