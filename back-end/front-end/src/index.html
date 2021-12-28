@@ -74,7 +74,7 @@
             <img src="img/timelist_rise.png" title="升序/降序" width=" 20px" height="20px"
             style="position:relative;top:4px;left: -6px;" :class="riseSort?'turnX':'turnXback'" @click="riseSort = !riseSort;dbNodeSort();currentTime = getItems()[0];">{{title}} 
         </span>
-        <lock-auto-up v-show="typeList === 0" @lockupdate="lockAutoUpdate"></lock-auto-up>
+        <lock-auto-up v-show="typeList === 0 || typeList === 1" @lockupdate="lockAutoUpdate"></lock-auto-up>
         <refresh @refresh="getTimeline(), getDevs()"></refresh>
         <div id="timelineScroll" ref="scroll" v-on:scroll="loadQuery">
             <div  v-show="showtip" :class='tipclass'>&nbsp;{{tip}}</div>

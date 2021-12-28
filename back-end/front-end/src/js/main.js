@@ -343,7 +343,6 @@ var infoListBox = new Vue({
         })
         vEvent.$on('dbquery', function() {
             that.lockInterval = true;
-            const that = this;
             const len = dbqueryRes.length;
             var tempNode = [];
             for (let i = 0; i < ((len < 200)?len:200); i++) {
