@@ -319,7 +319,7 @@ var infoListBox = new Vue({
             const scroll = this.$refs['scroll'];
             var distToBottom = scroll.scrollHeight - scroll.scrollTop - document.body.clientHeight;
             if(distToBottom < 30){
-                       
+                    vEvent.$emit('dbquery');
             }
         }
     },
@@ -347,7 +347,8 @@ var infoListBox = new Vue({
             var tempNode = [];
             for (let i = 0; i < ((len < 200)?len:200); i++) {
                 if(that.lazyLoadIndex >= dbqueryRes.length){
-                    alert("到底部了")
+                    alert("记载完毕");
+                    that.lazyLoadIndex = 0;
                     break;
                 }
                 if(that.riseSort === true)
