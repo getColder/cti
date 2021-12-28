@@ -350,8 +350,8 @@ var infoListBox = new Vue({
                 that.$refs['scroll'].scrollTop = pos;
                 return;
             }
+            that.lazyLoading = true; //开始加载
             for (let i = 0; i < ((len < 200)?len:200); i++) {
-                that.lazyLoading = true; //开始加载
                 if(that.lazyLoadIndex >= dbqueryRes.length){
                     alert("加载完毕");
                     that.lazyLoadIndex = 0;
@@ -364,6 +364,7 @@ var infoListBox = new Vue({
                 that.lazyLoadIndex++;
             }
             that.querynodes = tempNode;
+            that.lazyLoading = false; //开始加载
             that.currentTime = that.querynodes[0];
         })
         vEvent.$on('tipbox',value=>{
