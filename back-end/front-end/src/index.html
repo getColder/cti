@@ -103,7 +103,7 @@
                 </li>
             </ul>
         </div>
-        <div id="btn-dbres" v-show="typeList===2">
+        <div id="btn-dbres" v-if="typeList===2">
             <div @click=alert(123)><img src="img/curve.png" alt="">查看曲线视图</div>
             <div><img src="img/excel.png" alt="">下载电子表格</div>
         </div>
