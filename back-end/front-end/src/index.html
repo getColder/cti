@@ -82,8 +82,8 @@
         <lock-auto-up class="btn-listbox" v-show="typeList === 0 || typeList === 1" @lockupdate="lockAutoUpdate"></lock-auto-up>
         <refresh v-show="typeList === 0 || typeList === 1" @refresh="getTimeline(), getDevs()"></refresh>
         <span @click="loadAll" v-show="typeList===2"><img :class="lazyLoading?'turni':'turnoff'"  :src="lazyLoading?'img/loadingAll.png':'img/loadAll.png'" class="btn-listbox" title="一次性加载"></span>
-        <div id="btn-dbres" v-show="typeList !==2">
-            <div><img src="img/curve.png" alt="">查看曲线视图</div>
+        <div id="btn-dbres" v-show="typeList ===2">
+            <div @click="alert('test')"><img src="img/curve.png" alt="">查看曲线视图</div>
             <div><img src="img/excel.png" alt="">下载电子表格</div>
         </div>
         <div id="timelineScroll" ref="scroll" v-on:scroll="loadQuery">
