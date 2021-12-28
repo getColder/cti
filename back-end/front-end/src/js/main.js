@@ -221,6 +221,7 @@ var infoListBox = new Vue({
             querynodes : [], //缓存数据库数据,
             lazyLoadIndex : 0, //懒加载索引,
             lazyLoading : false,
+            lazyLoadPos : 0,
             currentTime : '',  //选中时间
             slctDevId : '', //选中设备
             displayQuery : [], //部分query
@@ -347,11 +348,11 @@ var infoListBox = new Vue({
             const len = dbqueryRes.length;
             var tempNode = [];
             if(that.lazyLoading === true){
-                that.$refs['scroll'].scrollTop = pos;
                 return;
             }
-            that.lazyLoading = true; //开始加载
             for (let i = 0; i < ((len < 200)?len:200); i++) {
+                that.lazyLoading = true; //开始加载
+                that.lazyLoadPos = pos;
                 if(that.lazyLoadIndex >= dbqueryRes.length){
                     alert("加载完毕");
                     that.lazyLoadIndex = 0;
@@ -364,7 +365,6 @@ var infoListBox = new Vue({
                 that.lazyLoadIndex++;
             }
             that.querynodes = tempNode;
-            that.lazyLoading = false; //开始加载
             that.currentTime = that.querynodes[0];
         })
         vEvent.$on('tipbox',value=>{
