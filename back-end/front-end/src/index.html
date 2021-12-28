@@ -75,7 +75,7 @@
             style="position:relative;top:4px;left: -6px;" :class="riseSort?'turnX':'turnXback'" @click="riseSort = !riseSort;dbNodeSort();currentTime = getItems()[0];">{{title}} 
         </span>
         <lock-auto-up class="btn-listbox" v-show="typeList === 0 || typeList === 1" @lockupdate="lockAutoUpdate"></lock-auto-up>
-        <refresh @refresh="getTimeline(), getDevs()"></refresh>
+        <refresh v-show="typeList === 0 || typeList === 1" @refresh="getTimeline(), getDevs()"></refresh>
         <span @click="loadAll" v-show="typeList===2"><img src="img/loadAll.png" class="btn-listbox" title="一次性加载"></span>
         <div id="timelineScroll" ref="scroll" v-on:scroll="loadQuery">
             <div  v-show="showtip" :class='tipclass'>&nbsp;{{tip}}</div>

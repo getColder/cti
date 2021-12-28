@@ -243,7 +243,7 @@ var infoListBox = new Vue({
             this.currentTime = key;
         },
         loadAll: function(){
-            vEvent.$emit('dbqeury',dbqueryRes.length);
+            vEvent.$emit('dbquery',dbqueryRes.length);
         },
         switchDev: function(dev){
             vEvent.$emit('updateDevId', dev);
@@ -348,6 +348,7 @@ var infoListBox = new Vue({
         vEvent.$on('dbquery', function(number) {
             that.lockInterval = true;
             const numberOnceLoad = Number(number?number:2000);
+            alert(numberOnceLoad)
             const len = dbqueryRes.length;
             var tempNode = that.querynodes;
             if(that.lazyLoading === true || that.lazyLoadIndex >= dbqueryRes.length){
