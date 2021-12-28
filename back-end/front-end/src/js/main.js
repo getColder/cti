@@ -123,7 +123,7 @@ this.onload = function () {
                 }
             },
             getDevs : function() {
-                this.dbSearchDevnodes = devicesList;      
+                this.dbSearchDevnodes = infoCurrentState.devicesList;      
             }
         },
         mounted(){
