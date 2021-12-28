@@ -323,7 +323,7 @@ var infoListBox = new Vue({
             const scroll = this.$refs['scroll'];
             var distToBottom = scroll.scrollHeight - scroll.scrollTop - document.body.clientHeight;
             if(distToBottom < 30){
-                    vEvent.$emit('dbquery', scroll.scrollTop);
+                vEvent.$emit('dbquery');
             }
         }
     },
@@ -345,7 +345,7 @@ var infoListBox = new Vue({
         vEvent.$on('changelisttype',(type)=>{
             this.typeList = type;
         })
-        vEvent.$on('dbquery', function(numer) {
+        vEvent.$on('dbquery', function(number) {
             that.lockInterval = true;
             const numberOnceLoad = Number(number?number:2000);
             const len = dbqueryRes.length;
