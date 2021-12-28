@@ -221,7 +221,6 @@ var infoListBox = new Vue({
             querynodes : [], //缓存数据库数据,
             lazyLoadIndex : 0, //懒加载索引,
             lazyLoading : false,
-            lazyLoadPos : 0,
             currentTime : '',  //选中时间
             slctDevId : '', //选中设备
             displayQuery : [], //部分query
@@ -343,19 +342,17 @@ var infoListBox = new Vue({
         vEvent.$on('changelisttype',(type)=>{
             this.typeList = type;
         })
-        vEvent.$on('dbquery', function(pos) {
+        vEvent.$on('dbquery', function() {
             that.lockInterval = true;
             const len = dbqueryRes.length;
             var tempNode = that.querynodes;
-            if(that.lazyLoading === true){
+            if(that.lazyLoading === true || that.lazyLoadIndex >= dbqueryRes.length){
                 return;
             }
             that.lazyLoading = true; //开始加载
-            that.lazyLoadPos = pos;
-            for (let i = 0; i < ((len < 200)?len:200); i++) {
+            for (let i = 0; i < ((len < 2000)?len:2000); i++) {
                 if(that.lazyLoadIndex >= dbqueryRes.length){
-                    alert("加载完毕");
-                    that.lazyLoadIndex = 0;
+                    vEvent.$emit('tipbox',"所有数据已加载完毕!")
                     break;
                 }
                 if(that.riseSort === true)
