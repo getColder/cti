@@ -96,8 +96,7 @@ this.onload = function () {
                                     that.$refs.dbmodel.afterSubmit = false;
                                     return;
                                 }
-                                vEvent.$emit('dbquery', response.data)
-                                console.log(response.data.reverse())
+                                vEvent.$emit('dbquery', response.data.reverse());
                                 vEvent.$emit('changeopt', 0) 
                                 setTimeout(() => {
                                     vEvent.$emit('changelisttype',2)
@@ -343,6 +342,7 @@ var infoListBox = new Vue({
         })
         vEvent.$on('dbquery', function(value) {
             const len = dbqueryRes.length;
+            console.log(len)
             that.querynodes = [];
             for (let index = 0; index < ((len < 200)?len:200); index++) {
                 console.log(dbqueryRes[index])
