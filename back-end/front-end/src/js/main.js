@@ -348,7 +348,7 @@ var infoListBox = new Vue({
             for (let index = 0; index < ((len < 200)?len:200); index++) {
                 console.log(dbqueryRes[index])
                 if(that.riseSort === true)
-                    that.querynodes.push(value[index].time); //先载入200条
+                    that.querynodes.push(dbqueryRes[index].time); //先载入200条
                 else
                     that.querynodes.unshift(dbqueryRes[index].time); //先载入200条
             }
