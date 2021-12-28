@@ -74,8 +74,9 @@
             <img src="img/timelist_rise.png" title="升序/降序" width=" 20px" height="20px"
             style="position:relative;top:4px;left: -6px;" :class="riseSort?'turnX':'turnXback'" @click="riseSort = !riseSort;dbNodeSort();currentTime = getItems()[0];">{{title}} 
         </span>
-        <lock-auto-up v-show="typeList === 0 || typeList === 1" @lockupdate="lockAutoUpdate"></lock-auto-up>
+        <lock-auto-up class="btn-listbox" v-show="typeList === 0 || typeList === 1" @lockupdate="lockAutoUpdate"></lock-auto-up>
         <refresh @refresh="getTimeline(), getDevs()"></refresh>
+        <span @click="loadAll" v-show="typeList===2"><img src="img/loadAll.png" class="btn-listbox" title="一次性加载"></span>
         <div id="timelineScroll" ref="scroll" v-on:scroll="loadQuery">
             <div  v-show="showtip" :class='tipclass'>&nbsp;{{tip}}</div>
             <ul>
@@ -100,10 +101,7 @@
             </ul>
         </div>
         <ul id="btn-dbres" v-show="typeList===2">
-            <li>
-                <div><img src="img/db.png" alt="" @click="loadAll">加载所有查询结果</div>
-            </li>
-            <li>
+            <li @click.native="alert(123)">
                 <div><img src="img/curve.png" alt="">查看曲线视图</div>
             </li>
             <li>
