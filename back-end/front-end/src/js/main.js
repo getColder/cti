@@ -244,7 +244,7 @@ var infoListBox = new Vue({
             vEvent.$emit('updateDev',infoCurrentState.currentDevId);
             this.slctDevId = infoCurrentState.currentDevId;
         },
-        getDevs : function() {
+        getDevs : async function() {
             var that = this;
             this.onelineKeep = false;
             await axios.get('/currentstate/devs')
