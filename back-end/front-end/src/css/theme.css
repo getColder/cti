@@ -226,12 +226,12 @@ border: 1px solid white;
     float: left;
     list-style: none;
     padding-right: 10px;
-    height: 350px;
+    height: 500px;
     border-left: 12px solid gray;
 }
 
 #timelineScroll{
-    height: 350px;
+    height: 450px;
     width: 225px;
     margin: 0;
     padding: 0;
@@ -294,16 +294,16 @@ border: 1px solid white;
 
 
 #btn-dbres div img{
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
 }
 
 #btn-dbres{
+    font-family: monospace;
     inherits:initial;
     list-style: none;
-    padding: 5px;
-    margin-top: 7px;
-
+    padding: 9px;
 }
 
 #btn-dbres div:hover{
@@ -314,10 +314,12 @@ border: 1px solid white;
 
 #btn-dbres div{
     float: none;
-    font-size: 14px;
+    font-size: 17px;
     color: #223355;
-    border-width: 0;
+    border-width: 0px;
+    border-bottom: 1px solid #a7a7a7;
     margin: 0;
+    margin-top: 10px;
 }
 
 
