@@ -96,7 +96,8 @@ this.onload = function () {
                                     that.$refs.dbmodel.afterSubmit = false;
                                     return;
                                 }
-                                vEvent.$emit('dbquery', response.data.reverse())
+                                vEvent.$emit('dbquery', response.data)
+                                console.log(response.data.reverse())
                                 vEvent.$emit('changeopt', 0) 
                                 setTimeout(() => {
                                     vEvent.$emit('changelisttype',2)
