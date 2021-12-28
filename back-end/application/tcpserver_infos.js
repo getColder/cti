@@ -26,7 +26,7 @@ process.stderr.write = errfilestream.write.bind(errfilestream);
 console.log('\nbegin 服务器启动-->日志打开成功\t %s', new Date().toLocaleString('cn', 'hour12:false'));
 //4、服务器listen
 var tcpServer = net.createServer((connection) => {
-    var address = connection.remoteAddress().address;
+    var address = connection.remoteAddress;
     connection.DevID = '';
     connection.isCorrect = true;
     connection.startTime = new Date()
