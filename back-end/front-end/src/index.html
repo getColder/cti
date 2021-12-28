@@ -94,7 +94,6 @@
                     {{
                         '设备'+ item
                     }}
-
                  <img v-show="slctDevId == item" src="img/this.png" width="17px" height="17px" alt="">
                 </li>
                 <li v-for="(item, i) in getItems()" @click="getQueryData(i)" v-if="typeList===2">{{
