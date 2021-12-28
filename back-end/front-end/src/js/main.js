@@ -316,11 +316,10 @@ var infoListBox = new Vue({
             if(this.typeList !==2 )
                 return;
             const scroll = this.$refs['scroll'];
-            if(scroll.scrollHeight - scroll.scrollTop < 30){
-                
+            var distToBottom = scroll.scrollTop + scroll.clientHeight - scroll.scrollHeight;
+            if(distToBottom < 30){
+                console.log(distToBottom);
             }
-            //console.log(this.$refs['scroll'].scrollHeight);
-            console.log(this.$refs['scroll'].scrollHeight);
         }
     },
     computed:{
@@ -343,15 +342,14 @@ var infoListBox = new Vue({
         })
         vEvent.$on('dbquery', function() {
             const len = dbqueryRes.length;
-            console.log(dbqueryRes)
-            that.querynodes = [];
+            var tempNode = [];
             for (let index = 0; index < ((len < 200)?len:200); index++) {
-                console.log(dbqueryRes[index])
                 if(that.riseSort === true)
-                    that.querynodes.push(dbqueryRes[index].time); //先载入200条
+                    tempNode.push(dbqueryRes[index].time); //先载入200条
                 else
-                    that.querynodes.unshift(dbqueryRes[index].time); //先载入200条
+                    tempNode.unshift(dbqueryRes[index].time); //先载入200条
             }
+            that.querynodes = tempNode;
             that.lockInterval = true;
             that.currentTime = that.querynodes[0];
         })
