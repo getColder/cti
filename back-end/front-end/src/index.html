@@ -104,14 +104,10 @@
                 </li>
             </ul>
         </div>
-        <ul id="btn-dbres" v-show="typeList===2">
-            <li @click="alert(123)">
-                <div><img src="img/curve.png" alt="">查看曲线视图</div>
-            </li>
-            <li>
-                <div><img src="img/excel.png" alt="">下载电子表格</div>
-            </li>
-        </ul>
+        <div id="btn-dbres" v-show="typeList===2">
+            <div @click=alert(123)><img src="img/curve.png" alt="">查看曲线视图</div>
+            <div><img src="img/excel.png" alt="">下载电子表格</div>
+        </div>
     </div>
     
     <div id="dataDisplay" v-show="showit" style="text-align:center;">
@@ -133,6 +129,7 @@
     图表在此
     </div>
     <script src="./js/main.js"></script>
+
 </body>
 
 
