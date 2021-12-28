@@ -1,14 +1,13 @@
 const host = window.location.host;  //网址
 const devInfoURL = 'data'
 
-var devicesList = [];
-var devicesOnlineList = [];
-var currentDevId = localStorage.getItem("devid");
-var devConfig = {}
+var tempCurrentDevId = localStorage.getItem("devid");
 
 var infoCurrentState = {
     devconfig : [],
-
+    devicesList : [],
+    currentDevId : tempCurrentDevId?tempCurrentDevId:0,
+    dbqueryRes : [],  //数据库查询结果
 }
 
 //性能测试
@@ -32,6 +31,12 @@ this.onload = function () {
 //中央vue事件中转
     var vEvent = new Vue({})
     vEvent.$on('updateConf',(data)=>{infoCurrentState.devconfig = data});
+    vEvent.$on('updateDevAll', (data)=> {infoCurrentState.devicesList = data;});
+    vEvent.$on('updateDevOn', (data)=>{infoCurrentState.devicesOnlineList = data;});
+    vEvent.$on('updateCurrentDev', (data)=>{infoCurrentState.devicesOnlineList = data;});    
+    vEvent.$on('updateDevId', (data)=>{infoCurrentState.currentDevId = data;});  
+
+    
 
     
 
@@ -39,9 +44,9 @@ this.onload = function () {
         el: '.nav',
         data(){
             return {
-                devid : currentDevId,
-                linkTo: "download/csvinfo?devid=" + currentDevId,
-                linkTodb: "download/csvinfodb?devid=" + currentDevId,
+                devid : infoCurrentState.currentDevId,
+                linkTo: "download/csvinfo?devid=" + infoCurrentState.currentDevId,
+                linkTodb: "download/csvinfodb?devid=" + infoCurrentState.currentDevId,
                 showdbInput : false,
                 turninfi : false,
                 dbSearchByDev: true,
@@ -91,11 +96,11 @@ this.onload = function () {
                                     that.$refs.dbmodel.afterSubmit = false;
                                     return;
                                 }
-                                vEvent.$emit('dbquery', response.data)
+                                vEvent.$emit('dbquery', response.data.reverse())
                                 vEvent.$emit('changeopt', 0) 
                                 setTimeout(() => {
                                     vEvent.$emit('changelisttype',2)
-                                    vEvent.$emit('updateQuerynode', {})
+                                    vEvent.$emit('updateQuerynode', {});
                                     vEvent.$emit('tipbox','一共查询到' + response.data.length + '条数据')
                                     that.$refs.dbmodel.afterSubmit = false;
                                 }, 100);
@@ -143,7 +148,7 @@ this.onload = function () {
             return{
                 showit : true,
                 showModal : false,
-                devID : currentDevId,
+                devID : infoCurrentState.currentDevId,
                 config : {},
                 note: '备注:'
             }
@@ -151,7 +156,7 @@ this.onload = function () {
         methods: {
             getDevConfig: function (){
                 var that = this;
-                axios.get('/currentstate/devconfig?devid=' + currentDevId)
+                axios.get('/currentstate/devconfig?devid=' + infoCurrentState.currentDevId)
                 .then(function(response){
                      that.config = response.data;
                      vEvent.$emit('updateConf', response.data);
@@ -174,7 +179,7 @@ this.onload = function () {
         el: '#dataDisplay',
         data(){
             return {
-                devID : currentDevId,
+                devID : infoCurrentState.currentDevId,
                 showit : false,
                 showdbInput : false,
             }
@@ -186,18 +191,20 @@ this.onload = function () {
             'indictor': indictor,
         },
         mounted(){
-            var display = this;
+            var that = this;
             vEvent.$on('updateTimenode', value => {
-                display.$children[0].timenode = value;
+                that.$children[0].timenode = value;
                 infoListBox.currentTime = value;
             })
             vEvent.$on('updateDev', function(value){
-                display.devID = value;
-                display.$children[0].devID = value;
+                that.devID = value;
+                that.$children[0].devID = value;
             })
             vEvent.$on('updateQuerynode', value => {
-                display.$children[0].displayData(value.data)
-                infoListBox.currentTime = value.time;
+                if(value){
+                    that.$children[0].displayData(value.data)
+                    infoListBox.currentTime = value.time;
+                }
             })
         }
     });
@@ -212,8 +219,7 @@ var infoListBox = new Vue({
             devnodes : [], //节点设备
             querynodes : [], //缓存数据库数据
             currentTime : '',  //选中时间
-            currentDevId : '', //选中设备
-            dbqueryData : [],  //
+            slctDevId : '', //选中设备
             displayQuery : [], //部分query
             lockInterval : null,    //自动更新锁
             riseSort : true,    //排序
@@ -229,23 +235,14 @@ var infoListBox = new Vue({
                 vEvent.$emit('updateTimenode', time)          
         },
         getQueryData: function(key) {
-            if(!this.riseSort){ 
-                var list = [];
-                list = list.concat(this.dbqueryData);
-                if(list[key]){
-                    vEvent.$emit('updateQuerynode',list.reverse()[key])
-                }
-            }
-            else{
-                if(this.dbqueryData[key])
-                    vEvent.$emit('updateQuerynode',this.dbqueryData[key])
-            }
+            if(this.dbqueryRes[key])
+                vEvent.$emit('updateQuerynode',dbqueryRes[key]);
             this.currentTime = key;
         },
         switchDev: function(dev){
-            currentDevId = dev;
-            this.currentDevId = currentDevId;
-            vEvent.$emit('updateDev',currentDevId)
+            vEvent.$emit('updateDevId', dev);
+            vEvent.$emit('updateDev',infoCurrentState.currentDevId);
+            this.slctDevId = currentDevId;
         },
         getDevs : function() {
             var that = this;
@@ -254,29 +251,32 @@ var infoListBox = new Vue({
                 .then(function(response){
                     if(response.data){
                         var devs = response.data.all;            
-                        devicesList = that.devnodes = devs;
-                        devicesOnlineList = response.data.on;
+                        that.devnodes = devs;
                         vEvent.$emit('updateDevAll', devs);
                         vEvent.$emit('updateDevOn', response.data.on);                           
                     }
                     else{
-                        devicesList = that.devnodes = [];
-                        devicesOnlineList = [];
+                        vEvent.$emit('updateDevAll', []);
+                        vEvent.$emit('updateDevOn', []);  
+                        that.devnodes = [];
                     }
                 })
             vEvent.$emit('updateDev',currentDevId)
         },
+        dbNodeSort(){
+            this.querynodes.reverse();
+        },
         getTimeline : function(){
-            var thisTimeline = this;
-            axios.get('/currentstate/timeline?devid=' + thisTimeline.currentDevId)
+            var that = this;
+            axios.get('/currentstate/timeline?devid=' + infoCurrentState.currentDevId)
             .then(function(response){
-                thisTimeline.timenodes = response.data;
-                if(thisTimeline.timenodes){
-                    thisTimeline.timenodes.reverse();
-                    thisTimeline.currentTime = thisTimeline.timenodes[0];
+                that.timenodes = response.data;
+                if(that.timenodes){
+                    that.timenodes.reverse();
+                    that.currentTime = that.timenodes[0];
                 }
                 else
-                    thisTimeline.timenodes = [];
+                    that.timenodes = [];
             })
             .catch(function(error){
                 alert('请求失败:' + error);
@@ -330,7 +330,7 @@ var infoListBox = new Vue({
     },
     mounted(){
         var that = this;
-        this.currentDevId = currentDevId;
+        this.slctDevId = infoCurrentState.currentDevId;
         vEvent.$on('updateDev',value=>{
             that.getTimeline();
         })
@@ -338,11 +338,14 @@ var infoListBox = new Vue({
             this.typeList = type;
         })
         vEvent.$on('dbquery', function(value) {
-            that.dbqueryData = value.reverse();
-            var len = that.dbqueryData.length;
+            const len = dbqueryRes.length;
             that.querynodes = [];
-            for (let index = 0; index < ((len < 200)?len:200); index++) 
-                that.querynodes.push(that.dbqueryData[index].time); //先载入200条
+            for (let index = 0; index < ((len < 200)?len:200); index++) {
+                if(that.riseSort === true)
+                    that.querynodes.push(dbqueryRes[index].time); //先载入200条
+                else
+                    that.querynodes.unshift(dbqueryRes[index].time); //先载入200条
+            }
             that.lockInterval = true;
             that.currentTime = that.querynodes[0];
         })
