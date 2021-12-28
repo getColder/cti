@@ -218,7 +218,8 @@ var infoListBox = new Vue({
             title : "近期数据",
             timenodes : [], //节点近期数据
             devnodes : [], //节点设备
-            querynodes : [], //缓存数据库数据
+            querynodes : [], //缓存数据库数据,
+            lazyLoadIndex : 0, //懒加载索引
             currentTime : '',  //选中时间
             slctDevId : '', //选中设备
             displayQuery : [], //部分query
@@ -318,7 +319,7 @@ var infoListBox = new Vue({
             const scroll = this.$refs['scroll'];
             var distToBottom = scroll.scrollHeight - scroll.scrollTop - document.body.clientHeight;
             if(distToBottom < 30){
-                console.log(distToBottom + "\t" + document.body.clientHeight);          
+                       
             }
         }
     },
@@ -341,16 +342,22 @@ var infoListBox = new Vue({
             this.typeList = type;
         })
         vEvent.$on('dbquery', function() {
+            that.lockInterval = true;
+            const that = this;
             const len = dbqueryRes.length;
             var tempNode = [];
-            for (let index = 0; index < ((len < 200)?len:200); index++) {
+            for (let i = 0; i < ((len < 200)?len:200); i++) {
+                if(that.lazyLoadIndex >= dbqueryRes.length){
+                    alert("到底部了")
+                    break;
+                }
                 if(that.riseSort === true)
-                    tempNode.push(dbqueryRes[index].time); //先载入200条
+                    tempNode.push(dbqueryRes[that.lazyLoadIndex].time); //先载入200条
                 else
-                    tempNode.unshift(dbqueryRes[index].time); //先载入200条
+                    tempNode.unshift(dbqueryRes[that.lazyLoadIndex].time); //先载入200条
+                that.lazyLoadIndex++;
             }
             that.querynodes = tempNode;
-            that.lockInterval = true;
             that.currentTime = that.querynodes[0];
         })
         vEvent.$on('tipbox',value=>{
