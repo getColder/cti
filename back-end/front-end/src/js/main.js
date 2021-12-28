@@ -242,12 +242,12 @@ var infoListBox = new Vue({
         switchDev: function(dev){
             vEvent.$emit('updateDevId', dev);
             vEvent.$emit('updateDev',infoCurrentState.currentDevId);
-            this.slctDevId = currentDevId;
+            this.slctDevId = infoCurrentState.currentDevId;
         },
         getDevs : function() {
             var that = this;
             this.onelineKeep = false;
-            axios.get('/currentstate/devs')
+            await axios.get('/currentstate/devs')
                 .then(function(response){
                     if(response.data){
                         var devs = response.data.all;            
@@ -260,6 +260,9 @@ var infoListBox = new Vue({
                         vEvent.$emit('updateDevOn', []);  
                         that.devnodes = [];
                     }
+                }).catch(error=>{
+                    alert('无法获取设备信息!');
+                    console.log(error);
                 })
             vEvent.$emit('updateDev',currentDevId)
         },
