@@ -226,12 +226,13 @@ border: 1px solid white;
     float: left;
     list-style: none;
     padding-right: 10px;
-    height: 500px;
+    height: 600px;
     border-left: 12px solid gray;
 }
 
 #timelineScroll{
-    height: 450px;
+    background-color: #cccccc21;
+    height: 390px;
     width: 225px;
     margin: 0;
     padding: 0;
