@@ -316,7 +316,7 @@ var infoListBox = new Vue({
             if(this.typeList !==2 )
                 return;
             const scroll = this.$refs['scroll'];
-            var distToBottom = scroll.scrollTop + document.body.clientHeight - scroll.scrollHeight;
+            var distToBottom = scroll.scrollHeight - scroll.scrollTop;
             if(distToBottom < 30){
                 console.log(distToBottom);
             }
