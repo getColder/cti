@@ -264,7 +264,7 @@ var infoListBox = new Vue({
                     alert('无法获取设备信息!');
                     console.log(error);
                 })
-            vEvent.$emit('updateDev',currentDevId)
+            vEvent.$emit('updateDev',infoCurrentState.currentDevId)
         },
         dbNodeSort(){
             this.querynodes.reverse();
