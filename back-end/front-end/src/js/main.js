@@ -347,34 +347,34 @@ var infoListBox = new Vue({
         })
         vEvent.$on('dbquery', function(number) {
             that.lockInterval = true;
-            that.lazyLoading = true; //开始加载
             if(Number(number) === -1){
                 //新的查询集合
                 number = 500;
                 that.lazyLoadIndex = 0;
-                console.log(500)
             }
-            console.log(number)
             const numberOnceLoad = Number(number?number:2000);
             const len = dbqueryRes.length;
             var tempNode = that.querynodes;
             if(that.lazyLoading === true || that.lazyLoadIndex >= dbqueryRes.length){
                 return;
             }
-            for (let i = 0; i < ((len < numberOnceLoad)?len:numberOnceLoad); i++) {
-                if(that.lazyLoadIndex >= dbqueryRes.length){
-                    vEvent.$emit('tipbox',"所有数据已加载完毕!")
-                    break;
+            that.lazyLoading = true; //开始加载
+            setTimeout(() => {
+                for (let i = 0; i < ((len < numberOnceLoad)?len:numberOnceLoad); i++) {
+                    if(that.lazyLoadIndex >= dbqueryRes.length){
+                        vEvent.$emit('tipbox',"所有数据已加载完毕!")
+                        break;
+                    }
+                    if(that.riseSort === true)
+                        tempNode.push(dbqueryRes[that.lazyLoadIndex].time); //先载入200条
+                    else
+                        tempNode.unshift(dbqueryRes[that.lazyLoadIndex].time); //先载入200条
+                    that.lazyLoadIndex++;
                 }
-                if(that.riseSort === true)
-                    tempNode.push(dbqueryRes[that.lazyLoadIndex].time); //先载入200条
-                else
-                    tempNode.unshift(dbqueryRes[that.lazyLoadIndex].time); //先载入200条
-                that.lazyLoadIndex++;
-            }
-            that.querynodes = tempNode;
-            that.lazyLoading = false;
-            that.currentTime = that.querynodes[0];
+                that.querynodes = tempNode;
+                that.lazyLoading = false;
+                that.currentTime = that.querynodes[0];
+            }, 100);
         })
         vEvent.$on('tipbox',value=>{
             that.$refs['scroll'].scrollTop = 0;
