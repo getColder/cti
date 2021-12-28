@@ -9,8 +9,8 @@ var infoCurrentState = {
     devconfig : [],
     devicesList : [],
     currentDevId : tempCurrentDevId?tempCurrentDevId:0,
-    dbqueryRes : [],  //数据库查询结果
 }
+var dbqueryRes = []  //数据库查询结果
 
 //性能测试
 var startTime = new Date();
@@ -235,7 +235,7 @@ var infoListBox = new Vue({
                 vEvent.$emit('updateTimenode', time)          
         },
         getQueryData: function(key) {
-            if(this.dbqueryRes[key])
+            if(dbqueryRes[key])
                 vEvent.$emit('updateQuerynode',dbqueryRes[key]);
             this.currentTime = key;
         },
