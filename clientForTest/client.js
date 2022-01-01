@@ -1,5 +1,20 @@
+function rn(n,m){
+    switch(arguments.length){
+        case 1:
+            return parseInt(Math.random()*n+1, 10)
+        case 2:
+            return parseInt(Math.random()* (m - n + 1) + n, 10);
+        default:
+            return 0;
+    }
+}
+
+var randomQueue_100 = [];
+var randomQueue_37 = [];
+
 const { clear } = require('console');
-var net = require('net')
+var net = require('net');
+const { exit } = require('process');
 var client;
 const address = '127.0.0.1'
 const ali_address = '47.108.232.221'
@@ -11,20 +26,46 @@ function preZero(num){
    return str;
 }
 
+function randomGe(n,m){
+    return rn(n,m) + rn(0,8)* 0.1;
+}
 
-var data = {
-    "Type":"NULL",
-    "Id": 7,
-    "Time":[2021,12,05,20,56],
-    "TempData":
-    [
-        {"Floor":1,"WaterTemp":[99.5,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
-        {"Floor":2,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
-        {"Floor":3,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
-        {"Floor":4,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
-        {"Floor":5,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0},
-        {"Floor":6,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":[0.0,0.0,0.0,0.0,0.0,0.0,0.0],"EnvirTemp":0.0}],
-    "SpareData":[1,0],
+setInterval(() => {
+    if(randomQueue_100.length > 100)
+        return;
+    randomQueue_100.push(randomGe(0,100))
+}, 20);
+
+setInterval(() => {
+    if(randomQueue_37.length > 100)
+        return;
+    randomQueue_37.push(randomGe(18,37))
+}, 20);
+
+function getRandomCement(){
+    var num = [];
+    for(var i = 0;i < 7;i ++){
+        num.push(randomQueue_100.pop())
+    }
+    return num;
+}
+
+
+function gedata() {
+    return {
+        "Type":"NULL",
+        "Id": 7,
+        "Time":[2021,12,05,20,56],
+        "TempData":
+        [
+            {"Floor":1,"WaterTemp":[99.5,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":getRandomCement(),"EnvirTemp":randomQueue_37.pop()},
+            {"Floor":2,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":getRandomCement(),"EnvirTemp":randomQueue_37.pop()},
+            {"Floor":3,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":getRandomCement(),"EnvirTemp":randomQueue_37.pop()},
+            {"Floor":4,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":getRandomCement(),"EnvirTemp":randomQueue_37.pop()},
+            {"Floor":5,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":getRandomCement(),"EnvirTemp":randomQueue_37.pop()},
+            {"Floor":6,"WaterTemp":[0.0,0.0],"PumpStaus":0,"ValveStatus":[0,0],"CementTemp":getRandomCement(),"EnvirTemp":randomQueue_37.pop()}],
+        "SpareData":[1,0],
+    }
 }
 
 function link() {
@@ -40,6 +81,7 @@ function link() {
             }, 3000);
         })
         var sendPerman = setInterval(() => {
+            var data = gedata();
             var date = new Date()
             const year = date.getUTCFullYear();
             const mon = date.getMonth() + 1;
@@ -68,4 +110,3 @@ process.on('uncaughtException',(err)=>{
         }
     }, 1);
 })
-

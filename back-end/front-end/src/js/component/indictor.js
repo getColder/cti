@@ -3,9 +3,9 @@ const indictor = {
     '<table id="indic">\
         <tbody>\
             <tr>\
-                <th></td>\
-                <th>热水箱</td>\
-                <th>冷水箱</td>\
+                <th></th>\
+                <th>热水箱</th>\
+                <th>冷水箱</th>\
             </tr>\
             <tr v-if="false" id="waterHighLevel">\
                 <td style="font-size: 25px">高水位</td>\
@@ -19,7 +19,6 @@ const indictor = {
             </tr>\
         </tbody>\
     </table>',
-    props:['showit'],
     data(){
         return{
             ledindic: [0,0],

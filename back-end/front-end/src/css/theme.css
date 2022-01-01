@@ -8,7 +8,13 @@ ul,li{
   margin: 0;
 }
 
-.nav {
+a{
+    text-decoration: none;
+}
+
+
+
+.nav{
   color : rgb(255,245,247);
   padding : 0;
   font-size: 0;
@@ -48,6 +54,7 @@ ul,li{
     margin-top: 17px;
     border-bottom-left-radius: 30px;
     border-right: 3px solid black;
+    border-bottom: 3px solid black;
     align-content: center;
     -webkit-filter:blur(10px);
     filter: grayscale(100%);
@@ -77,10 +84,6 @@ ul,li{
     padding-left: 15px;
     padding-right: 15px;
 	border: 1px solid transparent;
-}
-
-.nav a{
-    display: block;
 }
 
 #nav-excel{
@@ -124,7 +127,7 @@ ul,li{
 
 .nav a{
     color: white;
-    text-decoration: none;    
+    display: block; 
 }
 
 .navOpt:hover{
@@ -226,13 +229,11 @@ border: 1px solid white;
     float: left;
     list-style: none;
     padding-right: 10px;
-    height: 600px;
+    height: 450px;
     border-left: 12px solid gray;
 }
 
 #timelineScroll{
-    border-radius: 18px;
-    background-color: #cccccc61;
     height: 390px;
     width: 225px;
     margin: 0;
@@ -250,6 +251,16 @@ border: 1px solid white;
     margin-left:10px;
     width: 25px;
     height: 25px;
+}
+
+#infoListBox a,#infoListBox a:link,#infoListBox a:visited{
+    position: relative;
+    margin: 10px;
+    color:#096868;
+    font-weight: 550;
+    font-size: 20px;
+    display: block;
+
 }
 
 #infoListBox li{  
@@ -296,26 +307,37 @@ border: 1px solid white;
 }
 
 
-#btn-dbres div img{
+.btn-dbres div img{
     height: 25px;
     width: 25px;
     margin-right: 10px;
 }
 
-#btn-dbres{
+
+.btn-dbres{
+    z-index: 5000;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 200px;
+    background-color: white;
+    border: 15px solid rgb(220, 223, 214);
+    border-radius: 25px;
     font-family: monospace;
     inherits:initial;
     list-style: none;
     padding: 9px;
+    transform: scale(1);
+    transition: transform .5s cubic-bezier(.94, 1, .05, 1.0);
 }
 
-#btn-dbres div:hover{
+.btn-dbres div:hover{
     cursor: pointer;
     padding: 0;
     background: #85a5a53a;
 }
 
-#btn-dbres div{
+.btn-dbres div{
     float: none;
     font-size: 17px;
     color: #223355;
@@ -523,9 +545,11 @@ border: 1px solid white;
     background-color: rgb(245, 245, 245);
     border-radius: 18px;
     padding: 15px;
+    margin-left: 22%;
+    width: 1050px;
+    height:300px;
+    margin-bottom: 30px;
 }
-
-
 
 
 #fastSearch{
@@ -544,3 +568,6 @@ border: 1px solid white;
     cursor: pointer;
 }
 
+[v-cloak]{
+    display: none;
+}

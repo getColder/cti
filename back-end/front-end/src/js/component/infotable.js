@@ -1,4 +1,5 @@
 const tableInfoCom = {
+    props: ['dev'],
     template: '<div class="tempTable"> \
     <div style="font-size: 17px;text-align: left;padding: 10px;">\
         数据与设备状态采集于<span style="color:green;font-weight:bold">{{ time }}</span>\
@@ -43,10 +44,10 @@ const tableInfoCom = {
     </table> \
     <slot></slot>\
     <div style="border-top:3px solid grey"></div>\
-        <div>设备号:\
-            <span id="tabletitle">{{ devID }}</span> \
-        </div>\
     <div class="tableConfig">\
+        <div>设备号:\
+        <span id="tabletitle">{{ devID }}</span> \
+        </div>\
         <div>项目标号:\
                 <span id="tabletitle">{{ projectNumber }}</span> \
         </div>\
@@ -58,11 +59,11 @@ const tableInfoCom = {
     data() {
         return {
             time: '未知',
-            devID: '未知',
             infos: [],
             timenode: [],
             location : '',
             projectNumber : '',
+            devID : 0
         }
     },
     methods:{
@@ -85,22 +86,22 @@ const tableInfoCom = {
             time += info.Time[4] + '分';
             this.time = time;
             this.infos = info.TempData;
+            this.devID = info.Id;
             this.location = info.location;
             this.projectNumber = info.projectNumber;
             this.$parent.$refs['indic'].ledindic = info.SpareData
         },
         updateData: function(value){
-            var thisTable = this;
+            var that = this;
             axios.get(value)
             .then(function (response) {
-                thisTable.time = '未知';
-                thisTable.infos = [];
+                that.time = '未知';
+                that.infos = [];
                 if(!response.data){
                     return;
                 }
                 if(response.data != ''){
-                    thisTable.displayData(response.data)
-                    thisTable.devID = response.data.Id?response.data.Id:0
+                    that.displayData(response.data)
                 }
             })
             .catch(function (error) {
@@ -111,18 +112,14 @@ const tableInfoCom = {
     watch:{
         timenode: function(){
             let timestr = '' + this.timenode[0] + this.timenode[1] + this.timenode[2] + this.timenode[3] + this.timenode[4];
-            this.updateData('/currentstate/data?devid='+ this.devID +'&' + "timenode=" + timestr);
+            this.updateData('/currentstate/data?devid='+ this.dev +'&' + "timenode=" + timestr);
             currentTimenode = timestr;
         },
-        devID: function(){
-            this.updateData('/currentstate/data?devid='+ this.devID);
+        dev: function(){
+            this.updateData('/currentstate/data?devid='+ this.dev);
         }
     },
     mounted(){
-        var that = this;
-        vEvent.$on('init',(data)=>{
-            that.devID = data.currentDevId
-        })
-        this.updateData('/currentstate/data?devid='+ this.devID)
+        this.updateData('/currentstate/data?devid='+ this.dev)
     }
 }

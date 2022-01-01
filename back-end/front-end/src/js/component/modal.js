@@ -1,5 +1,5 @@
 var modalT = {
-    props:['title'],
+    props:['title','afterSubmit'],
     template: '\
     <div class="modal-backdrop">\
             <div class="modal">\
@@ -21,13 +21,7 @@ var modalT = {
             this.$emit('closemodal')
         },
         confirmit : function(){
-            this.afterSubmit = true;
             this.$emit('confirmmodal');
         }
-    },
-    data() {
-        return {
-            afterSubmit : false
-        }
-    },
+    }
 }

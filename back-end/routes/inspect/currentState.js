@@ -98,8 +98,9 @@ router.get('/devconfig', (req, res) => {
 })
 
 router.get('/data', (req, res, next) => {
-    var time_req = req.query.timenode;
-    var devid_req = req.query.devid;
+    const time_req = req.query.timenode;
+    const devid_req = req.query.devid;
+    const lately_req = req.query.lately
     if (!devid_req) {
     res.json('');
         res.end();
@@ -110,6 +111,11 @@ router.get('/data', (req, res, next) => {
         res.json('');
         res.end();
         return;
+    }
+
+    if(lately_req==='y'){
+        res.json(allDevsCurrentData[devid_req]['infoAry'])
+        res.end();
     }
 
     if (!time_req) {

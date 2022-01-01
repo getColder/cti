@@ -49,6 +49,14 @@
     border-radius: 13px;
     animation: bgFlashR 1.75s cubic-bezier(.34, .05, 0, 1.0);
 }
+
+.smallest{
+    transform: scaleY(0);
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
 @keyframes bgFlash {
     0%{background-color:transparent;}
     50%{background-color:#bbebbb;}

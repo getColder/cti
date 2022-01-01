@@ -4,8 +4,11 @@
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/anim.css">
-    <script src="lib/vue.min.js"></script>
-    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"> </script>
+    <script src="js/component/initCOMs.js"></script>
+    <script src="lib/axios.min.js" defer> </script>
+    <script src="lib/vue.min.js" defer></script>
+    <script src="./js/main.js" defer></script>
+    <script src="lib/echarts.js" defer></script>
     <meta http-equiv="refresh" content="900" charset="utf-8">
     <title>桥梁混凝土在线工作台</title>
     <link rel="icon" type="images/x-icon" href="http://47.108.232.221:9527/img/logo.ico">
@@ -14,16 +17,18 @@
 
 
 <body>
+    <div id="divglobal">
     <div id="bghead">    
         <div style="padding: 10px;text-align: right; font-size: 30px;color: rgb(220, 223, 214)">
         <span style="border-left: 1px solid white; padding-left: 40px;"> 桥梁混凝土在线工作台</span> 
         </div>
+        <img id="bg_img" src="img/pic4.jpg" alt="" width="700px" height="700px">
     </div>
     <div class='nav'>
         <img id="bg_navimg" src="img/pic1.jpg" alt="图片失效" />
         <ul id="nav_default">
             <li  class="navOpt"><a href=""><p>首页</p></a></li>
-            <li  class="navOpt" v-on:click="optDb(), getDevs()"><p>数据库查询</p></li>
+            <li  class="navOpt" v-on:click="optDb()"><p>数据库查询</p></li>
             <li  class="navOpt"><p>后台管理</p></li>
             <li id="nav-excel">
                 <a id="csvinfo"><p>电子表格</p></a>
@@ -33,8 +38,8 @@
                 </ul>
             </li>
         </ul>
-        <div id="dbmdl"> 
-            <modal-t v-show="showdbInput" v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询" ref="dbmodel">
+        <div v-cloak id="dbmdl" ref="dbmodel"> 
+            <modal-t v-if="showdbInput" :afterSubmit='showdbInput' v-on:closemodal="closeM" v-on:confirmmodal="confirmM" title="数据库查询" ref="model">
                 <ul>
                     <li>{{dbSearchByDev?'设备ID':'项目标号'}}：
                         <select v-show="dbSearchByDev" v-model="queryDev" @change="queryDev = $event.target.value">
@@ -62,73 +67,91 @@
         </div>
     </div>
     
-    <div id="options">
-        <btn-options>近期浏览</btn-options>
-        <btn-options>设备</btn-options>
-        <btn-options>图表</btn-options>
+    <div v-cloak id="options">
+        <btn-options :index="0">数据表</btn-options>
+        <btn-options :index="1">设备</btn-options>
+        <btn-options :index="2">曲线图</btn-options>
     </div>
 
-    <div id="tipBox" style="height: 50px;">
+    <div v-cloak id="tipBox" style="height: 50px;">
         <ul>
             <div :class='box[0].tipclass'>&nbsp;{{box[0].tip}}</div></li>
             <div :class='box[1].tipclass'>&nbsp;{{box[1].tip}}</div></li>
         </ul>
     </div>
-    <div id="infoListBox">
+
+    <div v-cloak id="infoListBox">
         <span id="fastSearch">
             <img src="img/timelist_rise.png" title="升序/降序" width=" 20px" height="20px"
             style="position:relative;top:4px;left: -6px;" :class="riseSort?'turnX':'turnXback'" @click="riseSort = !riseSort;dbNodeSort();currentTime = getItems()[0];">{{title}} 
         </span>
         <lock-auto-up class="btn-listbox" v-show="typeList === 0 || typeList === 1" @lockupdate="lockAutoUpdate"></lock-auto-up>
         <refresh v-show="typeList === 0 || typeList === 1" @refresh="getTimeline(), getDevs()"></refresh>
-        <span @click="loadAll" v-show="typeList===2"><img :class="lazyLoading?'turni':'turnoff'"  :src="lazyLoading?'img/loadingAll.png':'img/loadAll.png'" class="btn-listbox" title="一次性加载"></span>
-        <div id="btn-dbres" v-show="typeList ===2">
-            <div @click="alert('test')"><img src="img/curve.png" alt="">查看曲线图表</div>
-            <div><img src="img/excel.png" alt="">下载为电子表格</div>
-        </div>
+        <span  v-show="typeList===2">
+            <img @mouseover="openDbmenu" @mouseleave="closeDbmenu" :class="lazyLoading?'turni':'turnoff'"  :src="lazyLoading?'img/loadingAll.png':'img/loadAll.png'" class="btn-listbox">
+            <div @mouseover="delayDbmenu" @mouseleave="closeDbmenu" :class="dbmenu?'btn-dbres':'smallest'">
+                <div @click="loadAll"><img src="img/dbd.png" alt="">显示所有结果</div>
+                <div><img src="img/excel.png" alt="">下载为电子表格</div>
+                <div @click="dbCharts"><img src="img/curve.png" alt="">查看曲线图表</div>
+            </div>
+        </span>
         <div id="timelineScroll" ref="scroll" v-on:scroll="loadQuery">
-            <ul>
-                <li v-for="(item, i) in getItems()" @click="getData(item)" v-if="typeList===0">{{
+            <ul  v-if="typeList===0">
+                <li v-for="(item, i) in getItems()" @click="getData(item)">{{
                     item[0]+'年'+item[1]+'月'+item[2]+'日'+item[3]+'时'+item[4]+'分'
                 }}
-                    <img v-show="currentTime === item" src="img/this.png" width="15px" height="15px" alt="">
+                    <img v-if="currentTime === item" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
-                <li v-for="(item, i) in getItems()" @click="switchDev(item)" style="margin-left: auto;padding: 14px;font-size: 17px;" v-if="typeList===1">
-                    <div :class="(devOnline.list.indexOf(Number(item)) !== -1)?'devon':'devoff'"></div>
+            </ul>
+            <ul  v-if="typeList===1">
+                <li v-for="(item, i) in getItems()" @click="switchDev(item)" style="margin-left: auto;padding: 14px;font-size: 17px;">
+                    <div :class="(global.infoCurrentstate.devicesOnlineList.indexOf(Number(item)) !== -1)?'devon':'devoff'"></div>
                     {{
                         '设备'+ item
                     }}
 
-                 <img v-show="slctDevId == item" src="img/this.png" width="17px" height="17px" alt="">
+                 <img v-if="global.infoCurrentstate.currentDevId === item" src="img/this.png" width="17px" height="17px" alt="">
                 </li>
-                <li v-for="(item, i) in getItems()" @click="getQueryData(i)" v-if="typeList===2">{{
-                    new Date(item).toLocaleString()
+            </ul>
+            <ul  v-if="typeList===-1">
+                <li v-for="(item, i) in getItems()" :key="item" @click="getQueryData(i,item)">{{
+                    new Date(item).toLocaleString('zn',{hour12:false})
                 }}
-                    <img v-show="i === currentTime" src="img/this.png" width="15px" height="15px" alt="">
+                    <img v-if="item + i === currentTime" src="img/this.png" width="15px" height="15px" alt="">
+                </li>
+            </ul>
+            <ul v-if="typeList===2">
+                <li v-for="(item, i) in getItems()">
+                    <a :href="'#'+item">{{item}}</a>
                 </li>
             </ul>
         </div>
     </div>
-    <div id="dataDisplay" v-show="showit" style="text-align:center;">
-            <table-info>
+    <div v-cloak id="dataDisplay" v-show="global.pageIndex === 0" style="text-align:center;">
+            <table-info :dev="global.infoCurrentstate.currentDevId">
                 <indictor  ref='indic'></indictor>
             </table-info>
     </div>
-    <div id="devTable" v-show="showit" style="font-size: large;">
+    
+    <div v-cloak id="devTable" v-show="global.pageIndex === 1" style="font-size: large;">
         <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
         <ul id="devitems" style="list-style: none;">
             <li><span>项目标号：{{config.projectNumber}}</span></li>
             <li><span>项目位置: {{config.location}}</span></li>
             <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal" :value="config.note?note+'\n'+config.note:note"></textarea>
         </ul>
-        <img id="bg_img" src="img/pic4.jpg" alt="" width="700px" height="700px">
     </div>
-    <div class="infoCharts" id="chartsDisplay" style="display:none;width: 600px;height:400px;margin-left: 400px;margin-right: 20%;">
-    图表在此
+    
+    <div id='chartsDisplay' v-show="global.pageIndex === 2">
+        <t-chart chartname='层一'></t-chart>
+        <t-chart chartname='层二'></t-chart>
+        <t-chart chartname='层三'></t-chart>
+        <t-chart chartname='层四'></t-chart>
+        <t-chart chartname='层五'></t-chart>
+        <t-chart chartname='层六'></t-chart>
     </div>
-    <script src="./js/main.js"></script>
-    <div style="border-top:200px solid transparent;border-bottom: 325px solid #208f9c;position: relative;top: 150px;"></div>
-
+    <div style="z-index: -3000; ;border-top:200px solid transparent;border-bottom: 325px solid #208f9c;position: relative;top: 150px;"></div>
+</div>
 </body>
 
 
