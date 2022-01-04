@@ -4,7 +4,7 @@ var tempCurrentDevId = localStorage.getItem("devid");
 var vEvent = new Vue({})
 
 var global = {
-    pageIndex: 1,
+    pageIndex: 2,
     infoCurrentstate: {
         devconfig: [],
         devicesList: [],
@@ -91,16 +91,17 @@ this.onload = function () {
                                     if (response.data.length <= 0) {
                                         vEvent.$emit('tipbox', '抱歉！没有找到任何数据')
                                         that.showdbInput = false;
-                                        vEvent.$emit('changelisttype', 2)
+                                        vEvent.$emit('changeopt', 1)
+                                        vEvent.$emit('changelisttype', 11)
                                         vEvent.$emit('updateQuerynode', {})
                                         vEvent.$emit('loadingdb', false)
                                         return;
                                     }
                                     dbBuffer.dbqueryRes = response.data.reverse();
-                                    vEvent.$emit('dbquery', -1);
-                                    vEvent.$emit('changeopt', 0)
+                                    vEvent.$emit('dbquery', -1); //表示新的查询
+                                    vEvent.$emit('changeopt', 1)
                                     setTimeout(() => {
-                                        vEvent.$emit('changelisttype', 2)
+                                        vEvent.$emit('changelisttype', 11)
                                         vEvent.$emit('updateQuerynode', {});
                                         vEvent.$emit('tipbox', '一共查询到' + response.data.length + '条数据')
                                     }, 100);
@@ -261,8 +262,7 @@ this.onload = function () {
         el: '#infoListBox',
         data: {
             global: global,
-            typeList: 1, //0：近期， 1：设备 2：数据库时间轴 3、数据库曲线
-            title: "近期数据",
+            typeList: 2, //10：近期， 11：数据库 2：设备 30、数据库曲线 31、数据库曲线
             timenodes: [], //节点近期数据
             devnodes: [], //节点设备
             querynodes: [], //缓存数据库数据,
@@ -273,8 +273,8 @@ this.onload = function () {
             lockInterval: null,    //自动更新锁
             riseSort: true,    //排序
             dbmenu: false,
-            dbmenuCloseDelay: false
-
+            dbmenuCloseDelay: false,
+            dbBuf : dbBuffer
         },
         methods: {
             getData: function (time) {
@@ -348,24 +348,26 @@ this.onload = function () {
             },
             getItems() {
                 switch (this.typeList) {
-                    case 0:
-                        this.title = '近期数据';
+                    case 10:
                         return this.timenodes;
-                    case 1:
-                        this.title = '设备列表';
-                        return this.devnodes;
-                    case 3:
-                        this.title = '数据库查询结果'
+                    case 11:
                         return this.querynodes;
                     case 2:
-                        this.title = '层温度曲线'
+                        return this.devnodes;
+                    case 30:
+                        return this.global.chartsIndex;
+                    case 31:
                         return this.global.chartsIndex;
                     default:
-                        return this.timenodes;
+                        return [];
                 }
             },
+            changeSource(){
+                const sourceIndex = this.typeList % 10;
+                this.typeList = parseInt(this.typeList / 10) * 10 + (sourceIndex === 0 ? 1:0);
+            },
             loadQuery() {
-                if (this.typeList !== 2)
+                if (this.typeList !== 11)
                     return;
                 const scroll = this.$refs['scroll'];
                 var distToBottom = scroll.scrollHeight - scroll.scrollTop - document.body.clientHeight;
@@ -388,7 +390,8 @@ this.onload = function () {
                 this.dbmenuCloseDelay = true;
             },
             dbCharts() {
-                vEvent.$emit('changeopt', 2);
+                vEvent.$emit('changeopt', 3);
+                vEvent.$emit('changelisttype',31)
                 setTimeout(() => {
                     vEvent.$emit('dbCharts')
                 }, 100);
@@ -417,27 +420,51 @@ this.onload = function () {
                 }
                 that.lazyLoading = true; //开始加载
                 setTimeout(() => {
-                    for (let i = 0; i < ((len < numberOnceLoad) ? len : numberOnceLoad); i++) {
-                        if (that.lazyLoadIndex >= dbBuffer.dbqueryRes.length) {
-                            vEvent.$emit('tipbox', "所有数据已加载完毕!")
-                            break;
+                    that.$nextTick(function (){
+                        for (let i = 0; i < ((len < numberOnceLoad) ? len : numberOnceLoad); i++) {
+                            if (that.lazyLoadIndex >= dbBuffer.dbqueryRes.length) {
+                                setTimeout(() => {
+                                    that.$nextTick(()=>{
+                                        vEvent.$emit('tipbox', "所有数据已加载完毕!")
+                                    })
+                                }, 700);
+                                break;
+                            }
+                            if (that.riseSort === true)
+                                tempNode.push(dbBuffer.dbqueryRes[that.lazyLoadIndex].time); //尾载入200条
+                            else
+                                tempNode.unshift(dbBuffer.dbqueryRes[that.lazyLoadIndex].time); //头载入200条
+                            that.lazyLoadIndex++;
                         }
-                        if (that.riseSort === true)
-                            tempNode.push(dbBuffer.dbqueryRes[that.lazyLoadIndex].time); //先载入200条
-                        else
-                            tempNode.unshift(dbBuffer.dbqueryRes[that.lazyLoadIndex].time); //先载入200条
-                        that.lazyLoadIndex++;
-                    }
-                    that.querynodes = tempNode;
-                    that.lazyLoading = false;
-                    that.currentTime = that.querynodes[0];
-                }, 100);
+                        that.querynodes = tempNode;
+                        that.lazyLoading = false;
+                        that.currentTime = that.querynodes[0];
+                    })
+                }, 500);
             });
             setTimeout(() => {
                 that.getTimeline();
                 that.getDevs();
             }, 100);
             this.lockAutoUpdate(true); //初始锁定自动更新
+        },
+        computed: {
+            title: function(){
+                switch (this.typeList) {
+                    case 10:
+                        return '近期数据';
+                    case 11:
+                        return '数据库查询结果';
+                    case 2:
+                        return '设备列表';
+                    case 30:
+                        return '曲线图:近期数据';
+                    case 31:
+                        return '曲线图:数据库';
+                    default:
+                        break;
+                }
+            },
         },
         components: {
             'lock-auto-up': lockAutoUp,
@@ -470,15 +497,14 @@ this.onload = function () {
                         element.isActive = false;
                 });
                 switch (index) {
-                    case 0:
-                        vEvent.$emit('changelisttype', 0)
-                        break;
                     case 1:
-                        vEvent.$emit('changelisttype', 1)
+                        vEvent.$emit('changelisttype', 10)
                         break;
                     case 2:
-                        vEvent.$emit('changelisttype', 2);
-                        vEvent.$emit('fetchlately');
+                        vEvent.$emit('changelisttype', 2)
+                        break;
+                    case 3:                       
+                        vEvent.$emit('changelisttype', 30);
                         break;               
                     default:
                         break;
@@ -535,37 +561,12 @@ this.onload = function () {
                 var node = [];
                 switch (srcType) {
                     case 0:
-                        for(var i = 0;i < source.length;i ++){
-                            switch (i) {
-                                case 0:
-                                    node.push(new Date(source[i].time).toLocaleString('cn',{hour12:false}))
-                                    break;
-                                case 2/source.length:
-                                    node.push(new Date(source[i].time).toLocaleString('cn',{hour12:false}))
-                                    break;
-                                default:
-                                    node.push('')
-                                    break;
-                            }
-                        }
+                        for(var i = 0;i < source.length;i ++)
+                            node.push(new Date(source[i].time).toLocaleString('cn',{hour12:false}))
                         return node;
                     case 1:
-                        for(var i = 0;i < source.length;i ++){
-                            switch (i) {
-                                case 0:
-                                    node.push(source[i].toLocaleString('cn',{hour12:false}))
-                                    break;
-                                case source.length/2:
-                                    node.push(source[i].toLocaleString('cn',{hour12:false}))
-                                    break;
-                                case source.length - 1:
-                                    node.push(source[i].toLocaleString('cn',{hour12:false}))
-                                    break;    
-                                default:
-                                    node.push('')
-                                    break;
-                            }
-                        }
+                        for(var i = 0;i < source.length;i ++)
+                            node.push(source[i].toLocaleString('cn',{hour12:false}))
                         return node;        
                     default:
                         break;
@@ -583,12 +584,14 @@ this.onload = function () {
                     }
                     switch (srcType) {
                         case 0:
+                            console.log(srcType)
                             source.forEach(element => {
                                 for (var i = 0; i < 7; i++) {
                                     model.tempC[i].push(element.data.TempData[lay].CementTemp[i]);
                                 }
                                 model.tempE.push(element.data.TempData[lay].EnvirTemp);
                             });
+                            break;
                         case 1:
                             source.forEach(element => {
                                 for (var i = 0; i < 7; i++) {
@@ -625,10 +628,10 @@ this.onload = function () {
         },
         computed: {
             getDbTempInfo() {
-                return this.makeSeriesY(this.glb.dbqueryRes,0);
+                return this.makeSeriesY(dbBuffer.dbqueryRes,0);
             },
             getDbTempNode(){
-                return this.makeSeriesX(this.glb.dbqueryRes,0)
+                return this.makeSeriesX(dbBuffer.dbqueryRes,0)
             },
             getCurrentTempInfo(){
                 return this.makeSeriesY(this.currentSeries.data,1)

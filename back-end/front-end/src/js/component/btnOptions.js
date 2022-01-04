@@ -8,7 +8,7 @@ const btnOptions = {
     },
     template: '<button @click="slct" :class="activeCss"><span></span><slot><slot></button>',
     methods: {
-        slct: async function () {
+        slct: function () {
             vEvent.$emit('changeopt', this.index);         
         }
     },

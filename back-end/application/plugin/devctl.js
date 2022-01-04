@@ -21,5 +21,4 @@ client.on('close',function(){
 });
 client.on('error',function(error){
     console.log('error:'+error);
-    client.destory();
 });

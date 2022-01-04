@@ -26,6 +26,7 @@ work.tcpfork.on('message', (msg)=>{
             break;
         case 18:
             console.log(msg.data)
+            break;
         default:
             break;
     }

@@ -48,7 +48,7 @@ const tableInfoCom = {
         <div>设备号:\
         <span id="tabletitle">{{ devID }}</span> \
         </div>\
-        <div>项目标号:\
+        <div>项目标段:\
                 <span id="tabletitle">{{ projectNumber }}</span> \
         </div>\
         <div>位置:\

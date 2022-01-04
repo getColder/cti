@@ -8,20 +8,48 @@ const tChart = {
                 title: {
                     text: this.chartname
                 },
-                tooltip: {},
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {type: 'cross'}
+                },
                 legend: {
-                    data: ['温度1', '温度2', '温度3', '温度4', '温度5', '温度6', '温度7', '环境温度']
+                    data: ['温度1', '温度2', '温度3', '温度4', '温度5', '温度6', '温度7', '环境温度'],
+                    icon: 'pin',
+                    selected: {
+                        '温度2' : false,
+                        '温度3' : false,
+                        '温度4' : false,
+                        '温度5' : false,
+                        '温度6' : false,
+                        '温度7' : false,
+                    }
+
                 },
                 xAxis: {
-                    data : []
+                    data : [],
+                    type: 'category',
                 },
                 yAxis: {
+                    type: 'value',
+                    min: 'dataMin'
                 },
                 series: new Array(8).fill({name : '',
                     data : [],
                     type : 'line',
-                    smooth : true
-                })
+                }),
+                dataZoom:[
+                    {
+                        xAxisIndex: 0,
+                        startValue: 0,
+                        endValue: 30,
+                    },
+                    {
+                        type: 'inside',
+                        yAxisIndex: 0,
+                        startValue: 0,
+                        minValueSpan: 0,
+                    }
+                ]
             }
         }
     },
@@ -33,7 +61,10 @@ const tChart = {
                     name : '温度' +(i +1),
                     data : [i,i,i,i,i],
                     type : 'line',
-                    smooth : true
+                }
+                if(i === 7){
+                    obj.stack = 'x';
+                    obj.areaStyle = {};
                 }
                 tmpView[i] = obj;
             }
@@ -49,10 +80,15 @@ const tChart = {
     },
     mounted(){
         this.tempChart = echarts.init(this.$el);
+        //this.option.series[7].stack = 'x';
         var that = this;
         vEvent.$on('chart-paint',function(chartname,x,y){
             if(that.chartname === chartname){
-                that.paint(x,y);
+                that.tempChart.showLoading();
+                setTimeout(() => {
+                    that.paint(x,y);
+                    that.tempChart.hideLoading();
+                }, 1000);
             }
         })
     }

@@ -68,9 +68,9 @@
     </div>
     
     <div v-cloak id="options">
-        <btn-options :index="0">数据表</btn-options>
-        <btn-options :index="1">设备</btn-options>
-        <btn-options :index="2">曲线图</btn-options>
+        <btn-options :index="1">数据表</btn-options>
+        <btn-options :index="2">设备</btn-options>
+        <btn-options :index="3" @click.native="vEvent.$emit('fetchlately')">曲线图</btn-options>
     </div>
 
     <div v-cloak id="tipBox" style="height: 50px;">
@@ -85,9 +85,9 @@
             <img src="img/timelist_rise.png" title="升序/降序" width=" 20px" height="20px"
             style="position:relative;top:4px;left: -6px;" :class="riseSort?'turnX':'turnXback'" @click="riseSort = !riseSort;dbNodeSort();currentTime = getItems()[0];">{{title}} 
         </span>
-        <lock-auto-up class="btn-listbox" v-show="typeList === 0 || typeList === 1" @lockupdate="lockAutoUpdate"></lock-auto-up>
-        <refresh v-show="typeList === 0 || typeList === 1" @refresh="getTimeline(), getDevs()"></refresh>
-        <span  v-show="typeList===2">
+        <lock-auto-up class="btn-listbox" v-show="typeList === 10 || typeList === 2" @lockupdate="lockAutoUpdate"></lock-auto-up>
+        <refresh v-show="typeList === 10 || typeList === 2" @refresh="getTimeline(), getDevs()"></refresh>
+        <span  v-show="typeList=== 11">
             <img @mouseover="openDbmenu" @mouseleave="closeDbmenu" :class="lazyLoading?'turni':'turnoff'"  :src="lazyLoading?'img/loadingAll.png':'img/loadAll.png'" class="btn-listbox">
             <div @mouseover="delayDbmenu" @mouseleave="closeDbmenu" :class="dbmenu?'btn-dbres':'smallest'">
                 <div @click="loadAll"><img src="img/dbd.png" alt="">显示所有结果</div>
@@ -95,15 +95,16 @@
                 <div @click="dbCharts"><img src="img/curve.png" alt="">查看曲线图表</div>
             </div>
         </span>
+        <div v-show="typeList!==2" id="data-source-db" v-if="dbBuf.dbqueryRes.length" @click="changeSource">查看 <span style="color:greenyellow">近期/数据库</span> 数据</div>
         <div id="timelineScroll" ref="scroll" v-on:scroll="loadQuery">
-            <ul  v-if="typeList===0">
+            <ul  v-if="typeList===10">
                 <li v-for="(item, i) in getItems()" @click="getData(item)">{{
                     item[0]+'年'+item[1]+'月'+item[2]+'日'+item[3]+'时'+item[4]+'分'
                 }}
                     <img v-if="currentTime === item" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
             </ul>
-            <ul  v-if="typeList===1">
+            <ul  v-if="typeList===2">
                 <li v-for="(item, i) in getItems()" @click="switchDev(item)" style="margin-left: auto;padding: 14px;font-size: 17px;">
                     <div :class="(global.infoCurrentstate.devicesOnlineList.indexOf(Number(item)) !== -1)?'devon':'devoff'"></div>
                     {{
@@ -113,36 +114,36 @@
                  <img v-if="global.infoCurrentstate.currentDevId === item" src="img/this.png" width="17px" height="17px" alt="">
                 </li>
             </ul>
-            <ul  v-if="typeList===-1">
+            <ul  v-if="typeList===11">
                 <li v-for="(item, i) in getItems()" :key="item" @click="getQueryData(i,item)">{{
                     new Date(item).toLocaleString('zn',{hour12:false})
                 }}
                     <img v-if="item + i === currentTime" src="img/this.png" width="15px" height="15px" alt="">
                 </li>
             </ul>
-            <ul v-if="typeList===2">
+            <ul v-if="typeList===30">
                 <li v-for="(item, i) in getItems()">
                     <a :href="'#'+item">{{item}}</a>
                 </li>
             </ul>
         </div>
     </div>
-    <div v-cloak id="dataDisplay" v-show="global.pageIndex === 0" style="text-align:center;">
+    <div v-cloak id="dataDisplay" v-show="global.pageIndex === 1" style="text-align:center;">
             <table-info :dev="global.infoCurrentstate.currentDevId">
                 <indictor  ref='indic'></indictor>
             </table-info>
     </div>
     
-    <div v-cloak id="devTable" v-show="global.pageIndex === 1" style="font-size: large;">
+    <div v-cloak id="devTable" v-show="global.pageIndex === 2" style="font-size: large;">
         <div style="font-size:40px;font-family: serif;font-weight: bold;">设备信息</div>
         <ul id="devitems" style="list-style: none;">
-            <li><span>项目标号：{{config.projectNumber}}</span></li>
+            <li><span>项目标段：{{config.projectNumber}}</span></li>
             <li><span>项目位置: {{config.location}}</span></li>
             <textarea name="" id="" cols="30" rows="10" readonly="readonly" v-show="!showModal" :value="config.note?note+'\n'+config.note:note"></textarea>
         </ul>
     </div>
     
-    <div id='chartsDisplay' v-show="global.pageIndex === 2">
+    <div id='chartsDisplay' v-show="global.pageIndex === 3">
         <t-chart chartname='层一'></t-chart>
         <t-chart chartname='层二'></t-chart>
         <t-chart chartname='层三'></t-chart>
