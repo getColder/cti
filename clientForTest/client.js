@@ -12,9 +12,7 @@ function rn(n,m){
 var randomQueue_100 = [];
 var randomQueue_37 = [];
 
-const { clear } = require('console');
 var net = require('net');
-const { exit } = require('process');
 var client;
 const address = '127.0.0.1'
 const ali_address = '47.108.232.221'
@@ -27,7 +25,7 @@ function preZero(num){
 }
 
 function randomGe(n,m){
-    return rn(n,m) + rn(0,8)* 0.1;
+    return rn(n,m) + parseInt(rn(0,8)* 0.1);
 }
 
 setInterval(() => {
@@ -94,7 +92,7 @@ function link() {
                 if (err)
                     console.log('写入失败，请检查连接', err);
             });
-        }, 20000);
+        }, 20000 * 3 * 3);
         console.log('连接成功')
     })
 }
